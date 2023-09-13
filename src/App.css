@@ -1,38 +1,25 @@
-.App {
-  text-align: center;
+@import '../node_modules/@syncfusion/ej2-base/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-react-navigations/styles/material.css';
+
+@import '../node_modules/@syncfusion/ej2-base/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-buttons/styles/material.css';
+
+.e-sidebar {
+  background: #898b2b;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.e-sidebar.e-left {
+  border-right: 2px solid rgb(10, 5, 24);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.e-sidebar.e-left.e-open {
+  transition: transform 1s ease;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.e-sidebar.e-left.e-transition.e-close {
+  transition: transform 2.5s ease, visibility 1200ms;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.e-sidebar.e-dock {
+  background: #aab8da;
 }

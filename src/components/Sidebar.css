@@ -1,0 +1,12 @@
+.sidebar {
+  width: 240px;
+  height: 100%;
+  background-color: #f2f2f2;
+  border-right: 1px solid #ccc;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: bold;
+  padding: 12px;
+}

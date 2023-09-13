@@ -1,0 +1,16 @@
+{
+  "intents": [
+    {
+      "id": 1,
+      "name": "greet"
+    },
+    {
+      "id": 2,
+      "name": "bot_challenge"
+    },
+    {
+      "name": "Fucking ASDASDASD",
+      "id": 3
+    }
+  ]
+}
