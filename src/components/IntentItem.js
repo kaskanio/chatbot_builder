@@ -2,17 +2,15 @@ import { useState, useRef, useEffect } from 'react';
 import { GoTrash, GoXCircle } from 'react-icons/go';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { useRemoveIntentMutation, useEditIntentMutation } from '../store';
-import Button from './Button';
-import ExpandablePanel from './ExpandablePanel';
+import Button from './modules/Button';
+import IntentContent from './IntentContent';
 
 function IntentItem({ intent }) {
   const [removeIntent, resultsRemove] = useRemoveIntentMutation();
   const [editIntent, resultsEdit] = useEditIntentMutation();
   const [isEditing, setIsEditing] = useState(false);
   const [editedHeader, setEditedHeader] = useState(intent.name);
-  const originalHeader = intent.name; // Store the original value
-
-  const inputRef = useRef(null);
+  const inputRef = useRef(null); // Create a ref for the input element
 
   useEffect(() => {
     // When isEditing becomes true, focus on the input element
@@ -39,9 +37,9 @@ function IntentItem({ intent }) {
   };
 
   const stopEditing = () => {
-    // Add an event handler to stop editing
+    // Stop editing and reset the input field to the original value
     setIsEditing(false);
-    setEditedHeader(originalHeader);
+    setEditedHeader(intent.name);
   };
 
   let header = <div className="font-semibold">{intent.name}</div>;
@@ -60,23 +58,9 @@ function IntentItem({ intent }) {
     );
   }
 
-  // First attempt on experiment branch!!!!
-  // First attempt on experiment branch!!!!
-  // First attempt on experiment branch!!!!
-  // First attempt on experiment branch!!!!
-  // First attempt on experiment branch!!!!
-  // First attempt on experiment branch!!!!
-
   return (
     <div className="flex justify-between items-start">
-      <ExpandablePanel key={intent.id} header={header}>
-        <div className="whitespace-pre-line">
-          {`-"what time is it" 
-            -"what's the time" 
-            -"tell me the time"
-            -"is it late already"`}
-        </div>
-      </ExpandablePanel>
+      <IntentContent key={intent.id} intent={intent} header={header} />
       <div className="space-x-2 ml-2 flex">
         {isEditing ? (
           <Button
@@ -87,7 +71,8 @@ function IntentItem({ intent }) {
             rounded
             className="text-xs p-1"
           >
-            <GoXCircle onClick={stopEditing} /> {/* Stop editing on click */}
+            <GoXCircle onClick={stopEditing} />{' '}
+            {/* Stop editing and reset input */}
           </Button>
         ) : (
           <Button

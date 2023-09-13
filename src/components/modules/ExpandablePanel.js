@@ -1,12 +1,26 @@
 import { useState } from 'react';
 import { GoChevronDown, GoChevronLeft } from 'react-icons/go';
 
-function ExpandablePanel({ header, children }) {
+function ExpandablePanel({ header, content }) {
   const [expanded, setExpanded] = useState(false);
 
   const handleClick = () => {
     setExpanded(!expanded);
   };
+
+  let formattedContent = null;
+
+  if (expanded) {
+    formattedContent = (
+      <div className="p-2 border-t">
+        <div className="whitespace-pre-line">
+          {content.map((string, index) => (
+            <div key={index}>{'"' + string + '"'}</div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="mb-2 border rounded">
@@ -18,7 +32,7 @@ function ExpandablePanel({ header, children }) {
           {expanded ? <GoChevronDown /> : <GoChevronLeft />}
         </div>
       </div>
-      {expanded && <div className="p-2 border-t">{children}</div>}
+      {formattedContent}
     </div>
   );
 }

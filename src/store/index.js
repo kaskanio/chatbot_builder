@@ -16,4 +16,7 @@ export {
   useAddIntentMutation,
   useRemoveIntentMutation,
   useEditIntentMutation,
+  useFetchStringsQuery,
+  useEditStringMutation,
+  useRemoveStingMutation,
 } from './apis/intentsApi';

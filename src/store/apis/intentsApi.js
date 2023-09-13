@@ -18,6 +18,25 @@ const intentsApi = createApi({
   }),
   endpoints(builder) {
     return {
+      fetchIntent: builder.query({
+        providesTags: ['Intent'],
+        query: () => {
+          return {
+            url: '/intents',
+            method: 'GET',
+          };
+        },
+      }),
+      addIntent: builder.mutation({
+        invalidatesTags: ['Intent'],
+        query: (body) => {
+          return {
+            url: '/intents',
+            method: 'POST',
+            body: { name: body },
+          };
+        },
+      }),
       editIntent: builder.mutation({
         invalidatesTags: ['Intent'],
         query: ({ id, newName }) => {
@@ -37,22 +56,30 @@ const intentsApi = createApi({
           };
         },
       }),
-      addIntent: builder.mutation({
-        invalidatesTags: ['Intent'],
-        query: (body) => {
+      fetchStrings: builder.query({
+        providesTags: ['Strings'],
+        query: (intent) => {
           return {
-            url: '/intents',
-            method: 'POST',
-            body: { name: body },
+            url: `/intents/${intent.id}/strings`, // Use an appropriate URL structure
+            method: 'GET',
           };
         },
       }),
-      fetchIntent: builder.query({
-        providesTags: ['Intent'],
-        query: () => {
+      editString: builder.mutation({
+        invalidatesTags: ['Intent'],
+        query: ({ id, newStrings }) => {
           return {
-            url: '/intents',
-            method: 'GET',
+            url: `/intents/${id}`,
+            method: 'PATCH',
+            body: { strings: newStrings },
+          };
+        },
+      }),
+      removeSting: builder.mutation({
+        query: ({ id, index }) => {
+          return {
+            url: `intents/${id}`,
+            method: 'DELETE',
           };
         },
       }),
@@ -65,5 +92,8 @@ export const {
   useAddIntentMutation,
   useRemoveIntentMutation,
   useEditIntentMutation,
+  useFetchStringsQuery,
+  useEditStringMutation,
+  useRemoveStingMutation,
 } = intentsApi;
 export { intentsApi };

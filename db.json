@@ -2,15 +2,40 @@
   "intents": [
     {
       "id": 1,
-      "name": "greet"
+      "name": "greet",
+      "strings": [
+        "hey",
+        "hello",
+        "hi",
+        "hello there",
+        "good morning",
+        "good evening",
+        "moin",
+        "hey there",
+        "let's go",
+        "hey dude",
+        "goodmorning",
+        "goodevening",
+        "good afternoon"
+      ]
     },
     {
       "id": 2,
-      "name": "bot_challenge"
+      "name": "bot_challenge",
+      "strings": [
+        "are you a bot?",
+        "are you a human?",
+        "am I talking to a bot?",
+        "am I talking to a human?"
+      ]
     },
     {
-      "name": "Fucking ASDASDASD",
-      "id": 3
+      "id": 3,
+      "name": "Intent 3",
+      "strings": [
+        "NANI",
+        "NE RE"
+      ]
     }
   ]
 }
