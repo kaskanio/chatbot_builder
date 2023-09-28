@@ -11,7 +11,7 @@ function Dialogues() {
         height: 50,
         shape: { type: 'Basic', shape: 'Rectangle' },
       },
-      // Add more nodes as needed
+      // Add more nodes as needed asdgfasdgasgas
     ],
     connectors: [
       {
