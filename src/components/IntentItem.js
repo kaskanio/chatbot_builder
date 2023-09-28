@@ -80,7 +80,7 @@ function IntentItem({ intent }) {
               setIsEditing(true);
             }}
             type="button"
-            primary
+            warning
             rounded
             className="text-xs p-1"
           >
@@ -91,7 +91,7 @@ function IntentItem({ intent }) {
           onClick={handleRemoveIntent}
           loading={resultsRemove.isLoading}
           type="submit"
-          primary
+          danger
           rounded
           className="text-xs p-1"
         >

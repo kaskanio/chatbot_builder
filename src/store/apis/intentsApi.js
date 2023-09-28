@@ -56,33 +56,6 @@ const intentsApi = createApi({
           };
         },
       }),
-      fetchStrings: builder.query({
-        providesTags: ['Strings'],
-        query: (intent) => {
-          return {
-            url: `/intents/${intent.id}/strings`, // Use an appropriate URL structure
-            method: 'GET',
-          };
-        },
-      }),
-      editString: builder.mutation({
-        invalidatesTags: ['Intent'],
-        query: ({ id, newStrings }) => {
-          return {
-            url: `/intents/${id}`,
-            method: 'PATCH',
-            body: { strings: newStrings },
-          };
-        },
-      }),
-      removeSting: builder.mutation({
-        query: ({ id, index }) => {
-          return {
-            url: `intents/${id}`,
-            method: 'DELETE',
-          };
-        },
-      }),
     };
   },
 });
@@ -92,8 +65,5 @@ export const {
   useAddIntentMutation,
   useRemoveIntentMutation,
   useEditIntentMutation,
-  useFetchStringsQuery,
-  useEditStringMutation,
-  useRemoveStingMutation,
 } = intentsApi;
 export { intentsApi };

@@ -28,14 +28,93 @@
         "am I talking to a bot?",
         "am I talking to a human?"
       ]
+    }
+  ],
+  "strings": [
+    {
+      "id": 1,
+      "name": "hey",
+      "intentId": 1
     },
     {
-      "id": 3,
-      "name": "Intent 3",
-      "strings": [
-        "NANI",
-        "NE RE"
-      ]
+      "id": 2,
+      "name": "hello",
+      "intentId": 1
+    },
+    {
+      "name": "hi",
+      "intentId": 1,
+      "id": 3
+    },
+    {
+      "name": "hello there",
+      "intentId": 1,
+      "id": 4
+    },
+    {
+      "name": "good morning",
+      "intentId": 1,
+      "id": 5
+    },
+    {
+      "name": "good evening",
+      "intentId": 1,
+      "id": 6
+    },
+    {
+      "name": "moin",
+      "intentId": 1,
+      "id": 7
+    },
+    {
+      "name": "hey there",
+      "intentId": 1,
+      "id": 8
+    },
+    {
+      "name": "let's go",
+      "intentId": 1,
+      "id": 9
+    },
+    {
+      "name": "hey dude",
+      "intentId": 1,
+      "id": 10
+    },
+    {
+      "name": "goodmorning",
+      "intentId": 1,
+      "id": 11
+    },
+    {
+      "name": "goodevening",
+      "intentId": 1,
+      "id": 12
+    },
+    {
+      "name": "good afternoon",
+      "intentId": 1,
+      "id": 13
+    },
+    {
+      "name": "are you a bot?",
+      "intentId": 2,
+      "id": 14
+    },
+    {
+      "name": "are you a human?",
+      "intentId": 2,
+      "id": 15
+    },
+    {
+      "name": "am i talking to a bot?",
+      "intentId": 2,
+      "id": 16
+    },
+    {
+      "name": "am i talking to a human?",
+      "intentId": 2,
+      "id": 17
     }
   ]
 }

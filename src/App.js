@@ -1,6 +1,7 @@
 import Sidebar from './components/Sidebar';
 import IntentsList from './components/IntentsList';
 import Route from './components/Route';
+import Dialogues from './components/Dialogues';
 
 function App() {
   return (
@@ -20,6 +21,9 @@ function App() {
         <div className="flex-1 p-4 sm:p-8">
           <Route path="/intents">
             <IntentsList />
+          </Route>
+          <Route path="/dialogues">
+            <Dialogues />
           </Route>
         </div>
       </div>

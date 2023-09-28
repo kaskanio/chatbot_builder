@@ -2,7 +2,7 @@ import Link from './Link';
 
 function Sidebar() {
   return (
-    <div className="sidebar bg-gray-900 text-white w-72 p-4 h-screen top-0 transform">
+    <div className="sidebar bg-gray-900 text-white w-45 p-4 h-screen top-0 transform">
       <div className="flex flex-col justify-between h-full">
         <div>
           <div className="mb-8">
@@ -12,20 +12,20 @@ function Sidebar() {
           <ul className="space-y-2">
             <li>
               <Link
+                to="/dialogues"
+                className="flex items-center py-2 px-4 rounded hover:bg-gray-800"
+              >
+                <i className="fas fa-cog mr-3"></i>
+                Dialogues
+              </Link>
+            </li>
+            <li>
+              <Link
                 to="/intents"
                 className="flex items-center py-2 px-4 rounded hover:bg-gray-800"
               >
                 <i className="fas fa-home mr-3"></i>
                 Intents
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/settings"
-                className="flex items-center py-2 px-4 rounded hover:bg-gray-800"
-              >
-                <i className="fas fa-cog mr-3"></i>
-                Settings
               </Link>
             </li>
             <li>
