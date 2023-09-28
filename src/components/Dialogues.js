@@ -1,10 +1,4 @@
-import {
-  DiagramComponent,
-  NodeModel,
-  ConnectorModel,
-  Node,
-  Connector,
-} from '@syncfusion/ej2-react-diagrams';
+import { DiagramComponent } from '@syncfusion/ej2-react-diagrams';
 
 function Dialogues() {
   const diagram = {
