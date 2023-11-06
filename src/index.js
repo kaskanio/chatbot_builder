@@ -9,7 +9,7 @@ import { store } from './store';
 
 // Registering Syncfusion license key
 registerLicense(
-  'Ngo9BigBOggjHTQxAR8/V1NGaF1cWGhIfEx1RHxQdld5ZFRHallYTnNWUj0eQnxTdEZjUH9YcXdWQ2NcUUBzXg=='
+  'Ngo9BigBOggjHTQxAR8/V1NHaF5cXmVCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdgWH9fcHVQRGFYWER1W0I='
 );
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
