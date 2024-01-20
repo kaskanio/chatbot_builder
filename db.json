@@ -28,6 +28,10 @@
         "am I talking to a bot?",
         "am I talking to a human?"
       ]
+    },
+    {
+      "name": "Test",
+      "id": 3
     }
   ],
   "strings": [
@@ -119,12 +123,30 @@
   ],
   "nodes": [
     {
-      "name": "fotiaa",
-      "id": 1,
-      "offsetX": 250,
-      "offsetY": 250,
-      "width": 100,
-      "height": 100
+      "id": "Halo",
+      "shape": "Gateway",
+      "offsetX": 1079,
+      "offsetY": 169,
+      "width": 130,
+      "height": 130
+    },
+    {
+      "id": "greet",
+      "shape": "Gateway",
+      "offsetX": 236,
+      "offsetY": 342
+    },
+    {
+      "id": "Test",
+      "shape": "Gateway",
+      "offsetX": 422,
+      "offsetY": 406
+    },
+    {
+      "id": "bot_challenge",
+      "shape": "Gateway",
+      "offsetX": 718,
+      "offsetY": 163
     }
   ]
 }

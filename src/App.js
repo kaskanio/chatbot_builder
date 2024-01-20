@@ -2,6 +2,7 @@ import Sidebar from './components/Sidebar';
 import IntentsList from './components/IntentsList';
 import Route from './components/Route';
 import Dialogues from './components/Dialogues';
+import './App.css';
 
 function App() {
   return (

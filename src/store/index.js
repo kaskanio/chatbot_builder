@@ -34,4 +34,8 @@ export {
   useEditStringMutation,
 } from './apis/stringsApi';
 
-export { useFetchNodeQuery, useAddNodeMutation } from './apis/nodesApi';
+export {
+  useFetchNodeQuery,
+  useAddNodeMutation,
+  useUpdateNodeMutation,
+} from './apis/nodesApi';

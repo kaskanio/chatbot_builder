@@ -8,6 +8,9 @@ const nodesApi = createApi({
   endpoints(builder) {
     return {
       fetchNode: builder.query({
+        providesTagsTags: (result, error, node) => {
+          return [{ type: 'Node', id: node.id }];
+        },
         providesTags: ['Node'],
         query: () => {
           return {
@@ -17,16 +20,43 @@ const nodesApi = createApi({
         },
       }),
       addNode: builder.mutation({
-        invalidatesTags: ['Node'],
-        query: (nodeName) => ({
+        invalidatesTags: (result, error, { id }) => {
+          return [{ type: 'Node', id }];
+        },
+        query: ({ nodeId, shape, width, height }) => ({
           url: '/nodes',
           method: 'POST',
-          body: { name: nodeName },
+          body: { id: nodeId, shape: shape, width: width, height: height },
         }),
+      }),
+      updateNode: builder.mutation({
+        invalidatesTags: (result, error, { id }) => {
+          return [{ type: 'Node', id }];
+        },
+        query: ({
+          nodeId,
+          updatedOffsetX,
+          updatedOffsetY,
+          updatedWidth,
+          updatedHeight,
+        }) => {
+          return {
+            url: `/nodes/${nodeId}`,
+            method: 'PATCH',
+            body: {
+              id: nodeId,
+              offsetX: updatedOffsetX,
+              offsetY: updatedOffsetY,
+              width: updatedWidth,
+              height: updatedHeight,
+            },
+          };
+        },
       }),
     };
   },
 });
 
-export const { useFetchNodeQuery, useAddNodeMutation } = nodesApi;
+export const { useFetchNodeQuery, useAddNodeMutation, useUpdateNodeMutation } =
+  nodesApi;
 export { nodesApi };
