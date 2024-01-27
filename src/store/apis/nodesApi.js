@@ -53,10 +53,25 @@ const nodesApi = createApi({
           };
         },
       }),
+      deleteNode: builder.mutation({
+        invalidatesTags: (result, error, { id }) => {
+          return [{ type: 'Node', id }];
+        },
+        query: (nodeId) => {
+          return {
+            url: `/nodes/${nodeId}`,
+            method: 'DELETE',
+          };
+        },
+      }),
     };
   },
 });
 
-export const { useFetchNodeQuery, useAddNodeMutation, useUpdateNodeMutation } =
-  nodesApi;
+export const {
+  useFetchNodeQuery,
+  useAddNodeMutation,
+  useUpdateNodeMutation,
+  useDeleteNodeMutation,
+} = nodesApi;
 export { nodesApi };

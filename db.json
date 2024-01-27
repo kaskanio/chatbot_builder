@@ -30,8 +30,16 @@
       ]
     },
     {
-      "name": "Test",
+      "name": "Placeholder - greet_back",
       "id": 3
+    },
+    {
+      "name": "Test",
+      "id": 4
+    },
+    {
+      "name": "Test 2",
+      "id": 5
     }
   ],
   "strings": [
@@ -61,7 +69,7 @@
       "id": 5
     },
     {
-      "name": "good evening",
+      "name": "good evening ",
       "intentId": 1,
       "id": 6
     },
@@ -123,30 +131,16 @@
   ],
   "nodes": [
     {
-      "id": "Halo",
+      "id": "Placeholder - greet_back",
       "shape": "Gateway",
-      "offsetX": 1079,
-      "offsetY": 169,
-      "width": 130,
-      "height": 130
+      "offsetX": 457,
+      "offsetY": 369
     },
     {
       "id": "greet",
       "shape": "Gateway",
-      "offsetX": 236,
-      "offsetY": 342
-    },
-    {
-      "id": "Test",
-      "shape": "Gateway",
-      "offsetX": 422,
-      "offsetY": 406
-    },
-    {
-      "id": "bot_challenge",
-      "shape": "Gateway",
-      "offsetX": 718,
-      "offsetY": 163
+      "offsetX": 239,
+      "offsetY": 214
     }
   ]
 }
