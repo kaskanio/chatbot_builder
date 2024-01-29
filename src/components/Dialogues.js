@@ -24,8 +24,10 @@ function Dialogues() {
   const { data, error, isLoading } = useFetchNodeQuery();
   const [updateNode] = useUpdateNodeMutation();
   const [deleteNode] = useDeleteNodeMutation();
+  const [updateConnector] = useUpdateConnectorMutation();
+  const [addConnector] = useAddConnectorMutation();
+
   const diagramInstanceRef = useRef(null);
-  const [drawMode, toggleDrawMode] = useState(false);
 
   const handlePositionChange = useCallback(
     (args) => {
@@ -82,6 +84,38 @@ function Dialogues() {
     [updateNode]
   );
 
+  const handleConnectionChange = useCallback(
+    (args) => {
+      if (args.state === 'Changed') {
+        console.log(args);
+        updateConnector({
+          connectorId: args.connector.id,
+          updatedSourceId: args.connector.sourceID,
+          updatedTargetId: args.connector.targetID,
+        });
+      }
+    },
+    [updateConnector]
+  );
+
+  const handleSelectionChange = useCallback(
+    (args) => {
+      if (
+        args.newValue[0] &&
+        args.newValue[0].propName === 'connectors' &&
+        args.state === 'Changed'
+      ) {
+        addConnector({
+          connectorId: args.newValue[0].id,
+          sourceId: args.newValue[0].sourceID,
+          targetId: args.newValue[0].targetID,
+          type: args.newValue[0].type,
+        });
+      }
+    },
+    [addConnector]
+  );
+
   let content;
 
   if (isLoading) {
@@ -134,6 +168,14 @@ function Dialogues() {
                 handleCollectionChange
               );
               diagram.addEventListener('sizeChange', handleSizeChange);
+              diagram.addEventListener(
+                'connectionChange',
+                handleConnectionChange
+              );
+              diagram.addEventListener(
+                'selectionChange',
+                handleSelectionChange
+              );
             }
           }}
         >
@@ -144,30 +186,19 @@ function Dialogues() {
   }
 
   const handleButtonClick = () => {
-    toggleDrawMode(!drawMode);
     const connectors = {
       id: 'connector1',
-      type: 'Straight',
+      type: 'Orthogonal',
       segments: [
         {
-          type: 'polyline',
+          type: 'Orthogonal',
         },
       ],
-      sourceId: 'sourceNodeId',
-      targetId: 'targetNodeId',
     };
-
     diagramInstanceRef.current.drawingObject = connectors;
     diagramInstanceRef.current.tool = DiagramTools.DrawOnce;
     diagramInstanceRef.current.dataBind();
-    toggleDrawMode(!drawMode);
-    console.log(connectors);
   };
-
-  // const handleCollectionChange = (args) => {
-  //   console.log(args.element.sourceID);
-  //   console.log(args.element.targetID);
-  // };
 
   return (
     <div className="flex flex-col">

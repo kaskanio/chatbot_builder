@@ -23,30 +23,24 @@ const connectorsApi = createApi({
         invalidatesTags: (result, error, { id }) => {
           return [{ type: 'Connector', id }];
         },
-        query: ({ connectorId, startNodeId, endNodeId, type }) => ({
+        query: ({ connectorId, sourceId, targetId, type }) => ({
           url: '/connectors',
           method: 'POST',
-          body: { id: connectorId, startNodeId, endNodeId, type },
+          body: { id: connectorId, sourceId, targetId, type },
         }),
       }),
       updateConnector: builder.mutation({
         invalidatesTags: (result, error, { id }) => {
           return [{ type: 'Connector', id }];
         },
-        query: ({
-          connectorId,
-          updatedStartNodeId,
-          updatedEndNodeId,
-          updatedType,
-        }) => {
+        query: ({ connectorId, updatedSourceId, updatedTargetId }) => {
           return {
             url: `/connectors/${connectorId}`,
             method: 'PATCH',
             body: {
               id: connectorId,
-              startNodeId: updatedStartNodeId,
-              endNodeId: updatedEndNodeId,
-              type: updatedType,
+              sourceId: updatedSourceId,
+              targetId: updatedTargetId,
             },
           };
         },

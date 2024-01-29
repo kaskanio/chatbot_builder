@@ -139,8 +139,19 @@
     {
       "id": "greet",
       "shape": "Gateway",
-      "offsetX": 239,
+      "offsetX": 240,
       "offsetY": 214
+    },
+    {
+      "id": "Test",
+      "shape": "Gateway",
+      "offsetX": 139,
+      "offsetY": 394.5,
+      "width": 130,
+      "height": 125
     }
+  ],
+  "connectors": [
+
   ]
 }
