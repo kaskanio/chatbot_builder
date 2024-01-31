@@ -133,25 +133,44 @@
     {
       "id": "Placeholder - greet_back",
       "shape": "Gateway",
-      "offsetX": 457,
-      "offsetY": 369
+      "offsetX": 623,
+      "offsetY": 274
     },
     {
       "id": "greet",
       "shape": "Gateway",
-      "offsetX": 240,
-      "offsetY": 214
+      "offsetX": 438,
+      "offsetY": 172
     },
     {
-      "id": "Test",
+      "id": "Test 2",
       "shape": "Gateway",
-      "offsetX": 139,
-      "offsetY": 394.5,
-      "width": 130,
-      "height": 125
+      "offsetX": 243,
+      "offsetY": 348
     }
   ],
   "connectors": [
-
+    {
+      "id": "connector1lDfMq",
+      "sourceId": "Test 2",
+      "targetId": "greet",
+      "type": "Straight",
+      "sourceOffsetX": 344.21,
+      "sourceOffsetY": 390.79,
+      "targetOffsetX": 240.79,
+      "targetOffsetY": 199.21
+    },
+    {
+      "id": "Link1Wk0pl",
+      "sourceId": "",
+      "targetId": "",
+      "type": "Orthogonal"
+    },
+    {
+      "id": "Link21T6cmc",
+      "sourceId": "",
+      "targetId": "",
+      "type": "Straight"
+    }
   ]
 }

@@ -23,17 +23,43 @@ const connectorsApi = createApi({
         invalidatesTags: (result, error, { id }) => {
           return [{ type: 'Connector', id }];
         },
-        query: ({ connectorId, sourceId, targetId, type }) => ({
+        query: ({
+          connectorId,
+          sourceId,
+          targetId,
+          type,
+          sourceOffsetX,
+          sourceOffsetY,
+          targetOffsetX,
+          targetOffsetY,
+        }) => ({
           url: '/connectors',
           method: 'POST',
-          body: { id: connectorId, sourceId, targetId, type },
+          body: {
+            id: connectorId,
+            sourceId,
+            targetId,
+            type,
+            sourceOffsetX,
+            sourceOffsetY,
+            targetOffsetX,
+            targetOffsetY,
+          },
         }),
       }),
       updateConnector: builder.mutation({
         invalidatesTags: (result, error, { id }) => {
           return [{ type: 'Connector', id }];
         },
-        query: ({ connectorId, updatedSourceId, updatedTargetId }) => {
+        query: ({
+          connectorId,
+          updatedSourceId,
+          updatedTargetId,
+          updatedSourceOffsetX,
+          updatedSourceOffsetY,
+          updatedTargetOffsetX,
+          updatedTargetOffsetY,
+        }) => {
           return {
             url: `/connectors/${connectorId}`,
             method: 'PATCH',
@@ -41,6 +67,10 @@ const connectorsApi = createApi({
               id: connectorId,
               sourceId: updatedSourceId,
               targetId: updatedTargetId,
+              sourceOffsetX: updatedSourceOffsetX,
+              sourceOffsetY: updatedSourceOffsetY,
+              targetOffsetX: updatedTargetOffsetX,
+              targetOffsetY: updatedTargetOffsetY,
             },
           };
         },
