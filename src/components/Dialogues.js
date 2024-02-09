@@ -1,10 +1,8 @@
-import React, { useRef, useCallback } from 'react';
+import { useRef, useCallback } from 'react';
 import {
   DiagramComponent,
   Inject,
   BpmnDiagrams,
-  DiagramTools,
-  SymbolPaletteComponent,
   ConnectorEditing,
 } from '@syncfusion/ej2-react-diagrams';
 import {
@@ -20,7 +18,6 @@ import {
 } from '../store';
 import Skeleton from './modules/Skeleton';
 import DialoguesToolbar from './DialoguesToolbar';
-import Button from './modules/Button';
 
 function Dialogues() {
   const { data, error, isLoading } = useFetchNodeQuery();
@@ -37,59 +34,10 @@ function Dialogues() {
 
   const diagramInstanceRef = useRef(null);
 
-  let connectorSymbols = [
-    {
-      id: 'Link1',
-      type: 'Orthogonal',
-      sourcePoint: {
-        x: 0,
-        y: 0,
-      },
-      targetPoint: {
-        x: 40,
-        y: 40,
-      },
-      targetDecorator: {
-        shape: 'Arrow',
-      },
-    },
-    {
-      id: 'Link21',
-      type: 'Straight',
-      sourcePoint: {
-        x: 0,
-        y: 0,
-      },
-      targetPoint: {
-        x: 40,
-        y: 40,
-      },
-      targetDecorator: {
-        shape: 'Arrow',
-      },
-    },
-    {
-      id: 'link33',
-      type: 'Bezier',
-      sourcePoint: {
-        x: 0,
-        y: 0,
-      },
-      targetPoint: {
-        x: 40,
-        y: 40,
-      },
-      style: {
-        strokeWidth: 2,
-      },
-      targetDecorator: {
-        shape: 'None',
-      },
-    },
-  ];
-
   const handleCollectionChange = useCallback(
     (args) => {
+      console.log('Geia');
+
       if (
         args.type === 'Removal' &&
         args.element.propName === 'nodes' &&
@@ -108,10 +56,10 @@ function Dialogues() {
           sourceId: args.element.sourceID,
           targetId: args.element.targetID,
           type: args.element.type,
-          sourceOffsetX: args.element.properties.sourcePoint.x,
-          sourceOffsetY: args.element.properties.sourcePoint.y,
-          targetOffsetX: args.element.properties.targetPoint.x,
-          targetOffsetY: args.element.properties.targetPoint.y,
+          sourcePointX: args.element.sourcePoint.x,
+          sourcePointY: args.element.sourcePoint.y,
+          targetPointX: args.element.targetPoint.x,
+          targetPointY: args.element.targetPoint.y,
         });
       } else if (
         args.type === 'Removal' &&
@@ -128,33 +76,120 @@ function Dialogues() {
 
   const handlePositionChange = useCallback(
     (args) => {
-      console.log('Position changed:', args);
-
-      if (args.state === 'Completed' && args.source.propName === 'nodes') {
-        updateNode({
-          nodeId: args.source.properties.id,
-          updatedOffsetX: args.newValue.offsetX,
-          updatedOffsetY: args.newValue.offsetY,
-        })
-          .unwrap()
-          .then((result) => {
-            console.log('Update successful:', result);
+      const nodeId = args.source.properties.id;
+      if (args.state === 'Completed') {
+        if (args.source.propName === 'nodes') {
+          updateNode({
+            nodeId: nodeId,
+            updatedOffsetX: args.newValue.offsetX,
+            updatedOffsetY: args.newValue.offsetY,
           })
-          .catch((error) => {
-            console.error('Update failed:', error);
+            .unwrap()
+            .then((result) => {
+              console.log('Update successful:', result);
+            })
+            .catch((error) => {
+              console.error('Update failed:', error);
+            });
+          const connectedConnectors =
+            diagramInstanceRef.current.connectors.filter(
+              (connector) =>
+                connector.sourceID === nodeId || connector.targetID === nodeId
+            );
+
+          // Update the connectors
+          connectedConnectors.forEach((connector) => {
+            updateConnector({
+              connectorId: connector.id,
+              updatedSourcePointX: connector.sourcePoint.x,
+              updatedSourcePointY: connector.sourcePoint.y,
+              updatedTargetPointX: connector.targetPoint.x,
+              updatedTargetPointY: connector.targetPoint.y,
+            })
+              .unwrap()
+              .then((result) => {
+                console.log('Update successful:', result);
+              })
+              .catch((error) => {
+                console.error('Update failed:', error);
+              });
           });
+        } else if (args.source.propName === 'connectors') {
+          updateConnector({
+            connectorId: nodeId,
+            updatedSourcePointX: args.newValue.sourcePoint.x,
+            updatedSourcePointY: args.newValue.sourcePoint.y,
+            updatedTargetPointX: args.newValue.targetPoint.x,
+            updatedTargetPointY: args.newValue.targetPoint.y,
+          })
+            .unwrap()
+            .then((result) => {
+              console.log('Update successful:', result);
+            })
+            .catch((error) => {
+              console.error('Update failed:', error);
+            });
+        } else if (args.source.propName === 'selectedItems') {
+          const selectedItems = args.source.nodes || args.source.connectors;
+          if (selectedItems) {
+            selectedItems.forEach((item) => {
+              console.log('Selected item:', item);
+              if (item.propName === 'nodes') {
+                updateNode({
+                  nodeId: item.id,
+                  updatedOffsetX: args.newValue.offsetX,
+                  updatedOffsetY: args.newValue.offsetY,
+                })
+                  .unwrap()
+                  .then((result) => {
+                    console.log('Update successful:', result);
+                  })
+                  .catch((error) => {
+                    console.error('Update failed:', error);
+                  });
+                const connectedConnectors =
+                  diagramInstanceRef.current.connectors.filter(
+                    (connector) =>
+                      connector.sourceID === item.id ||
+                      connector.targetID === item.id
+                  );
+
+                // Update the connectors
+                connectedConnectors.forEach((connector) => {
+                  updateConnector({
+                    connectorId: connector.id,
+                    updatedSourcePointX: connector.sourcePoint.x,
+                    updatedSourcePointY: connector.sourcePoint.y,
+                    updatedTargetPointX: connector.targetPoint.x,
+                    updatedTargetPointY: connector.targetPoint.y,
+                  })
+                    .unwrap()
+                    .then((result) => {
+                      console.log('Update successful:', result);
+                    })
+                    .catch((error) => {
+                      console.error('Update failed:', error);
+                    });
+                });
+              }
+            });
+          }
+        }
       }
     },
-    [updateNode]
+    [updateNode, updateConnector]
   );
 
   const handleSizeChange = useCallback(
     (args) => {
       if (args.state === 'Completed') {
+        const nodeId = args.source.nodes[0].properties.id;
+
+        // Update the node in the Redux store
         updateNode({
-          nodeId: args.source.nodes[0].properties.id,
+          nodeId: nodeId,
           updatedOffsetX: args.newValue.offsetX,
-          updatedOffsetY: args.newValue.offsetY,
+          offsetY: args.newValue.offsetY,
           updatedWidth: args.newValue.width,
           updatedHeight: args.newValue.height,
         })
@@ -172,18 +207,16 @@ function Dialogues() {
 
   const handleConnectionChange = useCallback(
     (args) => {
-      console.log('allazo 8esi connector', args);
-
       if (args.state === 'Changed') {
         console.log(args);
         updateConnector({
           connectorId: args.connector.id,
           updatedSourceId: args.connector.sourceID,
           updatedTargetId: args.connector.targetID,
-          updatedSourceOffsetX: args.connector.properties.sourcePoint.x,
-          updatedSourceOffsetY: args.connector.properties.sourcePoint.y,
-          updatedTargetOffsetX: args.connector.properties.targetPoint.x,
-          updatedTargetOffsetY: args.connector.properties.targetPoint.y,
+          updatedSourcePointX: args.connector.sourcePoint.x,
+          updatedSourcePointY: args.connector.sourcePoint.y,
+          updatedTargetPointX: args.connector.targetPoint.x,
+          updatedTargetPointY: args.connector.targetPoint.y,
         });
       }
     },
@@ -225,18 +258,24 @@ function Dialogues() {
       id: connector.id,
       sourceID: connector.sourceId,
       targetID: connector.targetId,
-      type: connector.type,
+      type: connector.type || 'Orthogonal',
+      targetDecorator: connector.targetDecorator,
       sourcePoint: {
-        x: connector.sourceOffsetX,
-        y: connector.sourceOffsetY,
+        x: connector.sourcePointX,
+        y: connector.sourcePointY,
       },
       targetPoint: {
-        x: connector.targetOffsetX,
-        y: connector.targetOffsetY,
+        x: connector.targetPointX,
+        y: connector.targetPointY,
       },
     }));
 
-    console.log(returnConnectors);
+    const handleSymbolDrag = (args) => {
+      console.log('To stoixeio pou petaksa einai to: ', args.element.propName);
+      if (args.element.propName === 'nodes') {
+        console.log('Connector EINAI REEEE');
+      }
+    };
 
     content = (
       <div>
@@ -244,11 +283,9 @@ function Dialogues() {
           id="container"
           width={'100%'}
           height={'600px'}
-          connectors={returnConnectors}
           nodes={returnNodes}
-          getConnectorDefaults={(obj, diagramInstance) => {
-            return obj;
-          }}
+          connectors={returnConnectors}
+          drop={handleSymbolDrag}
           getNodeDefaults={(obj, diagramInstance) => {
             obj.borderWidth = 1;
             obj.style = {
@@ -280,53 +317,11 @@ function Dialogues() {
     );
   }
 
-  const handleButtonClick = () => {
-    const connectors = {
-      id: 'connector1',
-      type: 'Straight',
-      segments: [
-        {
-          type: 'polyline',
-        },
-      ],
-    };
-    diagramInstanceRef.current.drawingObject = connectors;
-    diagramInstanceRef.current.tool = DiagramTools.DrawOnce;
-    diagramInstanceRef.current.dataBind();
-  };
-
-  const handleSymbolDrag = (args) => {
-    const diagram = diagramInstanceRef.current;
-
-    // Check if the dragged item is a connector (you may adjust this check based on your symbol type)
-    if (args.element.isConnector) {
-      // Select the dragged connector in the diagram
-      diagram.select([args.element]);
-    }
-  };
-
   return (
     <div className="flex flex-col">
       <div className="mb-9">{content}</div>
       <div className="flex items-center space-x-4">
-        <Button onClick={handleButtonClick}>Draw Connector</Button>
-        <DialoguesToolbar />
-        <SymbolPaletteComponent
-          id="palette1"
-          //Defines how many palettes can be at expanded mode at a time
-          expandMode={'Multiple'}
-          symbolDrag={handleSymbolDrag}
-          //Defines the palette collection
-          palettes={[
-            {
-              id: 'connectors',
-              expanded: true,
-              symbols: connectorSymbols,
-              title: 'Connectors',
-              iconCss: 'e-ddb-icons e-connector',
-            },
-          ]}
-        />
+        <DialoguesToolbar diagramInstanceRef={diagramInstanceRef} />
       </div>
     </div>
   );

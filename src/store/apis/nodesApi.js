@@ -8,9 +8,6 @@ const nodesApi = createApi({
   endpoints(builder) {
     return {
       fetchNode: builder.query({
-        providesTagsTags: (result, error, node) => {
-          return [{ type: 'Node', id: node.id }];
-        },
         providesTags: ['Node'],
         query: () => {
           return {
@@ -20,9 +17,7 @@ const nodesApi = createApi({
         },
       }),
       addNode: builder.mutation({
-        invalidatesTags: (result, error, { id }) => {
-          return [{ type: 'Node', id }];
-        },
+        invalidatesTags: ['Node'],
         query: ({ nodeId, shape, width, height }) => ({
           url: '/nodes',
           method: 'POST',
@@ -30,9 +25,8 @@ const nodesApi = createApi({
         }),
       }),
       updateNode: builder.mutation({
-        invalidatesTags: (result, error, { id }) => {
-          return [{ type: 'Node', id }];
-        },
+        invalidatesTags: ['Node'],
+
         query: ({
           nodeId,
           updatedOffsetX,
@@ -54,9 +48,8 @@ const nodesApi = createApi({
         },
       }),
       deleteNode: builder.mutation({
-        invalidatesTags: (result, error, { id }) => {
-          return [{ type: 'Node', id }];
-        },
+        invalidatesTags: ['Node'],
+
         query: (nodeId) => {
           return {
             url: `/nodes/${nodeId}`,

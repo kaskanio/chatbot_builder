@@ -8,9 +8,6 @@ const connectorsApi = createApi({
   endpoints(builder) {
     return {
       fetchConnector: builder.query({
-        providesTagsTags: (result, error, connector) => {
-          return [{ type: 'Connector', id: connector.id }];
-        },
         providesTags: ['Connector'],
         query: () => {
           return {
@@ -28,10 +25,12 @@ const connectorsApi = createApi({
           sourceId,
           targetId,
           type,
-          sourceOffsetX,
-          sourceOffsetY,
-          targetOffsetX,
-          targetOffsetY,
+          sourcePointX,
+          sourcePointY,
+          targetPointX,
+          targetPointY,
+          offsetX,
+          offsetY,
         }) => ({
           url: '/connectors',
           method: 'POST',
@@ -40,10 +39,12 @@ const connectorsApi = createApi({
             sourceId,
             targetId,
             type,
-            sourceOffsetX,
-            sourceOffsetY,
-            targetOffsetX,
-            targetOffsetY,
+            sourcePointX,
+            sourcePointY,
+            targetPointX,
+            targetPointY,
+            offsetX,
+            offsetY,
           },
         }),
       }),
@@ -55,10 +56,12 @@ const connectorsApi = createApi({
           connectorId,
           updatedSourceId,
           updatedTargetId,
-          updatedSourceOffsetX,
-          updatedSourceOffsetY,
-          updatedTargetOffsetX,
-          updatedTargetOffsetY,
+          updatedSourcePointX,
+          updatedSourcePointY,
+          updatedTargetPointX,
+          updatedTargetPointY,
+          updatedOffsetX,
+          updatedOffsetY,
         }) => {
           return {
             url: `/connectors/${connectorId}`,
@@ -67,10 +70,12 @@ const connectorsApi = createApi({
               id: connectorId,
               sourceId: updatedSourceId,
               targetId: updatedTargetId,
-              sourceOffsetX: updatedSourceOffsetX,
-              sourceOffsetY: updatedSourceOffsetY,
-              targetOffsetX: updatedTargetOffsetX,
-              targetOffsetY: updatedTargetOffsetY,
+              sourcePointX: updatedSourcePointX,
+              sourcePointY: updatedSourcePointY,
+              targetPointX: updatedTargetPointX,
+              targetPointY: updatedTargetPointY,
+              offsetX: updatedOffsetX,
+              offsetY: updatedOffsetY,
             },
           };
         },

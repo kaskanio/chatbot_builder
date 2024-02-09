@@ -138,7 +138,7 @@ function IntentContent({ intent, header }) {
   if (isLoading) {
     content = <Skeleton className="h-10 w-full" times={3} />;
   } else if (error) {
-    content = <div>Error loading intents.</div>;
+    content = <div>Error loading strings.</div>;
   } else {
     content = data.map((string) => {
       let header = (

@@ -131,46 +131,28 @@
   ],
   "nodes": [
     {
-      "id": "Placeholder - greet_back",
-      "shape": "Gateway",
-      "offsetX": 623,
-      "offsetY": 274
-    },
-    {
       "id": "greet",
       "shape": "Gateway",
-      "offsetX": 438,
-      "offsetY": 172
+      "offsetX": 723.96875,
+      "offsetY": 306.90625
     },
     {
-      "id": "Test 2",
+      "id": "bot_challenge",
       "shape": "Gateway",
-      "offsetX": 243,
-      "offsetY": 348
+      "offsetX": 336.96875,
+      "offsetY": 371.90625
     }
   ],
   "connectors": [
     {
-      "id": "connector1lDfMq",
-      "sourceId": "Test 2",
+      "id": "Link1s5rTP",
+      "sourceId": "bot_challenge",
       "targetId": "greet",
-      "type": "Straight",
-      "sourceOffsetX": 344.21,
-      "sourceOffsetY": 390.79,
-      "targetOffsetX": 240.79,
-      "targetOffsetY": 199.21
-    },
-    {
-      "id": "Link1Wk0pl",
-      "sourceId": "",
-      "targetId": "",
-      "type": "Orthogonal"
-    },
-    {
-      "id": "Link21T6cmc",
-      "sourceId": "",
-      "targetId": "",
-      "type": "Straight"
+      "type": "Orthogonal",
+      "sourcePointX": 401.97,
+      "sourcePointY": 371.91,
+      "targetPointX": 662.32,
+      "targetPointY": 306.91
     }
   ]
 }
