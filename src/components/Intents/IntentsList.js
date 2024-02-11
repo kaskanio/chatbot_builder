@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { useFetchIntentQuery, useAddIntentMutation } from '../store';
-import Skeleton from './modules/Skeleton';
-import Button from './modules/Button';
+import { useFetchIntentQuery, useAddIntentMutation } from '../../store';
+import Skeleton from '../modules/Skeleton';
+import Button from '../modules/Button';
 import IntentItem from './IntentItem';
 
 function IntentsList() {

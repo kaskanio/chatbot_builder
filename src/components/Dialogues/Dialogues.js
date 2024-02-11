@@ -1,4 +1,4 @@
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, useState } from 'react';
 import {
   DiagramComponent,
   Inject,
@@ -9,15 +9,17 @@ import {
   useFetchNodeQuery,
   useUpdateNodeMutation,
   useDeleteNodeMutation,
-} from '../store';
+} from '../../store';
 import {
   useFetchConnectorQuery,
   useAddConnectorMutation,
   useUpdateConnectorMutation,
   useDeleteConnectorMutation,
-} from '../store';
-import Skeleton from './modules/Skeleton';
+} from '../../store';
+import Skeleton from '../modules/Skeleton';
 import DialoguesToolbar from './DialoguesToolbar';
+import DialogIntent from './DialogIntent';
+import DialogAction from './DialogAction';
 
 function Dialogues() {
   const { data, error, isLoading } = useFetchNodeQuery();
@@ -31,13 +33,12 @@ function Dialogues() {
   const [updateConnector] = useUpdateConnectorMutation();
   const [addConnector] = useAddConnectorMutation();
   const [deleteConnector] = useDeleteConnectorMutation();
+  const [showDialogIntent, setShowDialogIntent] = useState(false);
 
   const diagramInstanceRef = useRef(null);
 
   const handleCollectionChange = useCallback(
     (args) => {
-      console.log('Geia');
-
       if (
         args.type === 'Removal' &&
         args.element.propName === 'nodes' &&
@@ -246,12 +247,16 @@ function Dialogues() {
         },
       ],
       shape: {
-        type: 'Bpmn',
+        type: node.type,
         shape: node.shape,
-        gateway: {
-          type: 'None',
+        activity: {
+          activity: node.activity || 'None',
+          task: {
+            type: node.taskType || 'None',
+          },
         },
       },
+      addInfo: node.addInfo || 'None',
     }));
 
     const returnConnectors = connectorData.map((connector) => ({
@@ -271,9 +276,10 @@ function Dialogues() {
     }));
 
     const handleSymbolDrag = (args) => {
-      console.log('To stoixeio pou petaksa einai to: ', args.element.propName);
+      // console.log('To stoixeio pou petaksa einai to: ', args.element.propName);
+
       if (args.element.propName === 'nodes') {
-        console.log('Connector EINAI REEEE');
+        setShowDialogIntent(true);
       }
     };
 
@@ -320,6 +326,13 @@ function Dialogues() {
   return (
     <div className="flex flex-col">
       <div className="mb-9">{content}</div>
+      <div>
+        {/* Other components */}
+        <DialogAction
+          showDialogIntent={showDialogIntent}
+          setShowDialogIntent={setShowDialogIntent}
+        />{' '}
+      </div>
       <div className="flex items-center space-x-4">
         <DialoguesToolbar diagramInstanceRef={diagramInstanceRef} />
       </div>

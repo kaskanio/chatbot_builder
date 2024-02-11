@@ -1,7 +1,7 @@
 import Sidebar from './components/Sidebar';
-import IntentsList from './components/IntentsList';
+import IntentsList from './components/Intents/IntentsList';
 import Route from './components/Route';
-import Dialogues from './components/Dialogues';
+import Dialogues from './components/Dialogues/Dialogues';
 import './App.css';
 
 function App() {

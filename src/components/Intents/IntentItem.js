@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { GoTrash, GoXCircle } from 'react-icons/go';
 import { AiOutlineEdit } from 'react-icons/ai';
-import { useRemoveIntentMutation, useEditIntentMutation } from '../store';
-import Button from './modules/Button';
+import { useRemoveIntentMutation, useEditIntentMutation } from '../../store';
+import Button from '../modules/Button';
 import IntentContent from './IntentContent';
 
 function IntentItem({ intent }) {

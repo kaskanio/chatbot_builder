@@ -131,28 +131,12 @@
   ],
   "nodes": [
     {
-      "id": "greet",
-      "shape": "Gateway",
-      "offsetX": 723.96875,
-      "offsetY": 306.90625
-    },
-    {
       "id": "bot_challenge",
       "shape": "Gateway",
-      "offsetX": 336.96875,
-      "offsetY": 371.90625
+      "type": "Bpmn",
+      "offsetX": 393,
+      "offsetY": 254
     }
   ],
-  "connectors": [
-    {
-      "id": "Link1s5rTP",
-      "sourceId": "bot_challenge",
-      "targetId": "greet",
-      "type": "Orthogonal",
-      "sourcePointX": 401.97,
-      "sourcePointY": 371.91,
-      "targetPointX": 662.32,
-      "targetPointY": 306.91
-    }
-  ]
+  "connectors": []
 }

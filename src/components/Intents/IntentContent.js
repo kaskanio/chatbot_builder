@@ -1,13 +1,13 @@
 import { useState, useRef, useEffect } from 'react';
-import ExpandablePanel from './modules/ExpandablePanel';
-import Skeleton from './modules/Skeleton';
+import ExpandablePanel from '../modules/ExpandablePanel';
+import Skeleton from '../modules/Skeleton';
 import {
   useFetchStringQuery,
   useAddStringMutation,
   useRemoveStringMutation,
   useEditStringMutation,
-} from '../store';
-import Button from './modules/Button';
+} from '../../store';
+import Button from '../modules/Button';
 import { GoXCircle } from 'react-icons/go';
 import { AiOutlineEdit } from 'react-icons/ai';
 

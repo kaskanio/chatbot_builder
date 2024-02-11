@@ -1,38 +1,46 @@
-import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns';
 import { DialogComponent } from '@syncfusion/ej2-react-popups';
-import {
-  DiagramTools,
-  SymbolPaletteComponent,
-} from '@syncfusion/ej2-react-diagrams';
-import { useFetchIntentQuery, useAddNodeMutation } from '../store';
+import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns';
+import { useFetchIntentQuery, useAddNodeMutation } from '../../store';
 import { useState } from 'react';
-import Skeleton from './modules/Skeleton';
-import Button from './modules/Button';
-
-function DialogIntent() {
-  const [dialogVisible, setDialogVisible] = useState(false);
-
-  const { data, error, isLoading } = useFetchIntentQuery();
-  const [addNode, addNodeResults] = useAddNodeMutation();
+import Skeleton from '../modules/Skeleton';
+import Button from '../modules/Button';
+function DialogIntent({ showDialogIntent, setShowDialogIntent }) {
   const [selectedIntent, setSelectedIntent] = useState(null);
-
-  const showDialog = () => {
-    setDialogVisible(true);
-  };
+  const {
+    data: intentsData,
+    error: intentsError,
+    isLoading: intentsLoading,
+  } = useFetchIntentQuery();
+  const [addNode, addNodeResults] = useAddNodeMutation();
 
   const hideDialog = () => {
-    setDialogVisible(false);
+    setShowDialogIntent(false);
   };
 
-  let intents;
+  let intentsNames, content;
 
-  if (isLoading) {
-    intents = <Skeleton className="h-10 w-full" times={3} />;
-  } else if (error) {
-    intents = <div>Error loading intents.</div>;
+  if (intentsLoading) {
+    intentsNames = <Skeleton className="h-10 w-full" times={3} />;
+  } else if (intentsError) {
+    intentsNames = <div>Error loading intents.</div>;
   } else {
-    intents = data.map((intent) => {
+    intentsNames = intentsData.map((intent) => {
       return intent.name;
+    });
+    content = intentsData.map((intent) => {
+      if (selectedIntent === intent.name) {
+        if (intent.strings) {
+          return intent.strings.map((string) => (
+            <div
+              key={string}
+              className="mb-2 mt-2 flex justify-between mb-1 text-xs"
+            >
+              {'"' + string + '"'}{' '}
+            </div>
+          ));
+        }
+      }
+      return null;
     });
   }
 
@@ -43,15 +51,15 @@ function DialogIntent() {
       addNode({
         nodeId: selectedIntent,
         shape: 'Gateway',
+        type: 'Bpmn',
       });
+      hideDialog();
     }
   };
 
   const handleIntentChange = (e) => {
     setSelectedIntent(e.value);
-    console.log(selectedIntent);
   };
-
   const footerTemplate = () => {
     return (
       <div className="flex justify-between">
@@ -83,26 +91,25 @@ function DialogIntent() {
     );
   };
 
-  console.log('yolo');
-
   return (
     <DialogComponent
       id="dialog"
       header="Select Intent"
-      visible={dialogVisible}
+      visible={showDialogIntent}
       close={hideDialog}
-      width="250px"
+      width="600px"
       animationSettings={{ effect: 'None' }}
       footerTemplate={footerTemplate}
     >
       <div className="mt-4">
         <DropDownListComponent
           id="ddlelement"
-          dataSource={intents}
+          dataSource={intentsNames}
           placeholder="Select an Intent"
-          change={handleIntentChange}
           className="w-full"
+          change={handleIntentChange}
         />
+        <div>{content}</div>
       </div>
     </DialogComponent>
   );

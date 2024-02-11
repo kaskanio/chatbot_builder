@@ -18,10 +18,28 @@ const nodesApi = createApi({
       }),
       addNode: builder.mutation({
         invalidatesTags: ['Node'],
-        query: ({ nodeId, shape, width, height }) => ({
+        query: ({
+          nodeId,
+          shape,
+          type,
+          width,
+          height,
+          addInfo,
+          activity,
+          taskType,
+        }) => ({
           url: '/nodes',
           method: 'POST',
-          body: { id: nodeId, shape: shape, width: width, height: height },
+          body: {
+            id: nodeId,
+            shape: shape,
+            type: type,
+            width: width,
+            height: height,
+            activity: activity,
+            taskType: taskType,
+            addInfo: addInfo,
+          },
         }),
       }),
       updateNode: builder.mutation({
