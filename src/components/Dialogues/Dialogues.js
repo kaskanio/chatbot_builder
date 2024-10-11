@@ -19,7 +19,9 @@ import {
 import Skeleton from '../modules/Skeleton';
 import DialoguesToolbar from './DialoguesToolbar';
 import DialogIntent from './DialogIntent';
-import DialogAction from './DialogAction';
+import DialogSpeak from './DialogSpeak';
+import DialogEvent from './DialogEvent';
+import { FiRefreshCw } from 'react-icons/fi'; // Import the refresh icon from react-icons
 
 function Dialogues() {
   const { data, error, isLoading } = useFetchNodeQuery();
@@ -34,6 +36,42 @@ function Dialogues() {
   const [addConnector] = useAddConnectorMutation();
   const [deleteConnector] = useDeleteConnectorMutation();
   const [showDialogIntent, setShowDialogIntent] = useState(false);
+  const [showDialogSpeak, setShowDialogSpeak] = useState(false);
+  const [showDialogFireEvent, setShowDialogFireEvent] = useState(false);
+  const [nodeToAdd, setNodeToAdd] = useState();
+
+  // Handling the drag and drop of symbols from the palette to the diagram.
+  const handleSymbolDrag = (args) => {
+    console.log('To stoixeio pou petaksa einai to: ', args);
+
+    if (args.element.propName === 'nodes') {
+      // Add the dragged node to the diagram with the same styles
+      const node = {
+        id: args.element.id,
+        offsetX: 100, // Set appropriate offset X
+        offsetY: 100, // Set appropriate offset Y
+        width: args.element.width,
+        height: args.element.height,
+        annotations: args.element.annotations,
+        shape: args.element.shape,
+        style: args.element.style,
+        borderWidth: args.element.borderWidth,
+      };
+
+      setNodeToAdd(node);
+
+      if (args.element.properties.shape.shape === 'Gateway') {
+        setShowDialogIntent(true);
+      } else if (args.element.properties.shape.activity.task.type === 'User') {
+        setShowDialogSpeak(true);
+      } else if (
+        args.element.properties.shape.activity.task.type ===
+        'InstantiatingReceive'
+      ) {
+        setShowDialogFireEvent(true);
+      }
+    }
+  };
 
   const diagramInstanceRef = useRef(null);
 
@@ -77,6 +115,7 @@ function Dialogues() {
 
   const handlePositionChange = useCallback(
     (args) => {
+      //  Updating nodes and Connectors when position changes in the diagram.
       const nodeId = args.source.properties.id;
       if (args.state === 'Completed') {
         if (args.source.propName === 'nodes') {
@@ -87,7 +126,7 @@ function Dialogues() {
           })
             .unwrap()
             .then((result) => {
-              console.log('Update successful:', result);
+              console.log('Update node successful:', result);
             })
             .catch((error) => {
               console.error('Update failed:', error);
@@ -109,7 +148,7 @@ function Dialogues() {
             })
               .unwrap()
               .then((result) => {
-                console.log('Update successful:', result);
+                console.log('Update connector successful:', result);
               })
               .catch((error) => {
                 console.error('Update failed:', error);
@@ -183,6 +222,7 @@ function Dialogues() {
 
   const handleSizeChange = useCallback(
     (args) => {
+      //  Updating nodes when resizing them in the diagram.
       if (args.state === 'Completed') {
         const nodeId = args.source.nodes[0].properties.id;
 
@@ -201,13 +241,61 @@ function Dialogues() {
           .catch((error) => {
             console.error('Update failed:', error);
           });
+        if (args.source.propName === 'selectedItems') {
+          const selectedItems = args.source.nodes || args.source.connectors;
+
+          if (selectedItems) {
+            selectedItems.forEach((item) => {
+              console.log('Selected item:', item);
+              if (item.propName === 'nodes') {
+                updateNode({
+                  nodeId: item.id,
+                  updatedOffsetX: args.newValue.offsetX,
+                  updatedOffsetY: args.newValue.offsetY,
+                })
+                  .unwrap()
+                  .then((result) => {
+                    console.log('Update successful:', result);
+                  })
+                  .catch((error) => {
+                    console.error('Update failed:', error);
+                  });
+                const connectedConnectors =
+                  diagramInstanceRef.current.connectors.filter(
+                    (connector) =>
+                      connector.sourceID === item.id ||
+                      connector.targetID === item.id
+                  );
+
+                // Update the connectors
+                connectedConnectors.forEach((connector) => {
+                  updateConnector({
+                    connectorId: connector.id,
+                    updatedSourcePointX: connector.sourcePoint.x,
+                    updatedSourcePointY: connector.sourcePoint.y,
+                    updatedTargetPointX: connector.targetPoint.x,
+                    updatedTargetPointY: connector.targetPoint.y,
+                  })
+                    .unwrap()
+                    .then((result) => {
+                      console.log('Update successful:', result);
+                    })
+                    .catch((error) => {
+                      console.error('Update failed:', error);
+                    });
+                });
+              }
+            });
+          }
+        }
       }
     },
-    [updateNode]
+    [updateNode, updateConnector]
   );
 
   const handleConnectionChange = useCallback(
     (args) => {
+      // Updating connectors when their source and target points are changed.
       if (args.state === 'Changed') {
         console.log(args);
         updateConnector({
@@ -218,10 +306,22 @@ function Dialogues() {
           updatedSourcePointY: args.connector.sourcePoint.y,
           updatedTargetPointX: args.connector.targetPoint.x,
           updatedTargetPointY: args.connector.targetPoint.y,
-        });
+        })
+          .unwrap()
+          .then((result) => {
+            console.log('Update successful:', result);
+            // Update the diagram component to reflect the changes
+            diagramInstanceRef.updateConnector(
+              args.connector.id,
+              args.connector
+            );
+          })
+          .catch((error) => {
+            console.error('Update failed:', error);
+          });
       }
     },
-    [updateConnector]
+    [updateConnector, diagramInstanceRef]
   );
 
   let content;
@@ -235,6 +335,7 @@ function Dialogues() {
       </div>
     );
   } else if (data && connectorData) {
+    // Fetching nodes from database.
     const returnNodes = data.map((node) => ({
       id: node.id,
       offsetX: node.offsetX || 100,
@@ -247,18 +348,24 @@ function Dialogues() {
         },
       ],
       shape: {
-        type: node.type,
-        shape: node.shape,
+        type: node.shape.type,
+        shape: node.shape.shape,
         activity: {
-          activity: node.activity || 'None',
+          activity: node.shape.activity.activity || 'None',
           task: {
-            type: node.taskType || 'None',
+            type: node.shape.activity.task.type || 'None',
           },
         },
+      },
+      style: {
+        fill: node.style.fill,
+        strokeWidth: node.style.strokeWidth,
+        strokeColor: node.style.strokeColor,
       },
       addInfo: node.addInfo || 'None',
     }));
 
+    // Fetching connectors from database.
     const returnConnectors = connectorData.map((connector) => ({
       id: connector.id,
       sourceID: connector.sourceId,
@@ -275,32 +382,25 @@ function Dialogues() {
       },
     }));
 
-    const handleSymbolDrag = (args) => {
-      // console.log('To stoixeio pou petaksa einai to: ', args.element.propName);
-
-      if (args.element.propName === 'nodes') {
-        setShowDialogIntent(true);
-      }
-    };
-
+    // Rendering the diagram component.
     content = (
       <div>
         <DiagramComponent
           id="container"
           width={'100%'}
-          height={'600px'}
+          height={'calc(100vh - 100px)'}
           nodes={returnNodes}
           connectors={returnConnectors}
           drop={handleSymbolDrag}
-          getNodeDefaults={(obj, diagramInstance) => {
-            obj.borderWidth = 1;
-            obj.style = {
-              fill: '#6BA5D7',
-              strokeWidth: 2,
-              strokeColor: '#6BA5D7',
-            };
-            return obj;
-          }}
+          // getNodeDefaults={(obj, diagramInstance) => {
+          //   obj.borderWidth = 1;
+          //   obj.style = {
+          //     fill: '#6BA5D7',
+          //     strokeWidth: 2,
+          //     strokeColor: '#6BA5D7',
+          //   };
+          //   return obj;
+          // }}
           ref={(diagram) => {
             diagramInstanceRef.current = diagram;
             if (diagram) {
@@ -324,17 +424,39 @@ function Dialogues() {
   }
 
   return (
-    <div className="flex flex-col">
-      <div className="mb-9">{content}</div>
+    <div className="flex flex-col h-full">
+      <div className="flex items-center justify-center mb-4 relative">
+        <h1 className="text-2xl font-bold">Dialogues</h1>
+        <button
+          onClick={() => window.location.reload()}
+          className="absolute right-0 flex items-center justify-center p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        >
+          <FiRefreshCw className="mr-2" />
+          Refresh Page
+        </button>
+      </div>
+      <div className="flex flex-1">
+        <div className="flex-1 mb-9">{content}</div>
+        <div className="w-1/4 mb-9">
+          <DialoguesToolbar diagramInstanceRef={diagramInstanceRef} />
+        </div>
+      </div>
       <div>
-        {/* Other components */}
-        <DialogAction
+        <DialogIntent
           showDialogIntent={showDialogIntent}
           setShowDialogIntent={setShowDialogIntent}
-        />{' '}
-      </div>
-      <div className="flex items-center space-x-4">
-        <DialoguesToolbar diagramInstanceRef={diagramInstanceRef} />
+          nodeToAdd={nodeToAdd}
+        />
+        <DialogSpeak
+          showDialogSpeak={showDialogSpeak}
+          setShowDialogSpeak={setShowDialogSpeak}
+          nodeToAdd={nodeToAdd}
+        />
+        <DialogEvent
+          showDialogFireEvent={showDialogFireEvent}
+          setShowDialogFireEvent={setShowDialogFireEvent}
+          nodeToAdd={nodeToAdd}
+        />
       </div>
     </div>
   );

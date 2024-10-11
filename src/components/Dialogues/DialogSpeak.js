@@ -1,59 +1,69 @@
 import { DialogComponent } from '@syncfusion/ej2-react-popups';
-import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns';
 import { useAddNodeMutation } from '../../store';
 import { useState, useRef, useEffect } from 'react';
 import Button from '../modules/Button';
 
-function DialogAction({ showDialogIntent, setShowDialogIntent }) {
+function DialogSpeak({ showDialogSpeak, setShowDialogSpeak, nodeToAdd }) {
   const [addNode, addNodeResults] = useAddNodeMutation();
   const [actionId, setActionId] = useState(''); // State to store the input value
   const [actionType, setActionType] = useState(''); // State to store the input value
   const inputRef = useRef(); // Create a ref for the input field
 
+  const settings = { effect: 'Zoom', duration: 400, delay: 0 };
+
+  // Function to hide the dialog
   const hideDialog = () => {
-    setShowDialogIntent(false);
+    setShowDialogSpeak();
   };
 
+  // Function to handle when changing the action type on the DropDownList Component.
   const handleInputChange = (e) => {
     setActionId(e.target.value); // Update actionId with the input value
   };
 
-  const handleAddNodeIntent = (e) => {
+  // Function to add a node to my database, based on the selected action.
+  const handleAddNodeAction = (e) => {
     e.preventDefault();
 
     console.log('Action ID:', actionId); // Log the value of actionId
     console.log('Action Type:', actionType); // Log the value of actionType
-
+    console.log('Ayto vazw: ', nodeToAdd);
     addNode({
       nodeId: actionId,
-      type: 'Bpmn',
-      shape: 'Activity',
-      addInfo: actionType,
-      activity: 'Task',
-      taskType: actionToType(actionType),
+      shape: nodeToAdd.shape.properties.shape,
+      type: nodeToAdd.shape.properties.type,
+      activity: nodeToAdd.shape.activity.activity,
+      taskType: nodeToAdd.shape.activity.task.type,
+      fill: nodeToAdd.style.fill,
+      strokeWidth: nodeToAdd.style.strokeWidth,
+      strokeColor: nodeToAdd.style.strokeColor,
     });
     setActionId('');
-    hideDialog();
+    hideDialog(); // Reload the page after adding a new node
   };
 
+  // UseEffect hook to set focus to the input field after each render
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus(); // Set focus to the input field after each render
     }
   });
 
+  // Function to handle the action type when the dropdown value changes
   const handleActionType = (e) => {
     setActionType(e.value); // Update selected action when dropdown value changes
   };
 
+  // Define available actions and match them to the dflow types.
   const actions = [
     'SpeakAction',
     'FireEventAction',
     'RESTCallAction',
     'SetFormSlot',
     'SetGlobalSlot',
-  ]; // Define available actions
+  ];
 
+  // Function to match the action type to the dflow type
   const actionToType = (actionType) => {
     console.log('Action type:', actionType); // Log the actionType parameter
     switch (actionType) {
@@ -62,13 +72,13 @@ function DialogAction({ showDialogIntent, setShowDialogIntent }) {
         return 'User';
       case 'FireEventAction':
         console.log('Matching case: FireEventAction'); // Log the matched case
-        return 'Instantiating Receive';
+        return 'InstantiatingReceive';
       case 'RESTCallAction':
         console.log('Matching case: RESTCallAction'); // Log the matched case
         return 'Service';
       case 'SetFormSlot':
         console.log('Matching case: SetFormSlot'); // Log the matched case
-        return 'Business Rule';
+        return 'BusinessRule';
       case 'SetGlobalSlot':
         console.log('Matching case: SetGlobalSlot'); // Log the matched case
         return 'Manual';
@@ -78,6 +88,7 @@ function DialogAction({ showDialogIntent, setShowDialogIntent }) {
     }
   };
 
+  // Define the footer template for the dialog, which includes buttons and inputs.
   const footerTemplate = () => {
     return (
       <div className="flex justify-between items-center">
@@ -94,7 +105,7 @@ function DialogAction({ showDialogIntent, setShowDialogIntent }) {
           <Button
             type="submit"
             onClick={(e) => {
-              handleAddNodeIntent(e);
+              handleAddNodeAction(e);
               hideDialog();
             }}
             primary
@@ -124,24 +135,15 @@ function DialogAction({ showDialogIntent, setShowDialogIntent }) {
     <DialogComponent
       id="dialog"
       header="Add a new Action"
-      visible={showDialogIntent}
+      visible={showDialogSpeak}
       close={hideDialog}
       width="600px"
-      animationSettings={{ effect: 'None' }}
+      animationSettings={settings}
       footerTemplate={footerTemplate}
     >
-      <div className="mt-4">
-        <DropDownListComponent
-          id="actionDropdown"
-          dataSource={actions}
-          index={0}
-          change={handleActionType}
-          popupHeight="200px"
-          className="mr-2"
-        />{' '}
-      </div>
+      <div className="mt-4"></div>
     </DialogComponent>
   );
 }
 
-export default DialogAction;
+export default DialogSpeak;

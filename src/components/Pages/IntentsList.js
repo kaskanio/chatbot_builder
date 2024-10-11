@@ -39,6 +39,7 @@ function IntentsList() {
 
   return (
     <div className="p-4">
+      <h1 className="text-2xl font-bold mb-4">Intents</h1>
       <form onSubmit={handleAddIntent} className="flex mb-4">
         <input
           type="text"

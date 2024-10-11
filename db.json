@@ -2,32 +2,11 @@
   "intents": [
     {
       "id": 1,
-      "name": "greet",
-      "strings": [
-        "hey",
-        "hello",
-        "hi",
-        "hello there",
-        "good morning",
-        "good evening",
-        "moin",
-        "hey there",
-        "let's go",
-        "hey dude",
-        "goodmorning",
-        "goodevening",
-        "good afternoon"
-      ]
+      "name": "greet"
     },
     {
       "id": 2,
-      "name": "bot_challenge",
-      "strings": [
-        "are you a bot?",
-        "are you a human?",
-        "am I talking to a bot?",
-        "am I talking to a human?"
-      ]
+      "name": "bot_challenge"
     },
     {
       "name": "Placeholder - greet_back",
@@ -131,12 +110,176 @@
   ],
   "nodes": [
     {
+      "id": "greet",
+      "shape": {
+        "type": "Bpmn",
+        "shape": "Gateway",
+        "activity": {
+          "activity": "Task",
+          "task": {
+            "type": "None"
+          }
+        }
+      },
+      "style": {
+        "fill": "#6BA5D7",
+        "strokeWidth": 2,
+        "strokeColor": "#6BA5D7"
+      },
+      "offsetX": 831,
+      "offsetY": 272
+    },
+    {
       "id": "bot_challenge",
-      "shape": "Gateway",
-      "type": "Bpmn",
-      "offsetX": 393,
-      "offsetY": 254
+      "shape": {
+        "type": "Bpmn",
+        "shape": "Gateway",
+        "activity": {
+          "activity": "Task",
+          "task": {
+            "type": "None"
+          }
+        }
+      },
+      "style": {
+        "fill": "#6BA5D7",
+        "strokeWidth": 2,
+        "strokeColor": "#6BA5D7"
+      },
+      "offsetX": 695,
+      "offsetY": 554
+    },
+    {
+      "id": "'Hello There!!!'",
+      "shape": {
+        "type": "Bpmn",
+        "shape": "Activity",
+        "activity": {
+          "activity": "Task",
+          "task": {
+            "type": "User"
+          }
+        }
+      },
+      "style": {
+        "fill": "#FFD700",
+        "strokeWidth": 2,
+        "strokeColor": "#FFD700"
+      },
+      "offsetX": 237,
+      "offsetY": 126
+    },
+    {
+      "id": "'I am a bot, powered by dFlow and Rasa.'",
+      "shape": {
+        "type": "Bpmn",
+        "shape": "Activity",
+        "activity": {
+          "activity": "Task",
+          "task": {
+            "type": "User"
+          }
+        }
+      },
+      "style": {
+        "fill": "#FFD700",
+        "strokeWidth": 2,
+        "strokeColor": "#FFD700"
+      },
+      "offsetX": 137,
+      "offsetY": 339
     }
   ],
-  "connectors": []
+  "connectors": [
+    {
+      "id": "Link1cS5fy",
+      "sourceId": "greet",
+      "targetId": "'Hello There!!!'",
+      "type": "Orthogonal",
+      "sourcePointX": 831,
+      "sourcePointY": 210.45,
+      "targetPointX": 237,
+      "targetPointY": 191
+    },
+    {
+      "id": "Link21ph64N",
+      "sourceId": "bot_challenge",
+      "targetId": "'I am a bot, powered by dFlow and Rasa.'",
+      "type": "Straight",
+      "sourcePointX": 648.08,
+      "sourcePointY": 535.92,
+      "targetPointX": 202,
+      "targetPointY": 364.05
+    }
+  ],
+  "services": [
+    {
+      "name": "weather_svc",
+      "id": "1",
+      "verb": "GET",
+      "host": "r4a.issel.ee.auth.gr",
+      "port": "8080",
+      "path": "/weather"
+    }
+  ],
+  "events": [
+    {
+      "name": "external_1",
+      "uri": "\"bot/event/external_1\"",
+      "id": 1
+    },
+    {
+      "name": "Google",
+      "uri": "www.google.gr",
+      "id": 2
+    }
+  ],
+  "entities": [
+    {
+      "name": "doc",
+      "id": 1,
+      "values": [
+        "doctor",
+        "physician",
+        "doc"
+      ]
+    },
+    {
+      "name": "Teacher",
+      "id": 2,
+      "values": [
+        "Maths",
+        "Physics",
+        "Chemistry",
+        "asdgs"
+      ]
+    }
+  ],
+  "synonyms": [
+    {
+      "name": "date_period",
+      "values": [
+        "day",
+        "week",
+        "month",
+        "tomorrow",
+        "now"
+      ],
+      "id": 1
+    }
+  ],
+  "globalSlots": [
+    {
+      "name": "slotA",
+      "type": "int",
+      "value": "10",
+      "id": 1
+    },
+    {
+      "name": "slotB",
+      "type": "str",
+      "value": "asdas",
+      "id": 2
+    }
+  ]
 }

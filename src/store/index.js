@@ -4,6 +4,11 @@ import { intentsApi } from './apis/intentsApi';
 import { stringsApi } from './apis/stringsApi';
 import { nodesApi } from './apis/nodesApi';
 import { connectorsApi } from './apis/connectorsApi';
+import { servicesApi } from './apis/servicesApi';
+import { eventsApi } from './apis/eventsApi';
+import { entitiesApi } from './apis/entitiesApi';
+import { synonymsApi } from './apis/synonymsApi';
+import { globalSlotsApi } from './apis/globalSlotsApi';
 
 export const store = configureStore({
   reducer: {
@@ -11,13 +16,23 @@ export const store = configureStore({
     [stringsApi.reducerPath]: stringsApi.reducer,
     [nodesApi.reducerPath]: nodesApi.reducer,
     [connectorsApi.reducerPath]: connectorsApi.reducer,
+    [servicesApi.reducerPath]: servicesApi.reducer,
+    [eventsApi.reducerPath]: eventsApi.reducer,
+    [entitiesApi.reducerPath]: entitiesApi.reducer,
+    [synonymsApi.reducerPath]: synonymsApi.reducer,
+    [globalSlotsApi.reducerPath]: globalSlotsApi.reducer,
   },
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware()
       .concat(intentsApi.middleware)
       .concat(stringsApi.middleware)
       .concat(nodesApi.middleware)
-      .concat(connectorsApi.middleware);
+      .concat(connectorsApi.middleware)
+      .concat(servicesApi.middleware)
+      .concat(eventsApi.middleware)
+      .concat(entitiesApi.middleware)
+      .concat(synonymsApi.middleware)
+      .concat(globalSlotsApi.middleware);
   },
 });
 
@@ -50,3 +65,42 @@ export {
   useUpdateConnectorMutation,
   useDeleteConnectorMutation,
 } from './apis/connectorsApi';
+
+export {
+  useFetchServiceQuery,
+  useAddServiceMutation,
+  useEditServiceMutation,
+  useRemoveServiceMutation,
+} from './apis/servicesApi';
+
+export {
+  useFetchEventQuery,
+  useAddEventMutation,
+  useEditEventMutation,
+  useRemoveEventMutation,
+} from './apis/eventsApi';
+
+export {
+  useFetchEntitiesQuery,
+  useAddEntityMutation,
+  useRemoveEntityMutation,
+  useEditEntityMutation,
+  useAddValueMutation,
+  useRemoveValueMutation,
+} from './apis/entitiesApi';
+
+export {
+  useFetchSynonymsQuery,
+  useAddSynonymMutation,
+  useRemoveSynonymMutation,
+  useEditSynonymMutation,
+  useAddSynonymValueMutation,
+  useRemoveSynonymValueMutation,
+} from './apis/synonymsApi';
+
+export {
+  useFetchGlobalSlotsQuery,
+  useAddGlobalSlotMutation,
+  useRemoveGlobalSlotMutation,
+  useEditGlobalSlotMutation,
+} from './apis/globalSlotsApi';

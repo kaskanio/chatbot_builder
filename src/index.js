@@ -6,6 +6,7 @@ import './index.css';
 import { registerLicense } from '@syncfusion/ej2-base';
 import { Provider } from 'react-redux';
 import { store } from './store';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 // Registering Syncfusion license key
 registerLicense(
@@ -15,9 +16,10 @@ registerLicense(
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-    {' '}
     <NavigationProvider>
-      <App />
+      <Router>
+        <App />
+      </Router>
     </NavigationProvider>
   </Provider>
 );

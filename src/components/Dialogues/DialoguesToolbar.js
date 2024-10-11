@@ -5,6 +5,7 @@ import {
 } from '@syncfusion/ej2-react-diagrams';
 
 function DialoguesToolbar(diagramInstanceRef) {
+  // Define the connector symbols
   let connectorSymbols = [
     {
       id: 'Link1',
@@ -56,11 +57,13 @@ function DialoguesToolbar(diagramInstanceRef) {
     },
   ];
 
-  let nodeShape = [
+  // Define the node shapes
+  let triggerShape = [
     {
       id: 'Intent',
-      width: 35,
-      height: 35,
+      text: 'Intent',
+      width: 30,
+      height: 30,
       shape: {
         type: 'Bpmn',
         shape: 'Gateway',
@@ -70,21 +73,23 @@ function DialoguesToolbar(diagramInstanceRef) {
         strokeWidth: 2,
         strokeColor: '#6BA5D7',
       },
-      borderWidth: 1, // Set the border width
+      borderWidth: 1,
     },
+  ];
+
+  let actionShape = [
     {
-      id: 'ActionGroup',
+      id: 'SpeakAction',
+      text: 'Speak',
       width: 35,
       height: 35,
       shape: {
         type: 'Bpmn',
         shape: 'Activity',
-        //Sets activity as Task
         activity: {
           activity: 'Task',
-          //Sets the type of the task as Send
           task: {
-            type: 'Send',
+            type: 'User',
           },
         },
       },
@@ -93,19 +98,93 @@ function DialoguesToolbar(diagramInstanceRef) {
         strokeWidth: 2,
         strokeColor: '#FFD700',
       },
-      borderWidth: 1, // Set the border width
+      borderWidth: 1,
     },
     {
-      id: 'Form',
+      id: 'FireEventAction',
+      text: 'Fire Event',
       width: 35,
       height: 35,
       shape: {
-        type: 'Flow',
-        shape: 'Document',
+        type: 'Bpmn',
+        shape: 'Activity',
+        activity: {
+          activity: 'Task',
+          task: {
+            type: 'InstantiatingReceive',
+          },
+        },
       },
       style: {
-        fill: '#6BA5D7',
-        strokeColor: 'white',
+        fill: '#FFD700',
+        strokeWidth: 2,
+        strokeColor: '#FFD700',
+      },
+      borderWidth: 1,
+    },
+    {
+      id: 'RESTCallAction',
+      text: 'REST Call',
+      width: 35,
+      height: 35,
+      shape: {
+        type: 'Bpmn',
+        shape: 'Activity',
+        activity: {
+          activity: 'Task',
+          task: {
+            type: 'Service',
+          },
+        },
+      },
+      style: {
+        fill: '#FFD700',
+        strokeWidth: 2,
+        strokeColor: '#FFD700',
+      },
+      borderWidth: 1,
+    },
+    {
+      id: 'SetFormSlot',
+      text: 'Form Slot',
+      width: 35,
+      height: 35,
+      shape: {
+        type: 'Bpmn',
+        shape: 'Activity',
+        activity: {
+          activity: 'Task',
+          task: {
+            type: 'BusinessRule',
+          },
+        },
+      },
+      style: {
+        fill: '#FFD700',
+        strokeWidth: 2,
+        strokeColor: '#FFD700',
+      },
+      borderWidth: 1,
+    },
+    {
+      id: 'SetGlobalSlot',
+      text: 'Global Slot',
+      width: 35,
+      height: 35,
+      shape: {
+        type: 'Bpmn',
+        shape: 'Activity',
+        activity: {
+          activity: 'Task',
+          task: {
+            type: 'Manual',
+          },
+        },
+      },
+      style: {
+        fill: '#FFD700',
+        strokeWidth: 2,
+        strokeColor: '#FFD700',
       },
       borderWidth: 1, // Set the border width
     },
@@ -121,20 +200,51 @@ function DialoguesToolbar(diagramInstanceRef) {
             palettes={[
               {
                 id: 'connectors',
-                expanded: false,
+                expanded: true,
                 symbols: connectorSymbols,
                 title: 'Connectors',
                 iconCss: 'e-ddb-icons e-connector',
               },
               {
-                id: 'Intent',
+                id: 'Triggers',
                 expanded: true,
-                symbols: nodeShape,
-                title: 'Nodes',
+                symbols: triggerShape,
+                title: 'Triggers',
+              },
+              {
+                id: 'ActionsForms',
+                expanded: true,
+                symbols: actionShape,
+                title: 'Actions & Forms',
               },
             ]}
             symbolHeight={100}
             symbolWidth={100}
+            getSymbolInfo={(symbol) => {
+              if (symbol['text'] !== undefined) {
+                return {
+                  width: 75,
+                  height: 60,
+                  //Add or Remove the Text for Symbol palette item.
+                  description: {
+                    //Defines the symbol description
+                    text: symbol['text'],
+                    //Defines how to handle the text when its size exceeds the given symbol size
+                    overflow: 'Wrap',
+                    orientation: 'Bottom', // Position the text below the symbol
+                  },
+                };
+              }
+              return {
+                width: 75,
+                height: 60,
+                description: {
+                  text: symbol.shape['shape'],
+                  overflow: 'Wrap',
+                  orientation: 'Bottom', // Position the text below the symbol
+                },
+              };
+            }}
           >
             <Inject services={[BpmnDiagrams]} />
           </SymbolPaletteComponent>

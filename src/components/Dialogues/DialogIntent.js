@@ -4,7 +4,7 @@ import { useFetchIntentQuery, useAddNodeMutation } from '../../store';
 import { useState } from 'react';
 import Skeleton from '../modules/Skeleton';
 import Button from '../modules/Button';
-function DialogIntent({ showDialogIntent, setShowDialogIntent }) {
+function DialogIntent({ showDialogIntent, setShowDialogIntent, nodeToAdd }) {
   const [selectedIntent, setSelectedIntent] = useState(null);
   const {
     data: intentsData,
@@ -13,12 +13,15 @@ function DialogIntent({ showDialogIntent, setShowDialogIntent }) {
   } = useFetchIntentQuery();
   const [addNode, addNodeResults] = useAddNodeMutation();
 
+  // Function to hide the dialog
   const hideDialog = () => {
     setShowDialogIntent(false);
   };
+  const settings = { effect: 'Zoom', duration: 400, delay: 0 };
 
   let intentsNames, content;
 
+  // Fetch the intents from the database
   if (intentsLoading) {
     intentsNames = <Skeleton className="h-10 w-full" times={3} />;
   } else if (intentsError) {
@@ -44,22 +47,31 @@ function DialogIntent({ showDialogIntent, setShowDialogIntent }) {
     });
   }
 
+  // Function to handle the addition of a new node based on the selected intent.
   const handleAddNodeIntent = (e) => {
     console.log(selectedIntent);
     e.preventDefault();
     if (selectedIntent) {
       addNode({
         nodeId: selectedIntent,
-        shape: 'Gateway',
-        type: 'Bpmn',
+        shape: nodeToAdd.shape.properties.shape,
+        type: nodeToAdd.shape.properties.type,
+        activity: nodeToAdd.shape.activity.activity,
+        taskType: nodeToAdd.shape.activity.task.type,
+        fill: nodeToAdd.style.fill,
+        strokeWidth: nodeToAdd.style.strokeWidth,
+        strokeColor: nodeToAdd.style.strokeColor,
       });
       hideDialog();
     }
   };
 
+  // Function to handle the change of the selected intent
   const handleIntentChange = (e) => {
     setSelectedIntent(e.value);
   };
+
+  // Define the footer template for the dialog
   const footerTemplate = () => {
     return (
       <div className="flex justify-between">
@@ -98,7 +110,7 @@ function DialogIntent({ showDialogIntent, setShowDialogIntent }) {
       visible={showDialogIntent}
       close={hideDialog}
       width="600px"
-      animationSettings={{ effect: 'None' }}
+      animationSettings={settings}
       footerTemplate={footerTemplate}
     >
       <div className="mt-4">
