@@ -126,8 +126,8 @@
         "strokeWidth": 2,
         "strokeColor": "#6BA5D7"
       },
-      "offsetX": 831,
-      "offsetY": 272
+      "offsetX": 564,
+      "offsetY": 338
     },
     {
       "id": "bot_challenge",
@@ -196,8 +196,8 @@
       "sourceId": "greet",
       "targetId": "'Hello There!!!'",
       "type": "Orthogonal",
-      "sourcePointX": 831,
-      "sourcePointY": 210.45,
+      "sourcePointX": 564,
+      "sourcePointY": 276.45,
       "targetPointX": 237,
       "targetPointY": 191
     },

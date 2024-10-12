@@ -20,8 +20,8 @@ import Skeleton from '../modules/Skeleton';
 import DialoguesToolbar from './DialoguesToolbar';
 import DialogIntent from './DialogIntent';
 import DialogSpeak from './DialogSpeak';
-import DialogEvent from './DialogEvent';
 import { FiRefreshCw } from 'react-icons/fi'; // Import the refresh icon from react-icons
+import DialogEvent from './DialogEvent';
 
 function Dialogues() {
   const { data, error, isLoading } = useFetchNodeQuery();
