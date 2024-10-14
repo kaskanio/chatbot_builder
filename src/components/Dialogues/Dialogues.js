@@ -27,6 +27,15 @@ import DialogIntent from './DialogIntent';
 import DialogSpeak from './DialogSpeak';
 import DialogEvent from './DialogEvent';
 import { FiRefreshCw } from 'react-icons/fi'; // Import the refresh icon from react-icons
+import DialogIntentRefresh from './DialogIntentRefresh';
+import { mapNodes, mapIntentNodes, mapConnectors } from './utils';
+import {
+  handleSymbolDrag,
+  handleCollectionChange,
+  handlePositionChange,
+  handleSizeChange,
+  handleConnectionChange,
+} from './handlers';
 
 function Dialogues() {
   const { data, error, isLoading } = useFetchNodeQuery();
