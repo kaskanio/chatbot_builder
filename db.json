@@ -108,6 +108,98 @@
       "id": 17
     }
   ],
+  "intentNodes": [
+    {
+      "id": "greetIntent",
+      "shape": {
+        "type": "UmlClassifier",
+        "classShape": {
+          "name": "greet",
+          "attributes": [
+            {
+              "type": "string",
+              "name": "hey"
+            },
+            {
+              "type": "string",
+              "name": "hello"
+            },
+            {
+              "type": "string",
+              "name": "hi"
+            },
+            {
+              "type": "string",
+              "name": "hello there"
+            },
+            {
+              "type": "string",
+              "name": "good morning"
+            },
+            {
+              "type": "string",
+              "name": "good evening "
+            },
+            {
+              "type": "string",
+              "name": "moin"
+            },
+            {
+              "type": "string",
+              "name": "hey there"
+            },
+            {
+              "type": "string",
+              "name": "let's go"
+            },
+            {
+              "type": "string",
+              "name": "hey dude"
+            },
+            {
+              "type": "string",
+              "name": "goodmorning"
+            },
+            {
+              "type": "string",
+              "name": "goodevening"
+            },
+            {
+              "type": "string",
+              "name": "good afternoon"
+            }
+          ]
+        },
+        "classifier": "Class"
+      },
+      "offsetX": 185,
+      "offsetY": 363
+    },
+    {
+      "id": "TestIntent",
+      "shape": {
+        "type": "UmlClassifier",
+        "classShape": {
+          "name": "Test",
+          "attributes": []
+        },
+        "classifier": "Class"
+      }
+    },
+    {
+      "id": "Test 2Intent",
+      "shape": {
+        "type": "UmlClassifier",
+        "classShape": {
+          "name": "Test 2",
+          "attributes": []
+        },
+        "classifier": "Class"
+      },
+      "offsetX": 392,
+      "offsetY": 56
+    }
+  ],
   "nodes": [
     {
       "id": "greet",
@@ -126,8 +218,8 @@
         "strokeWidth": 2,
         "strokeColor": "#6BA5D7"
       },
-      "offsetX": 831,
-      "offsetY": 272
+      "offsetX": 1025,
+      "offsetY": 319
     },
     {
       "id": "bot_challenge",
@@ -146,8 +238,8 @@
         "strokeWidth": 2,
         "strokeColor": "#6BA5D7"
       },
-      "offsetX": 695,
-      "offsetY": 554
+      "offsetX": 759,
+      "offsetY": 556
     },
     {
       "id": "'Hello There!!!'",
@@ -166,8 +258,8 @@
         "strokeWidth": 2,
         "strokeColor": "#FFD700"
       },
-      "offsetX": 237,
-      "offsetY": 126
+      "offsetX": 668,
+      "offsetY": 109
     },
     {
       "id": "'I am a bot, powered by dFlow and Rasa.'",
@@ -186,8 +278,8 @@
         "strokeWidth": 2,
         "strokeColor": "#FFD700"
       },
-      "offsetX": 137,
-      "offsetY": 339
+      "offsetX": 465,
+      "offsetY": 345
     }
   ],
   "connectors": [
@@ -196,20 +288,60 @@
       "sourceId": "greet",
       "targetId": "'Hello There!!!'",
       "type": "Orthogonal",
-      "sourcePointX": 831,
-      "sourcePointY": 210.45,
-      "targetPointX": 237,
-      "targetPointY": 191
+      "sourcePointX": 1025,
+      "sourcePointY": 257.45,
+      "targetPointX": 668,
+      "targetPointY": 174
     },
     {
       "id": "Link21ph64N",
       "sourceId": "bot_challenge",
-      "targetId": "'I am a bot, powered by dFlow and Rasa.'",
+      "targetId": "greet",
       "type": "Straight",
-      "sourcePointX": 648.08,
-      "sourcePointY": 535.92,
-      "targetPointX": 202,
-      "targetPointY": 364.05
+      "sourcePointX": 623.16,
+      "sourcePointY": 527.16,
+      "targetPointX": 822.84,
+      "targetPointY": 265.84
+    },
+    {
+      "id": "Link21qekbJ",
+      "sourceId": "'Hello There!!!'",
+      "targetId": "greetIntent",
+      "type": "Straight",
+      "sourcePointX": 603,
+      "sourcePointY": 143.18,
+      "targetPointX": 269,
+      "targetPointY": 318.83
+    },
+    {
+      "id": "Link1eMB2X",
+      "sourceId": "",
+      "targetId": "",
+      "type": "Orthogonal",
+      "sourcePointX": 712,
+      "sourcePointY": 311,
+      "targetPointX": 766.86,
+      "targetPointY": 365.86
+    },
+    {
+      "id": "Link1fAB96",
+      "sourceId": "",
+      "targetId": "",
+      "type": "Orthogonal",
+      "sourcePointX": 928,
+      "sourcePointY": 132,
+      "targetPointX": 982.86,
+      "targetPointY": 186.86
+    },
+    {
+      "id": "link33w2wGS",
+      "sourceId": "",
+      "targetId": "",
+      "type": "Bezier",
+      "sourcePointX": 71,
+      "sourcePointY": 634,
+      "targetPointX": 132.29,
+      "targetPointY": 695.29
     }
   ],
   "services": [

@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from 'react';
-import ExpandablePanel from '../modules/ExpandablePanel';
 import Skeleton from '../modules/Skeleton';
 import {
   useFetchStringQuery,
@@ -186,22 +185,20 @@ function IntentContent({ intent, header }) {
   return (
     <div className="flex-auto mb-2">
       <div>
-        <ExpandablePanel header={header}>
-          <div className="mb-2"> {content}</div>
-          <div className="flex-auto">
-            <form onSubmit={handleAddString} className="flex mb-4">
-              <input
-                type="text"
-                id="StringNameInput"
-                value={newStringName}
-                onChange={handleStringNameChange}
-                placeholder="Enter string"
-                className="flex-grow p-2 border border-gray-400 rounded-full text-sm mt-4"
-              />
-              {addButton()}
-            </form>
-          </div>
-        </ExpandablePanel>
+        <div className="mb-2"> {content}</div>
+        <div className="flex-auto">
+          <form onSubmit={handleAddString} className="flex mb-4">
+            <input
+              type="text"
+              id="StringNameInput"
+              value={newStringName}
+              onChange={handleStringNameChange}
+              placeholder="Enter string"
+              className="flex-grow p-2 border border-gray-400 rounded-full text-sm mt-4"
+            />
+            {addButton()}
+          </form>
+        </div>
       </div>
     </div>
   );

@@ -168,6 +168,7 @@ function DialogEvent({
       width="600px"
       animationSettings={settings}
       footerTemplate={footerTemplate}
+      enableResize={true}
     >
       <div className="mt-4">
         <DropDownListComponent
