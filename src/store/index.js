@@ -9,6 +9,7 @@ import { eventsApi } from './apis/eventsApi';
 import { entitiesApi } from './apis/entitiesApi';
 import { synonymsApi } from './apis/synonymsApi';
 import { globalSlotsApi } from './apis/globalSlotsApi';
+import { intentNodesApi } from './apis/intentNodesApi';
 
 export const store = configureStore({
   reducer: {
@@ -21,6 +22,7 @@ export const store = configureStore({
     [entitiesApi.reducerPath]: entitiesApi.reducer,
     [synonymsApi.reducerPath]: synonymsApi.reducer,
     [globalSlotsApi.reducerPath]: globalSlotsApi.reducer,
+    [intentNodesApi.reducerPath]: intentNodesApi.reducer,
   },
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware()
@@ -32,7 +34,8 @@ export const store = configureStore({
       .concat(eventsApi.middleware)
       .concat(entitiesApi.middleware)
       .concat(synonymsApi.middleware)
-      .concat(globalSlotsApi.middleware);
+      .concat(globalSlotsApi.middleware)
+      .concat(intentNodesApi.middleware);
   },
 });
 
@@ -104,3 +107,10 @@ export {
   useRemoveGlobalSlotMutation,
   useEditGlobalSlotMutation,
 } from './apis/globalSlotsApi';
+
+export {
+  useFetchIntentNodesQuery,
+  useAddIntentNodeMutation,
+  useUpdateIntentNodeMutation,
+  useDeleteIntentNodeMutation,
+} from './apis/intentNodesApi';

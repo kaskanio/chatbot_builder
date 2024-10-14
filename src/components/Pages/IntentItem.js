@@ -4,6 +4,7 @@ import { AiOutlineEdit } from 'react-icons/ai';
 import { useRemoveIntentMutation, useEditIntentMutation } from '../../store';
 import Button from '../modules/Button';
 import IntentContent from './IntentContent';
+import ExpandablePanel from '../modules/ExpandablePanel';
 
 function IntentItem({ intent }) {
   const [removeIntent, resultsRemove] = useRemoveIntentMutation();
@@ -60,7 +61,13 @@ function IntentItem({ intent }) {
 
   return (
     <div className="flex justify-between items-start">
-      <IntentContent key={intent.id} intent={intent} header={header} />
+      <div className="flex-auto">
+        {' '}
+        <ExpandablePanel header={header}>
+          <IntentContent key={intent.id} intent={intent} header={header} />
+        </ExpandablePanel>
+      </div>
+
       <div className="space-x-2 ml-2 flex">
         {isEditing ? (
           <Button
