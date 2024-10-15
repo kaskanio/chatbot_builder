@@ -1,26 +1,14 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
+import { saveAs } from 'file-saver';
 import {
   DiagramComponent,
   Inject,
   BpmnDiagrams,
   ConnectorEditing,
 } from '@syncfusion/ej2-react-diagrams';
-import {
-  useFetchNodeQuery,
-  useUpdateNodeMutation,
-  useDeleteNodeMutation,
-} from '../../store';
-import {
-  useFetchConnectorQuery,
-  useAddConnectorMutation,
-  useUpdateConnectorMutation,
-  useDeleteConnectorMutation,
-} from '../../store';
-import {
-  useFetchIntentNodesQuery,
-  useUpdateIntentNodeMutation,
-  useDeleteIntentNodeMutation,
-} from '../../store';
+import { useFetchNodeQuery } from '../../store';
+import { useFetchConnectorQuery } from '../../store';
+import { useFetchIntentNodesQuery } from '../../store';
 import Skeleton from '../modules/Skeleton';
 import DialoguesToolbar from './DialoguesToolbar';
 import DialogIntent from './DialogIntent';
@@ -29,13 +17,30 @@ import DialogEvent from './DialogEvent';
 import { FiRefreshCw } from 'react-icons/fi';
 import DialogIntentRefresh from './DialogIntentRefresh';
 import { mapNodes, mapIntentNodes, mapConnectors } from './utils';
-import {
-  handleSymbolDrag,
-  handleCollectionChange,
-  handlePositionChange,
-  handleSizeChange,
-  handleConnectionChange,
-} from './handlers';
+import { handleSymbolDrag } from './handlers';
+
+function saveDiagramData(diagramInstanceRef) {
+  if (diagramInstanceRef.current) {
+    const diagramData = diagramInstanceRef.current.saveDiagram();
+    const formattedData = JSON.stringify(JSON.parse(diagramData), null, 2); // Pretty-print JSON with 2-space indentation
+    const blob = new Blob([formattedData], { type: 'application/json' });
+    saveAs(blob, 'diagramData.json');
+  }
+}
+
+function loadDiagramData(event, diagramInstanceRef) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const diagramData = e.target.result;
+      if (diagramInstanceRef.current) {
+        diagramInstanceRef.current.loadDiagram(diagramData);
+      }
+    };
+    reader.readAsText(file);
+  }
+}
 
 function Dialogues() {
   const { data, error, isLoading } = useFetchNodeQuery();
@@ -44,18 +49,12 @@ function Dialogues() {
     error: connectorError,
     isLoading: connectorLoading,
   } = useFetchConnectorQuery();
-  const [updateNode] = useUpdateNodeMutation();
-  const [deleteNode] = useDeleteNodeMutation();
-  const [updateConnector] = useUpdateConnectorMutation();
-  const [addConnector] = useAddConnectorMutation();
-  const [deleteConnector] = useDeleteConnectorMutation();
+
   const {
     data: intentNodesData,
     error: intentNodesError,
     isLoading: intentNodesLoading,
   } = useFetchIntentNodesQuery();
-  const [updateIntentNode] = useUpdateIntentNodeMutation();
-  const [deleteIntentNode] = useDeleteIntentNodeMutation();
 
   const [showDialogIntent, setShowDialogIntent] = useState(false);
   const [showDialogSpeak, setShowDialogSpeak] = useState(false);
@@ -64,6 +63,20 @@ function Dialogues() {
   const [nodeToAdd, setNodeToAdd] = useState();
 
   const diagramInstanceRef = useRef(null);
+
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      saveDiagramData(diagramInstanceRef);
+      event.preventDefault();
+      event.returnValue = '';
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [diagramInstanceRef]);
 
   let content;
 
@@ -100,41 +113,6 @@ function Dialogues() {
           }
           ref={(diagram) => {
             diagramInstanceRef.current = diagram;
-            if (diagram) {
-              diagram.addEventListener('positionChange', (args) =>
-                handlePositionChange(
-                  args,
-                  updateNode,
-                  updateIntentNode,
-                  updateConnector,
-                  diagramInstanceRef
-                )
-              );
-              diagram.addEventListener('collectionChange', (args) =>
-                handleCollectionChange(
-                  args,
-                  deleteNode,
-                  addConnector,
-                  deleteConnector,
-                  diagramInstanceRef
-                )
-              );
-              diagram.addEventListener('sizeChange', (args) =>
-                handleSizeChange(
-                  args,
-                  updateNode,
-                  updateConnector,
-                  diagramInstanceRef
-                )
-              );
-              diagram.addEventListener('connectionChange', (args) =>
-                handleConnectionChange(
-                  args,
-                  updateConnector,
-                  diagramInstanceRef
-                )
-              );
-            }
           }}
         >
           <Inject services={[BpmnDiagrams, ConnectorEditing]} />
@@ -153,6 +131,26 @@ function Dialogues() {
         >
           <FiRefreshCw className="mr-2" />
           Refresh Page
+        </button>
+      </div>
+      <div className="flex items-center justify-center mb-4">
+        <input
+          type="file"
+          id="fileInput"
+          style={{ display: 'none' }}
+          onChange={(event) => loadDiagramData(event, diagramInstanceRef)}
+        />
+        <button
+          onClick={() => document.getElementById('fileInput').click()}
+          className="p-2 bg-green-500 text-white rounded hover:bg-green-600"
+        >
+          Load Diagram
+        </button>
+        <button
+          onClick={() => saveDiagramData(diagramInstanceRef)}
+          className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600 ml-2"
+        >
+          Save Diagram
         </button>
       </div>
       <div className="flex flex-1">

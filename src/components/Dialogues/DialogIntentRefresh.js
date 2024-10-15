@@ -75,20 +75,20 @@ function DialogIntentRefresh({
     setSelectedIntent(selected);
   };
 
-  // Function to handle the addition of a new intent node
-  const handleAddIntentNode = async (e) => {
-    e.preventDefault();
-    if (selectedIntent && stringsData) {
-      await addIntentNode({
-        nodeId: `${selectedIntent.name}Intent`,
-        classShapeName: selectedIntent.name,
-        attributes: stringsData.map((string) => string.name),
-        offsetX: 100,
-        offsetY: 100,
-      });
-      hideDialog();
-    }
-  };
+  // // Function to handle the addition of a new intent node
+  // const handleAddIntentNode = async (e) => {
+  //   e.preventDefault();
+  //   if (selectedIntent && stringsData) {
+  //     await addIntentNode({
+  //       nodeId: `${selectedIntent.name}Intent`,
+  //       classShapeName: selectedIntent.name,
+  //       attributes: stringsData.map((string) => string.name),
+  //       offsetX: 100,
+  //       offsetY: 100,
+  //     });
+  //     hideDialog();
+  //   }
+  // };
 
   // Define the footer template for the dialog
   const footerTemplate = () => {
@@ -96,7 +96,7 @@ function DialogIntentRefresh({
       <div className="flex justify-between">
         <Button
           type="submit"
-          onClick={handleAddIntentNode}
+          onClick={hideDialog}
           primary
           loading={isAdding}
           rounded
@@ -104,7 +104,7 @@ function DialogIntentRefresh({
         >
           Insert
         </Button>
-        <Button
+        {/* <Button
           onClick={hideDialog}
           type="button"
           danger
@@ -112,7 +112,7 @@ function DialogIntentRefresh({
           className="text-xs p-1"
         >
           Cancel
-        </Button>
+        </Button> */}
       </div>
     );
   };

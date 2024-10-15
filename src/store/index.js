@@ -10,6 +10,7 @@ import { entitiesApi } from './apis/entitiesApi';
 import { synonymsApi } from './apis/synonymsApi';
 import { globalSlotsApi } from './apis/globalSlotsApi';
 import { intentNodesApi } from './apis/intentNodesApi';
+import diagramReducer from './diagramSlice'; // Import the diagramSlice reducer
 
 export const store = configureStore({
   reducer: {
@@ -23,6 +24,7 @@ export const store = configureStore({
     [synonymsApi.reducerPath]: synonymsApi.reducer,
     [globalSlotsApi.reducerPath]: globalSlotsApi.reducer,
     [intentNodesApi.reducerPath]: intentNodesApi.reducer,
+    diagram: diagramReducer, // Add the diagramSlice reducer
   },
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware()

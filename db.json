@@ -184,7 +184,9 @@
           "attributes": []
         },
         "classifier": "Class"
-      }
+      },
+      "offsetX": 471,
+      "offsetY": 530
     },
     {
       "id": "Test 2Intent",
@@ -196,8 +198,8 @@
         },
         "classifier": "Class"
       },
-      "offsetX": 392,
-      "offsetY": 56
+      "offsetX": 1085,
+      "offsetY": 653
     }
   ],
   "nodes": [
@@ -278,8 +280,8 @@
         "strokeWidth": 2,
         "strokeColor": "#FFD700"
       },
-      "offsetX": 465,
-      "offsetY": 345
+      "offsetX": 456,
+      "offsetY": 423
     }
   ],
   "connectors": [
@@ -314,34 +316,14 @@
       "targetPointY": 318.83
     },
     {
-      "id": "Link1eMB2X",
-      "sourceId": "",
-      "targetId": "",
-      "type": "Orthogonal",
-      "sourcePointX": 712,
-      "sourcePointY": 311,
-      "targetPointX": 766.86,
-      "targetPointY": 365.86
-    },
-    {
-      "id": "Link1fAB96",
-      "sourceId": "",
-      "targetId": "",
-      "type": "Orthogonal",
-      "sourcePointX": 928,
-      "sourcePointY": 132,
-      "targetPointX": 982.86,
-      "targetPointY": 186.86
-    },
-    {
-      "id": "link33w2wGS",
-      "sourceId": "",
-      "targetId": "",
+      "id": "link33MsRJr",
+      "sourceId": "TestIntent",
+      "targetId": "Test 2Intent",
       "type": "Bezier",
-      "sourcePointX": 71,
-      "sourcePointY": 634,
-      "targetPointX": 132.29,
-      "targetPointY": 695.29
+      "sourcePointX": 471,
+      "sourcePointY": 505,
+      "targetPointX": 456,
+      "targetPointY": 346
     }
   ],
   "services": [
