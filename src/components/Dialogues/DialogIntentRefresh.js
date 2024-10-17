@@ -4,7 +4,6 @@ import { useFetchIntentQuery, useFetchStringQuery } from '../../store';
 import { useState, useEffect, useRef } from 'react';
 import Skeleton from '../modules/Skeleton';
 import Button from '../modules/Button';
-import { useAddIntentNodeMutation } from '../../store';
 
 function DialogIntentRefresh({
   showDialogIntentRefresh,
@@ -26,7 +25,7 @@ function DialogIntentRefresh({
     { id: selectedIntent?.id },
     { skip: !selectedIntent }
   );
-  const [addIntentNode, { isLoading: isAdding }] = useAddIntentNodeMutation();
+  // const [addIntentNode, { isLoading: isAdding }] = useAddIntentNodeMutation();
 
   // Function to hide the dialog
   const hideDialog = () => {
@@ -98,7 +97,6 @@ function DialogIntentRefresh({
           type="submit"
           onClick={hideDialog}
           primary
-          loading={isAdding}
           rounded
           className="mr-2"
         >

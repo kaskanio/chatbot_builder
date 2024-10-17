@@ -5,6 +5,9 @@ import {
 } from '@syncfusion/ej2-react-diagrams';
 
 function DialoguesToolbar(diagramInstanceRef) {
+  function createProperty(name, type) {
+    return { name: name, type: type };
+  }
   // Define the connector symbols
   let connectorSymbols = [
     {
@@ -57,10 +60,30 @@ function DialoguesToolbar(diagramInstanceRef) {
     },
   ];
 
+  let umlShapes = [
+    {
+      id: 'Intent',
+      shape: {
+        type: 'UmlClassifier',
+        classShape: {
+          name: 'Patient',
+          attributes: [
+            createProperty('name', 'Name'),
+            createProperty('title', 'String[*]'),
+            createProperty('gender', 'Gender'),
+          ],
+        },
+        classifier: 'Class',
+      },
+      offsetX: 405,
+      offsetY: 105,
+    },
+  ];
+
   // Define the node shapes
   let triggerShape = [
     {
-      id: 'Intent',
+      id: 'IntentOld',
       text: 'Intent',
       width: 30,
       height: 30,
@@ -199,6 +222,12 @@ function DialoguesToolbar(diagramInstanceRef) {
             expandMode="Multiple"
             palettes={[
               {
+                id: 'intents',
+                expanded: true,
+                symbols: umlShapes,
+                title: 'Intents',
+              },
+              {
                 id: 'connectors',
                 expanded: true,
                 symbols: connectorSymbols,
@@ -206,13 +235,13 @@ function DialoguesToolbar(diagramInstanceRef) {
                 iconCss: 'e-ddb-icons e-connector',
               },
               {
-                id: 'Triggers',
+                id: 'triggers',
                 expanded: true,
                 symbols: triggerShape,
                 title: 'Triggers',
               },
               {
-                id: 'ActionsForms',
+                id: 'actionsForms',
                 expanded: true,
                 symbols: actionShape,
                 title: 'Actions & Forms',

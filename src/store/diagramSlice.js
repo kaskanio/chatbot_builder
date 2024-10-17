@@ -12,7 +12,11 @@ const diagramSlice = createSlice({
       state.diagramData = action.payload;
     },
     loadDiagramState: (state) => {
-      return state.diagramData || {};
+      const savedDiagramData = localStorage.getItem('diagramData');
+      return {
+        ...state,
+        diagramData: savedDiagramData ? JSON.parse(savedDiagramData) : null,
+      };
     },
   },
 });

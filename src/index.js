@@ -10,7 +10,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 // Registering Syncfusion license key
 registerLicense(
-  'Ngo9BigBOggjHTQxAR8/V1NHaF5cXmVCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdgWH9fcHVQRGFYWER1W0I='
+  'ORg4AjUWIQA/Gnt2UlhhQlVMfV5AQmBIYVp/TGpJfl96cVxMZVVBJAtUQF1hTX9Td0NjXXpdcHddQGdV'
 );
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

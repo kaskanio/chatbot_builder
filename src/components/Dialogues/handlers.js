@@ -23,15 +23,17 @@ export function handleSymbolDrag(
 
     setNodeToAdd(node);
 
-    if (args.element.properties.shape.shape === 'Gateway') {
+    if (args.element.shape === 'UmlClassifierShape') {
       setShowDialogIntentRefresh(true);
-    } else if (args.element.properties.shape.activity.task.type === 'User') {
-      setShowDialogSpeak(true);
-    } else if (
-      args.element.properties.shape.activity.task.type ===
-      'InstantiatingReceive'
-    ) {
-      setShowDialogFireEvent(true);
+    } else if (args.element.shape === 'BpmnShape') {
+      if (args.element.activity.task.type === 'User') {
+        setShowDialogSpeak(true);
+      } else if (
+        args.element.properties.shape.activity.task.type ===
+        'InstantiatingReceive'
+      ) {
+        setShowDialogFireEvent(true);
+      }
     }
   }
 }
