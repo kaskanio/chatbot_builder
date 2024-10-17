@@ -39,7 +39,6 @@ const Dialogues = forwardRef((props, ref) => {
       diagramInstanceRef.current.loadDiagram(diagramData);
       // Manually set the diagram's size and viewport
       diagramInstanceRef.current.fitToPage();
-      console.log(diagramData);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Empty dependency array ensures this runs only once
@@ -120,7 +119,10 @@ const Dialogues = forwardRef((props, ref) => {
             args,
             setShowDialogIntentRefresh,
             setShowDialogSpeak,
-            setShowDialogFireEvent
+            setShowDialogFireEvent,
+            selectedIntent,
+            relatedStrings,
+            diagramInstanceRef
           )
         }
         ref={(diagram) => {

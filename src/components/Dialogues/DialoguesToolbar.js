@@ -13,8 +13,8 @@ function DialoguesToolbar({
   const intentName = selectedIntent?.name;
   const strings = relatedStrings.map((string) => string.name);
 
-  // Log the variables to verify
-  console.log(intentName, strings);
+  // // Log the variables to verify
+  // console.log(intentName, strings);
 
   function createProperty(name, type) {
     return { name: name, type: type };

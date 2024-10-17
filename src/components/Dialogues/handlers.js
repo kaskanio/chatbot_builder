@@ -3,7 +3,10 @@ export function handleSymbolDrag(
   args,
   setShowDialogIntentRefresh,
   setShowDialogSpeak,
-  setShowDialogFireEvent
+  setShowDialogFireEvent,
+  selectedIntent,
+  relatedStrings,
+  diagramInstanceRef
 ) {
   console.log('To stoixeio pou petaksa einai to: ', args);
 
@@ -13,6 +16,28 @@ export function handleSymbolDrag(
       'classShape'
     ) {
       args.cancel = true;
+
+      const className = selectedIntent?.name;
+      const classId = selectedIntent?.id;
+      const relatedStringsNames = relatedStrings.map((string) => string.name);
+      const newNode = {
+        id: classId, // Unique ID for the new node
+        shape: {
+          type: 'UmlClassifier',
+          classShape: {
+            name: className,
+            attributes: relatedStringsNames,
+          },
+        },
+        classifier: 'Class',
+      };
+
+      console.log(newNode);
+
+      // Add the new node to the diagram
+      if (diagramInstanceRef.current) {
+        diagramInstanceRef.current.add(newNode);
+      }
 
       setShowDialogIntentRefresh(true);
     } else if (args.element.shape === 'BpmnShape') {
