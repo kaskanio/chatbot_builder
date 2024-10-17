@@ -8,9 +8,10 @@ import Button from '../modules/Button';
 function DialogIntentRefresh({
   showDialogIntentRefresh,
   setShowDialogIntentRefresh,
-  nodeToAdd,
+  selectedIntent,
+  setSelectedIntent,
+  setRelatedStrings,
 }) {
-  const [selectedIntent, setSelectedIntent] = useState(null);
   const dialogRef = useRef(null);
   const {
     data: intentsData,
@@ -25,7 +26,6 @@ function DialogIntentRefresh({
     { id: selectedIntent?.id },
     { skip: !selectedIntent }
   );
-  // const [addIntentNode, { isLoading: isAdding }] = useAddIntentNodeMutation();
 
   // Function to hide the dialog
   const hideDialog = () => {
@@ -74,20 +74,12 @@ function DialogIntentRefresh({
     setSelectedIntent(selected);
   };
 
-  // // Function to handle the addition of a new intent node
-  // const handleAddIntentNode = async (e) => {
-  //   e.preventDefault();
-  //   if (selectedIntent && stringsData) {
-  //     await addIntentNode({
-  //       nodeId: `${selectedIntent.name}Intent`,
-  //       classShapeName: selectedIntent.name,
-  //       attributes: stringsData.map((string) => string.name),
-  //       offsetX: 100,
-  //       offsetY: 100,
-  //     });
-  //     hideDialog();
-  //   }
-  // };
+  // Update relatedStrings when stringsData changes
+  useEffect(() => {
+    if (stringsData) {
+      setRelatedStrings(stringsData);
+    }
+  }, [stringsData, setRelatedStrings]);
 
   // Define the footer template for the dialog
   const footerTemplate = () => {
@@ -102,15 +94,6 @@ function DialogIntentRefresh({
         >
           Insert
         </Button>
-        {/* <Button
-          onClick={hideDialog}
-          type="button"
-          danger
-          rounded
-          className="text-xs p-1"
-        >
-          Cancel
-        </Button> */}
       </div>
     );
   };

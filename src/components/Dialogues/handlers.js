@@ -1,7 +1,6 @@
 // handlers.js
 export function handleSymbolDrag(
   args,
-  setNodeToAdd,
   setShowDialogIntentRefresh,
   setShowDialogSpeak,
   setShowDialogFireEvent
@@ -9,21 +8,12 @@ export function handleSymbolDrag(
   console.log('To stoixeio pou petaksa einai to: ', args);
 
   if (args.element.propName === 'nodes') {
-    const node = {
-      id: args.element.id,
-      offsetX: 100,
-      offsetY: 100,
-      width: args.element.width,
-      height: args.element.height,
-      annotations: args.element.annotations,
-      shape: args.element.shape,
-      style: args.element.style,
-      borderWidth: args.element.borderWidth,
-    };
+    if (
+      args.target.properties.shape.properties.classShape.propName ===
+      'classShape'
+    ) {
+      args.cancel = true;
 
-    setNodeToAdd(node);
-
-    if (args.element.shape === 'UmlClassifierShape') {
       setShowDialogIntentRefresh(true);
     } else if (args.element.shape === 'BpmnShape') {
       if (args.element.activity.task.type === 'User') {

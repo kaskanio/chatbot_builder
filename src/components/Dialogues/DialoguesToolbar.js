@@ -4,10 +4,22 @@ import {
   BpmnDiagrams,
 } from '@syncfusion/ej2-react-diagrams';
 
-function DialoguesToolbar(diagramInstanceRef) {
+function DialoguesToolbar({
+  diagramInstanceRef,
+  selectedIntent,
+  relatedStrings,
+}) {
+  // You can now use selectedIntent and relatedStrings here
+  const intentName = selectedIntent?.name;
+  const strings = relatedStrings.map((string) => string.name);
+
+  // Log the variables to verify
+  console.log(intentName, strings);
+
   function createProperty(name, type) {
     return { name: name, type: type };
   }
+
   // Define the connector symbols
   let connectorSymbols = [
     {
@@ -66,7 +78,7 @@ function DialoguesToolbar(diagramInstanceRef) {
       shape: {
         type: 'UmlClassifier',
         classShape: {
-          name: 'Patient',
+          name: 'Hi',
           attributes: [
             createProperty('name', 'Name'),
             createProperty('title', 'String[*]'),
@@ -80,32 +92,12 @@ function DialoguesToolbar(diagramInstanceRef) {
     },
   ];
 
-  // Define the node shapes
-  let triggerShape = [
-    {
-      id: 'IntentOld',
-      text: 'Intent',
-      width: 30,
-      height: 30,
-      shape: {
-        type: 'Bpmn',
-        shape: 'Gateway',
-      },
-      style: {
-        fill: '#6BA5D7',
-        strokeWidth: 2,
-        strokeColor: '#6BA5D7',
-      },
-      borderWidth: 1,
-    },
-  ];
-
   let actionShape = [
     {
       id: 'SpeakAction',
       text: 'Speak',
-      width: 35,
-      height: 35,
+      width: 170,
+      height: 100,
       shape: {
         type: 'Bpmn',
         shape: 'Activity',
@@ -126,8 +118,8 @@ function DialoguesToolbar(diagramInstanceRef) {
     {
       id: 'FireEventAction',
       text: 'Fire Event',
-      width: 35,
-      height: 35,
+      width: 170,
+      height: 100,
       shape: {
         type: 'Bpmn',
         shape: 'Activity',
@@ -148,8 +140,8 @@ function DialoguesToolbar(diagramInstanceRef) {
     {
       id: 'RESTCallAction',
       text: 'REST Call',
-      width: 35,
-      height: 35,
+      width: 170,
+      height: 100,
       shape: {
         type: 'Bpmn',
         shape: 'Activity',
@@ -170,8 +162,8 @@ function DialoguesToolbar(diagramInstanceRef) {
     {
       id: 'SetFormSlot',
       text: 'Form Slot',
-      width: 35,
-      height: 35,
+      width: 170,
+      height: 100,
       shape: {
         type: 'Bpmn',
         shape: 'Activity',
@@ -192,8 +184,8 @@ function DialoguesToolbar(diagramInstanceRef) {
     {
       id: 'SetGlobalSlot',
       text: 'Global Slot',
-      width: 35,
-      height: 35,
+      width: 170,
+      height: 100,
       shape: {
         type: 'Bpmn',
         shape: 'Activity',
@@ -234,12 +226,7 @@ function DialoguesToolbar(diagramInstanceRef) {
                 title: 'Connectors',
                 iconCss: 'e-ddb-icons e-connector',
               },
-              {
-                id: 'triggers',
-                expanded: true,
-                symbols: triggerShape,
-                title: 'Triggers',
-              },
+
               {
                 id: 'actionsForms',
                 expanded: true,

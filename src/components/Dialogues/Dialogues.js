@@ -20,7 +20,9 @@ const Dialogues = forwardRef((props, ref) => {
   const [showDialogSpeak, setShowDialogSpeak] = useState(false);
   const [showDialogFireEvent, setShowDialogFireEvent] = useState(false);
   const [showDialogIntentRefresh, setShowDialogIntentRefresh] = useState(false);
-  const [nodeToAdd, setNodeToAdd] = useState();
+
+  const [selectedIntent, setSelectedIntent] = useState(null);
+  const [relatedStrings, setRelatedStrings] = useState([]);
 
   const diagramInstanceRef = useRef(null);
   const dispatch = useDispatch();
@@ -116,7 +118,6 @@ const Dialogues = forwardRef((props, ref) => {
         drop={(args) =>
           handleSymbolDrag(
             args,
-            setNodeToAdd,
             setShowDialogIntentRefresh,
             setShowDialogSpeak,
             setShowDialogFireEvent
@@ -161,7 +162,11 @@ const Dialogues = forwardRef((props, ref) => {
       <div className="flex flex-1">
         <div className="flex-1 mb-9">{content}</div>
         <div className="w-1/4 mb-9">
-          <DialoguesToolbar diagramInstanceRef={diagramInstanceRef} />
+          <DialoguesToolbar
+            diagramInstanceRef={diagramInstanceRef}
+            selectedIntent={selectedIntent}
+            relatedStrings={relatedStrings}
+          />
         </div>
       </div>
 
@@ -169,22 +174,21 @@ const Dialogues = forwardRef((props, ref) => {
         <DialogIntentRefresh
           showDialogIntentRefresh={showDialogIntentRefresh}
           setShowDialogIntentRefresh={setShowDialogIntentRefresh}
-          // nodeToAdd={nodeToAdd}
+          selectedIntent={selectedIntent}
+          setSelectedIntent={setSelectedIntent}
+          setRelatedStrings={setRelatedStrings}
         />
         <DialogIntent
           showDialogIntent={showDialogIntent}
           setShowDialogIntent={setShowDialogIntent}
-          // nodeToAdd={nodeToAdd}
         />
         <DialogSpeak
           showDialogSpeak={showDialogSpeak}
           setShowDialogSpeak={setShowDialogSpeak}
-          // nodeToAdd={nodeToAdd}
         />
         <DialogEvent
           showDialogFireEvent={showDialogFireEvent}
           setShowDialogFireEvent={setShowDialogFireEvent}
-          // nodeToAdd={nodeToAdd}
         />
       </div>
     </div>
