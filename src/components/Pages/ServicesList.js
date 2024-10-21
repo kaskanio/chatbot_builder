@@ -92,7 +92,7 @@ function ServicesList() {
             field="id"
             headerText="ID"
             isPrimaryKey={true}
-            width="100"
+            width="40"
           />
           <ColumnDirective field="name" headerText="Service Name" width="160" />
           <ColumnDirective field="verb" headerText="verb" />

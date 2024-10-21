@@ -10,8 +10,6 @@ function DialoguesToolbar({
   relatedStrings,
 }) {
   // You can now use selectedIntent and relatedStrings here
-  const intentName = selectedIntent?.name;
-  const strings = relatedStrings.map((string) => string.name);
 
   // // Log the variables to verify
   // console.log(intentName, strings);

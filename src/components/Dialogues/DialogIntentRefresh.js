@@ -10,7 +10,8 @@ function DialogIntentRefresh({
   setShowDialogIntentRefresh,
   selectedIntent,
   setSelectedIntent,
-  setRelatedStrings,
+  diagramInstanceRef,
+  setNewNode, // Receive the callback function as a prop
 }) {
   const dialogRef = useRef(null);
   const {
@@ -26,10 +27,12 @@ function DialogIntentRefresh({
     { id: selectedIntent?.id },
     { skip: !selectedIntent }
   );
+  const [dropIt, setDropIt] = useState(false);
 
   // Function to hide the dialog
   const hideDialog = () => {
     setShowDialogIntentRefresh(false);
+    setDropIt(true);
   };
   const settings = { effect: 'Zoom', duration: 400, delay: 0 };
 
@@ -74,13 +77,6 @@ function DialogIntentRefresh({
     setSelectedIntent(selected);
   };
 
-  // Update relatedStrings when stringsData changes
-  useEffect(() => {
-    if (stringsData) {
-      setRelatedStrings(stringsData);
-    }
-  }, [stringsData, setRelatedStrings]);
-
   // Define the footer template for the dialog
   const footerTemplate = () => {
     return (
@@ -97,6 +93,33 @@ function DialogIntentRefresh({
       </div>
     );
   };
+
+  const className = selectedIntent?.name;
+  const classId = selectedIntent?.name;
+
+  // Add the new node to the diagram
+  useEffect(() => {
+    let newNode;
+
+    newNode = {
+      id: classId, // Unique ID for the new node
+      shape: {
+        type: 'UmlClassifier',
+        classShape: {
+          name: className,
+          attributes: stringsData,
+        },
+      },
+      classifier: 'Class',
+      offsetX: 300,
+      offsetY: 300,
+    };
+
+    if (dropIt === true) {
+      setNewNode(newNode);
+      setDropIt(false);
+    }
+  }, [dropIt, classId, className, setNewNode, stringsData]);
 
   // Adjust the dialog position based on content height
   useEffect(() => {

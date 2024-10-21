@@ -3,10 +3,7 @@ export function handleSymbolDrag(
   args,
   setShowDialogIntentRefresh,
   setShowDialogSpeak,
-  setShowDialogFireEvent,
-  selectedIntent,
-  relatedStrings,
-  diagramInstanceRef
+  setShowDialogFireEvent
 ) {
   console.log('To stoixeio pou petaksa einai to: ', args);
 
@@ -16,29 +13,6 @@ export function handleSymbolDrag(
       'classShape'
     ) {
       args.cancel = true;
-
-      const className = selectedIntent?.name;
-      const classId = selectedIntent?.id;
-      const relatedStringsNames = relatedStrings.map((string) => string.name);
-      const newNode = {
-        id: classId, // Unique ID for the new node
-        shape: {
-          type: 'UmlClassifier',
-          classShape: {
-            name: className,
-            attributes: relatedStringsNames,
-          },
-        },
-        classifier: 'Class',
-      };
-
-      console.log(newNode);
-
-      // Add the new node to the diagram
-      if (diagramInstanceRef.current) {
-        diagramInstanceRef.current.add(newNode);
-      }
-
       setShowDialogIntentRefresh(true);
     } else if (args.element.shape === 'BpmnShape') {
       if (args.element.activity.task.type === 'User') {
@@ -49,6 +23,39 @@ export function handleSymbolDrag(
       ) {
         setShowDialogFireEvent(true);
       }
+    }
+  }
+}
+
+export function handlePropertyChange(args, editString) {
+  console.log('To args ayto einai: ', args);
+
+  if (args.diagramAction === 'TextEdit') {
+    if (args.newValue.annotations) {
+      // const oldAnnotations = Object.entries(args.oldValue.annotations)
+      //   .map(([key, annotation]) => `Object ${key}: ${annotation.content}`)
+      //   .join(', ');
+      // const newAnnotations = Object.entries(args.newValue.annotations)
+      //   .map(([key, annotation]) => `Object ${key}: ${annotation.content}`)
+      //   .join(', ');
+
+      // console.log('Allaksa to text: ', oldAnnotations, ' se: ', newAnnotations);
+
+      // Extract the stringId and newName
+      Object.entries(args.newValue.annotations).forEach(
+        ([stringId, annotation]) => {
+          const newName = annotation.content;
+          console.log(stringId, newName);
+          // Call the editString mutation
+          editString({ stringId, newName })
+            .then((response) => {
+              console.log('String updated successfully:', response);
+            })
+            .catch((error) => {
+              console.error('Error updating string:', error);
+            });
+        }
+      );
     }
   }
 }

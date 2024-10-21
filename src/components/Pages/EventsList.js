@@ -5,6 +5,7 @@ import {
   Inject,
   Edit,
   Toolbar,
+  Page,
 } from '@syncfusion/ej2-react-grids';
 
 import {
@@ -75,10 +76,16 @@ function EventsList() {
         actionComplete={handleActionComplete}
       >
         <ColumnsDirective>
+          <ColumnDirective
+            field="id"
+            headerText="ID"
+            isPrimaryKey={true}
+            width="40"
+          />
           <ColumnDirective field="name" headerText="Event Name" width="160" />
           <ColumnDirective field="uri" headerText="URI" width="250" />
         </ColumnsDirective>
-        <Inject services={[Edit, Toolbar]} />
+        <Inject services={[Edit, Toolbar, Page]} />
       </GridComponent>
     </div>
   );

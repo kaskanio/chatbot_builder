@@ -8,21 +8,27 @@ import {
 } from '@syncfusion/ej2-react-diagrams';
 
 import DialoguesToolbar from './DialoguesToolbar';
-import DialogIntent from './DialogIntent';
 import DialogSpeak from './DialogSpeak';
 import DialogEvent from './DialogEvent';
 import DialogIntentRefresh from './DialogIntentRefresh';
-import { handleSymbolDrag } from './handlers';
+import { handlePropertyChange, handleSymbolDrag } from './handlers';
 import { saveDiagramState, loadDiagramState } from '../../store/diagramSlice';
+import { useEditStringMutation } from '../../store'; // Import the hook
+
+// handlers.js
+
+// Dialogues.js
 
 const Dialogues = forwardRef((props, ref) => {
-  const [showDialogIntent, setShowDialogIntent] = useState(false);
   const [showDialogSpeak, setShowDialogSpeak] = useState(false);
   const [showDialogFireEvent, setShowDialogFireEvent] = useState(false);
   const [showDialogIntentRefresh, setShowDialogIntentRefresh] = useState(false);
 
   const [selectedIntent, setSelectedIntent] = useState(null);
-  const [relatedStrings, setRelatedStrings] = useState([]);
+  const [newNode, setNewNode] = useState(null);
+  const [nodes, setNodes] = useState([]); // Initialize nodes state
+
+  const [editString, resultsEdit] = useEditStringMutation();
 
   const diagramInstanceRef = useRef(null);
   const dispatch = useDispatch();
@@ -55,7 +61,7 @@ const Dialogues = forwardRef((props, ref) => {
   };
 
   // Save the diagram to a JSON file
-  const handleSaveToFile = () => {
+  const handleSaveToFile = (args) => {
     if (diagramInstanceRef.current) {
       const serializedData = diagramInstanceRef.current.saveDiagram({
         exclude: ['width', 'height', 'viewport'],
@@ -69,8 +75,10 @@ const Dialogues = forwardRef((props, ref) => {
       a.download = 'diagram.json';
       a.click();
       URL.revokeObjectURL(url);
+      console.log('Ayto?', args);
     }
   };
+
   // Load the diagram from a JSON file
   const handleLoadFromFile = (event) => {
     const file = event.target.files[0];
@@ -86,26 +94,17 @@ const Dialogues = forwardRef((props, ref) => {
     }
   };
 
-  // // Prompt the user to save their progress before closing the tab, exiting the browser, or refreshing the page
-  // useEffect(() => {
-  //   const handleBeforeUnload = (event) => {
-  //     event.preventDefault();
-  //     event.returnValue = ''; // This triggers the confirmation dialog
-  //     return '';
-  //   };
+  // Function to add a new node to the nodes array
+  const addNewNode = (node) => {
+    setNodes((prevNodes) => [...prevNodes, node]);
+  };
 
-  //   const handleUnload = (event) => {
-  //     if (window.confirm('Do you want to save your progress before exiting?')) {
-  //       handleSaveToFile();
-  //     }
-  //   };
-
-  //   window.addEventListener('beforeunload', handleBeforeUnload);
-
-  //   return () => {
-  //     window.removeEventListener('beforeunload', handleBeforeUnload);
-  //   };
-  // }, []);
+  // Watch for changes to newNode and add it to nodes array
+  useEffect(() => {
+    if (newNode) {
+      addNewNode(newNode);
+    }
+  }, [newNode]);
 
   let content;
   content = (
@@ -114,17 +113,16 @@ const Dialogues = forwardRef((props, ref) => {
         id="container"
         width={'100%'}
         height={'800px'} //'calc(100vh - 100px)'
+        nodes={nodes} // Pass nodes to DiagramComponent
         drop={(args) =>
           handleSymbolDrag(
             args,
             setShowDialogIntentRefresh,
             setShowDialogSpeak,
-            setShowDialogFireEvent,
-            selectedIntent,
-            relatedStrings,
-            diagramInstanceRef
+            setShowDialogFireEvent
           )
         }
+        propertyChange={(args) => handlePropertyChange(args, editString)} // Update the node properties
         ref={(diagram) => {
           diagramInstanceRef.current = diagram;
         }}
@@ -167,7 +165,6 @@ const Dialogues = forwardRef((props, ref) => {
           <DialoguesToolbar
             diagramInstanceRef={diagramInstanceRef}
             selectedIntent={selectedIntent}
-            relatedStrings={relatedStrings}
           />
         </div>
       </div>
@@ -178,11 +175,8 @@ const Dialogues = forwardRef((props, ref) => {
           setShowDialogIntentRefresh={setShowDialogIntentRefresh}
           selectedIntent={selectedIntent}
           setSelectedIntent={setSelectedIntent}
-          setRelatedStrings={setRelatedStrings}
-        />
-        <DialogIntent
-          showDialogIntent={showDialogIntent}
-          setShowDialogIntent={setShowDialogIntent}
+          diagramInstanceRef={diagramInstanceRef}
+          setNewNode={setNewNode}
         />
         <DialogSpeak
           showDialogSpeak={showDialogSpeak}
