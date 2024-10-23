@@ -52,6 +52,7 @@ export {
 
 export {
   useFetchStringQuery,
+  useFetchAllStringsQuery,
   useAddStringMutation,
   useRemoveStringMutation,
   useEditStringMutation,

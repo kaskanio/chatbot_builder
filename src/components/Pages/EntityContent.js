@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import ExpandablePanel from '../modules/ExpandablePanel';
 import Button from '../modules/Button';
-import { GoXCircle } from 'react-icons/go';
+import { GoTrash } from 'react-icons/go';
 import { useAddValueMutation, useRemoveValueMutation } from '../../store';
 
 function EntityContent({ entity, header }) {
@@ -58,7 +58,7 @@ function EntityContent({ entity, header }) {
         rounded
         className="text-xs p-1"
       >
-        <GoXCircle className="w-4 h-4" />
+        <GoTrash className="w-4 h-4" />
       </Button>
     );
   };

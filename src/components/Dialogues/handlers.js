@@ -1,3 +1,5 @@
+import { useFetchStringByNameQuery } from '../../store';
+
 // handlers.js
 export function handleSymbolDrag(
   args,
@@ -27,36 +29,49 @@ export function handleSymbolDrag(
   }
 }
 
-export function handlePropertyChange(args, editString) {
-  console.log('To args ayto einai: ', args);
-
+export function handlePropertyChange(
+  args,
+  editString,
+  addString,
+  stringsData,
+  selectedIntent
+) {
+  // PREPEI NA DW POS NA KANW DELETE TO STRING OTAN TO SVINW APO TO DIAGRAMA
+  console.log(args);
   if (args.diagramAction === 'TextEdit') {
     if (args.newValue.annotations) {
-      // const oldAnnotations = Object.entries(args.oldValue.annotations)
-      //   .map(([key, annotation]) => `Object ${key}: ${annotation.content}`)
-      //   .join(', ');
-      // const newAnnotations = Object.entries(args.newValue.annotations)
-      //   .map(([key, annotation]) => `Object ${key}: ${annotation.content}`)
-      //   .join(', ');
+      console.log('To args einai: ', args);
+      // console.log('To stringsData ayto einai: ', stringsData);
 
-      // console.log('Allaksa to text: ', oldAnnotations, ' se: ', newAnnotations);
-
-      // Extract the stringId and newName
-      Object.entries(args.newValue.annotations).forEach(
-        ([stringId, annotation]) => {
-          const newName = annotation.content;
-          console.log(stringId, newName);
-          // Call the editString mutation
-          editString({ stringId, newName })
-            .then((response) => {
-              console.log('String updated successfully:', response);
-            })
-            .catch((error) => {
-              console.error('Error updating string:', error);
-            });
-        }
+      // Search for the object with a matching name
+      const matchingString = stringsData.find(
+        (string) => string.name === args.oldValue.annotations[0].content
       );
+      let newName = args.newValue.annotations[0].content;
+      newName = newName.substring(2).trim();
+      if (matchingString) {
+        const stringId = matchingString.id;
+
+        console.log('To stringId einai: ', stringId);
+        console.log('To newName einai: ', newName);
+        editString({ stringId, newName })
+          .then((response) => {
+            console.log('String updated successfully:', response);
+          })
+          .catch((error) => {
+            console.error('Error updating string:', error);
+          });
+      } else {
+        addString({ intent: selectedIntent, newStringName: newName });
+      }
     }
+  }
+}
+
+export function handleCollectionChange(args) {
+  // Cancels the addition of attributes as a seperate element in the diagram
+  if (args.type === 'Addition' && !args.parentId) {
+    args.cancel = true;
   }
 }
 

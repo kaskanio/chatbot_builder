@@ -95,22 +95,27 @@ function DialogIntentRefresh({
   };
 
   const className = selectedIntent?.name;
-  const classId = selectedIntent?.name;
 
   // Add the new node to the diagram
   useEffect(() => {
-    let newNode;
+    // Check if stringsData is defined and is an array
+    const members = Array.isArray(stringsData)
+      ? stringsData.map((data) => ({
+          ...data,
+        }))
+      : [];
 
+    let newNode;
     newNode = {
-      id: classId, // Unique ID for the new node
+      id: className, // Unique ID for the new node
       shape: {
         type: 'UmlClassifier',
-        classShape: {
+        enumerationShape: {
           name: className,
-          attributes: stringsData,
+          members: members,
         },
+        classifier: 'Enumeration',
       },
-      classifier: 'Class',
       offsetX: 300,
       offsetY: 300,
     };
@@ -119,7 +124,7 @@ function DialogIntentRefresh({
       setNewNode(newNode);
       setDropIt(false);
     }
-  }, [dropIt, classId, className, setNewNode, stringsData]);
+  }, [dropIt, className, setNewNode, stringsData]);
 
   // Adjust the dialog position based on content height
   useEffect(() => {

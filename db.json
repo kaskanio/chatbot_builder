@@ -5,107 +5,46 @@
       "name": "greet"
     },
     {
-      "id": 2,
-      "name": "bot_challenge"
-    },
-    {
-      "name": "Placeholder - greet_back",
-      "id": 3
-    },
-    {
-      "name": "Test",
-      "id": 4
-    },
-    {
-      "name": "Test 2",
-      "id": 5
+      "name": "bot_challenge",
+      "id": 2
     }
   ],
   "strings": [
     {
-      "id": 1,
-      "name": "hey",
-      "intentId": 1
+      "name": "hi girl",
+      "intentId": 2,
+      "intentName": "bot_challenge",
+      "id": 1
     },
     {
-      "id": 2,
-      "name": "hello",
-      "intentId": 1
+      "name": "yo",
+      "intentId": 2,
+      "intentName": "bot_challenge",
+      "id": 2
     },
     {
-      "name": "hi",
-      "intentId": 1,
+      "name": "",
+      "intentId": 2,
+      "intentName": "bot_challenge",
       "id": 3
     },
     {
-      "name": "hello there",
-      "intentId": 1,
+      "name": "nice",
+      "intentId": 2,
+      "intentName": "bot_challenge",
       "id": 4
     },
     {
-      "name": "good morning",
-      "intentId": 1,
+      "name": "cewl",
+      "intentId": 2,
+      "intentName": "bot_challenge",
       "id": 5
     },
     {
-      "name": "good evening ",
-      "intentId": 1,
+      "name": "dfsagdg",
+      "intentId": 2,
+      "intentName": "bot_challenge",
       "id": 6
-    },
-    {
-      "name": "moin",
-      "intentId": 1,
-      "id": 7
-    },
-    {
-      "name": "hey there",
-      "intentId": 1,
-      "id": 8
-    },
-    {
-      "name": "let's go",
-      "intentId": 1,
-      "id": 9
-    },
-    {
-      "name": "hey dude",
-      "intentId": 1,
-      "id": 10
-    },
-    {
-      "name": "goodmorning",
-      "intentId": 1,
-      "id": 11
-    },
-    {
-      "name": "goodevening",
-      "intentId": 1,
-      "id": 12
-    },
-    {
-      "name": "good afternoon",
-      "intentId": 1,
-      "id": 13
-    },
-    {
-      "name": "are you a bot?",
-      "intentId": 2,
-      "id": 14
-    },
-    {
-      "name": "are you a human?",
-      "intentId": 2,
-      "id": 15
-    },
-    {
-      "name": "am i talking to a bot?",
-      "intentId": 2,
-      "id": 16
-    },
-    {
-      "name": "am i talking to a human?",
-      "intentId": 2,
-      "id": 17
     }
   ],
   "intentNodes": [

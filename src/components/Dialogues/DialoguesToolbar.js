@@ -75,15 +75,11 @@ function DialoguesToolbar({
       id: 'Intent',
       shape: {
         type: 'UmlClassifier',
-        classShape: {
+        enumerationShape: {
           name: 'Hi',
-          attributes: [
-            createProperty('name', 'Name'),
-            createProperty('title', 'String[*]'),
-            createProperty('gender', 'Gender'),
-          ],
+          members: [],
+          classifier: 'Enumeration',
         },
-        classifier: 'Class',
       },
       offsetX: 405,
       offsetY: 105,

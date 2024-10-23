@@ -25,9 +25,18 @@ const stringsApi = createApi({
           };
         },
       }),
+      fetchAllStrings: builder.query({
+        providesTags: ['Strings'],
+        query: () => {
+          return {
+            url: '/strings',
+            method: 'GET',
+          };
+        },
+      }),
       addString: builder.mutation({
         invalidatesTags: (result, error, intent) => {
-          return [{ type: 'IntentsString', id: intent.id }];
+          return [{ type: 'IntentsString', id: intent.id }, 'Strings'];
         },
         query: ({ intent, newStringName }) => {
           return {
@@ -36,13 +45,14 @@ const stringsApi = createApi({
             body: {
               name: newStringName,
               intentId: intent.id,
+              intentName: intent.name,
             },
           };
         },
       }),
       removeString: builder.mutation({
         invalidatesTags: (result, error, string) => {
-          return [{ type: 'String', id: string.id }];
+          return [{ type: 'String', id: string.id }, 'Strings'];
         },
         query: (stringId) => {
           return {
@@ -53,7 +63,7 @@ const stringsApi = createApi({
       }),
       editString: builder.mutation({
         invalidatesTags: (result, error, string) => {
-          return [{ type: 'String', id: string.id }];
+          return [{ type: 'String', id: string.id }, 'Strings'];
         },
         query: ({ stringId, newName }) => {
           return {
@@ -71,6 +81,7 @@ const stringsApi = createApi({
 
 export const {
   useFetchStringQuery,
+  useFetchAllStringsQuery,
   useAddStringMutation,
   useRemoveStringMutation,
   useEditStringMutation,

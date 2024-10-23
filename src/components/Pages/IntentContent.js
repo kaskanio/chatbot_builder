@@ -7,7 +7,7 @@ import {
   useEditStringMutation,
 } from '../../store';
 import Button from '../modules/Button';
-import { GoXCircle } from 'react-icons/go';
+import { GoXCircle, GoTrash } from 'react-icons/go';
 import { AiOutlineEdit } from 'react-icons/ai';
 
 function IntentContent({ intent, header }) {
@@ -95,7 +95,7 @@ function IntentContent({ intent, header }) {
         rounded
         className="text-xs p-1"
       >
-        <GoXCircle className="w-4 h-4" /> {/* Stop editing and reset input */}
+        <GoTrash className="w-4 h-4" /> {/* Stop editing and reset input */}
       </Button>
     );
   };

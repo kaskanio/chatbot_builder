@@ -11,9 +11,17 @@ import DialoguesToolbar from './DialoguesToolbar';
 import DialogSpeak from './DialogSpeak';
 import DialogEvent from './DialogEvent';
 import DialogIntentRefresh from './DialogIntentRefresh';
-import { handlePropertyChange, handleSymbolDrag } from './handlers';
+import {
+  handlePropertyChange,
+  handleSymbolDrag,
+  handleCollectionChange,
+} from './handlers';
 import { saveDiagramState, loadDiagramState } from '../../store/diagramSlice';
-import { useEditStringMutation } from '../../store'; // Import the hook
+import {
+  useFetchAllStringsQuery,
+  useEditStringMutation,
+  useAddStringMutation,
+} from '../../store'; // Import the hook
 
 // handlers.js
 
@@ -26,13 +34,14 @@ const Dialogues = forwardRef((props, ref) => {
 
   const [selectedIntent, setSelectedIntent] = useState(null);
   const [newNode, setNewNode] = useState(null);
-  const [nodes, setNodes] = useState([]); // Initialize nodes state
-
-  const [editString, resultsEdit] = useEditStringMutation();
 
   const diagramInstanceRef = useRef(null);
   const dispatch = useDispatch();
   const diagramData = useSelector((state) => state.diagram.diagramData);
+
+  const { data: stringsData } = useFetchAllStringsQuery();
+  const [editString] = useEditStringMutation();
+  const [addString] = useAddStringMutation();
 
   // Dispatch the action to load the diagram state from Redux when the component mounts
   useEffect(() => {
@@ -75,7 +84,6 @@ const Dialogues = forwardRef((props, ref) => {
       a.download = 'diagram.json';
       a.click();
       URL.revokeObjectURL(url);
-      console.log('Ayto?', args);
     }
   };
 
@@ -96,7 +104,8 @@ const Dialogues = forwardRef((props, ref) => {
 
   // Function to add a new node to the nodes array
   const addNewNode = (node) => {
-    setNodes((prevNodes) => [...prevNodes, node]);
+    diagramInstanceRef.current.addNode(node);
+    // setNodes((prevNodes) => [...prevNodes, node]);
   };
 
   // Watch for changes to newNode and add it to nodes array
@@ -106,6 +115,24 @@ const Dialogues = forwardRef((props, ref) => {
     }
   }, [newNode]);
 
+  // const nodeTemplate = (node) => {
+  //   if (node.shape && node.shape.type === 'UmlClassifier') {
+  //     // Customize the node rendering here
+  //     return (
+  //       <div>
+  //         <div>{node.shape.classShape.name}</div>
+  //         {/* Render attributes as part of the node */}
+  //         <div>
+  //           {node.shape.classShape.attributes.map((attr, index) => (
+  //             <div key={index}>{attr.name}</div>
+  //           ))}
+  //         </div>
+  //       </div>
+  //     );
+  //   }
+  //   return null;
+  // };
+
   let content;
   content = (
     <div>
@@ -113,7 +140,6 @@ const Dialogues = forwardRef((props, ref) => {
         id="container"
         width={'100%'}
         height={'800px'} //'calc(100vh - 100px)'
-        nodes={nodes} // Pass nodes to DiagramComponent
         drop={(args) =>
           handleSymbolDrag(
             args,
@@ -122,7 +148,18 @@ const Dialogues = forwardRef((props, ref) => {
             setShowDialogFireEvent
           )
         }
-        propertyChange={(args) => handlePropertyChange(args, editString)} // Update the node properties
+        collectionChange={(args) => {
+          handleCollectionChange(args);
+        }}
+        propertyChange={(args) => {
+          handlePropertyChange(
+            args,
+            editString,
+            addString,
+            stringsData,
+            selectedIntent
+          );
+        }}
         ref={(diagram) => {
           diagramInstanceRef.current = diagram;
         }}
