@@ -1,10 +1,8 @@
 import { DialogComponent } from '@syncfusion/ej2-react-popups';
-import { useAddNodeMutation } from '../../store';
 import { useState, useRef, useEffect } from 'react';
 import Button from '../modules/Button';
 
 function DialogSpeak({ showDialogSpeak, setShowDialogSpeak, nodeToAdd }) {
-  const [addNode, addNodeResults] = useAddNodeMutation();
   const [actionId, setActionId] = useState(''); // State to store the input value
   const [actionType, setActionType] = useState(''); // State to store the input value
   const inputRef = useRef(); // Create a ref for the input field
@@ -28,16 +26,7 @@ function DialogSpeak({ showDialogSpeak, setShowDialogSpeak, nodeToAdd }) {
     console.log('Action ID:', actionId); // Log the value of actionId
     console.log('Action Type:', actionType); // Log the value of actionType
     console.log('Ayto vazw: ', nodeToAdd);
-    addNode({
-      nodeId: actionId,
-      shape: nodeToAdd.shape.properties.shape,
-      type: nodeToAdd.shape.properties.type,
-      activity: nodeToAdd.shape.activity.activity,
-      taskType: nodeToAdd.shape.activity.task.type,
-      fill: nodeToAdd.style.fill,
-      strokeWidth: nodeToAdd.style.strokeWidth,
-      strokeColor: nodeToAdd.style.strokeColor,
-    });
+
     setActionId('');
     hideDialog(); // Reload the page after adding a new node
   };
@@ -109,7 +98,6 @@ function DialogSpeak({ showDialogSpeak, setShowDialogSpeak, nodeToAdd }) {
               hideDialog();
             }}
             primary
-            loading={addNodeResults.isLoading}
             rounded
             className="mr-2"
           >

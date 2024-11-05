@@ -1,21 +1,38 @@
 import { DialogComponent } from '@syncfusion/ej2-react-popups';
 import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns';
-import { useFetchIntentQuery, useAddNodeMutation } from '../../store';
-import { useState } from 'react';
+import { useFetchIntentQuery, useFetchStringQuery } from '../../store';
+import { useState, useEffect, useRef } from 'react';
 import Skeleton from '../modules/Skeleton';
 import Button from '../modules/Button';
-function DialogIntent({ showDialogIntent, setShowDialogIntent, nodeToAdd }) {
-  const [selectedIntent, setSelectedIntent] = useState(null);
+
+function DialogIntent({
+  showDialogIntentRefresh,
+  setShowDialogIntentRefresh,
+  selectedIntent,
+  setSelectedIntent,
+  diagramInstanceRef,
+  setNewNode, // Receive the callback function as a prop
+}) {
+  const dialogRef = useRef(null);
   const {
     data: intentsData,
     error: intentsError,
     isLoading: intentsLoading,
   } = useFetchIntentQuery();
-  const [addNode, addNodeResults] = useAddNodeMutation();
+  const {
+    data: stringsData,
+    error: stringsError,
+    isLoading: stringsLoading,
+  } = useFetchStringQuery(
+    { id: selectedIntent?.id },
+    { skip: !selectedIntent }
+  );
+  const [dropIt, setDropIt] = useState(false);
 
   // Function to hide the dialog
   const hideDialog = () => {
-    setShowDialogIntent(false);
+    setShowDialogIntentRefresh(false);
+    setDropIt(true);
   };
   const settings = { effect: 'Zoom', duration: 400, delay: 0 };
 
@@ -30,45 +47,34 @@ function DialogIntent({ showDialogIntent, setShowDialogIntent, nodeToAdd }) {
     intentsNames = intentsData.map((intent) => {
       return intent.name;
     });
-    content = intentsData.map((intent) => {
-      if (selectedIntent === intent.name) {
-        if (intent.strings) {
-          return intent.strings.map((string) => (
-            <div
-              key={string}
-              className="mb-2 mt-2 flex justify-between mb-1 text-xs"
-            >
-              {'"' + string + '"'}{' '}
-            </div>
-          ));
-        }
-      }
-      return null;
-    });
   }
 
-  // Function to handle the addition of a new node based on the selected intent.
-  const handleAddNodeIntent = (e) => {
-    console.log(selectedIntent);
-    e.preventDefault();
-    if (selectedIntent) {
-      addNode({
-        nodeId: selectedIntent,
-        shape: nodeToAdd.shape.properties.shape,
-        type: nodeToAdd.shape.properties.type,
-        activity: nodeToAdd.shape.activity.activity,
-        taskType: nodeToAdd.shape.activity.task.type,
-        fill: nodeToAdd.style.fill,
-        strokeWidth: nodeToAdd.style.strokeWidth,
-        strokeColor: nodeToAdd.style.strokeColor,
-      });
-      hideDialog();
+  // Fetch the strings related to the selected intent
+  if (selectedIntent) {
+    if (stringsLoading) {
+      content = <Skeleton className="h-10 w-full" times={3} />;
+    } else if (stringsError) {
+      content = <div>Error loading strings.</div>;
+    } else if (stringsData) {
+      content = (
+        <div className="mt-4">
+          {stringsData.map((string) => (
+            <div
+              key={string.id}
+              className="mb-2 mt-2 p-2 bg-gray-100 rounded shadow-sm text-sm"
+            >
+              "{string.name}"
+            </div>
+          ))}
+        </div>
+      );
     }
-  };
+  }
 
   // Function to handle the change of the selected intent
   const handleIntentChange = (e) => {
-    setSelectedIntent(e.value);
+    const selected = intentsData.find((intent) => intent.name === e.value);
+    setSelectedIntent(selected);
   };
 
   // Define the footer template for the dialog
@@ -77,42 +83,75 @@ function DialogIntent({ showDialogIntent, setShowDialogIntent, nodeToAdd }) {
       <div className="flex justify-between">
         <Button
           type="submit"
-          onClick={(e) => {
-            handleAddNodeIntent(e);
-            hideDialog();
-          }}
+          onClick={hideDialog}
           primary
-          loading={addNodeResults.isLoading}
           rounded
           className="mr-2"
         >
           Insert
         </Button>
-        <Button
-          onClick={() => {
-            hideDialog();
-          }}
-          type="button"
-          danger
-          rounded
-          className="text-xs p-1"
-        >
-          Cancel
-        </Button>
       </div>
     );
   };
+
+  const className = selectedIntent?.name;
+
+  // Add the new node to the diagram
+  useEffect(() => {
+    // Check if stringsData is defined and is an array
+    const members = Array.isArray(stringsData)
+      ? stringsData.map((data) => ({
+          ...data,
+        }))
+      : [];
+
+    let newNode;
+    newNode = {
+      id: className, // Unique ID for the new node
+      shape: {
+        type: 'UmlClassifier',
+        enumerationShape: {
+          name: className,
+          members: members,
+        },
+        classifier: 'Enumeration',
+      },
+      offsetX: 300,
+      offsetY: 300,
+    };
+
+    if (dropIt === true) {
+      setNewNode(newNode);
+      setDropIt(false);
+    }
+  }, [dropIt, className, setNewNode, stringsData]);
+
+  // Adjust the dialog position based on content height
+  useEffect(() => {
+    if (dialogRef.current) {
+      const dialogElement = dialogRef.current.element;
+      const contentHeight =
+        dialogElement.querySelector('.e-dlg-content').scrollHeight;
+      const windowHeight = window.innerHeight;
+      const dialogHeight = Math.min(contentHeight, windowHeight * 0.8); // Limit dialog height to 80% of window height
+      dialogElement.style.height = `${dialogHeight}px`;
+      dialogElement.style.top = `${(windowHeight - dialogHeight) / 2}px`;
+    }
+  }, [content]);
 
   return (
     <DialogComponent
       id="dialog"
       header="Select Intent"
-      visible={showDialogIntent}
+      visible={showDialogIntentRefresh}
       close={hideDialog}
       width="600px"
       animationSettings={settings}
       footerTemplate={footerTemplate}
       enableResize={true}
+      position={{ X: 'center', Y: 'center' }} // Adjust the position here
+      ref={dialogRef}
+      minHeight="200px" // Set a minimum height for the dialog
     >
       <div className="mt-4">
         <DropDownListComponent

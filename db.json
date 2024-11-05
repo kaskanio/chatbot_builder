@@ -5,107 +5,124 @@
       "name": "greet"
     },
     {
-      "id": 2,
-      "name": "bot_challenge"
-    },
-    {
-      "name": "Placeholder - greet_back",
-      "id": 3
-    },
-    {
-      "name": "Test",
-      "id": 4
-    },
-    {
-      "name": "Test 2",
-      "id": 5
+      "name": "bot_challenge",
+      "id": 2
     }
   ],
   "strings": [
     {
-      "id": 1,
-      "name": "hey",
-      "intentId": 1
-    },
-    {
-      "id": 2,
-      "name": "hello",
-      "intentId": 1
-    },
-    {
-      "name": "hi",
-      "intentId": 1,
-      "id": 3
-    },
-    {
-      "name": "hello there",
-      "intentId": 1,
-      "id": 4
-    },
-    {
-      "name": "good morning",
-      "intentId": 1,
-      "id": 5
-    },
-    {
-      "name": "good evening ",
-      "intentId": 1,
-      "id": 6
-    },
-    {
-      "name": "moin",
-      "intentId": 1,
-      "id": 7
-    },
-    {
-      "name": "hey there",
-      "intentId": 1,
-      "id": 8
-    },
-    {
-      "name": "let's go",
-      "intentId": 1,
-      "id": 9
-    },
-    {
-      "name": "hey dude",
-      "intentId": 1,
-      "id": 10
-    },
-    {
-      "name": "goodmorning",
-      "intentId": 1,
-      "id": 11
-    },
-    {
-      "name": "goodevening",
-      "intentId": 1,
-      "id": 12
-    },
-    {
-      "name": "good afternoon",
-      "intentId": 1,
-      "id": 13
-    },
-    {
       "name": "are you a bot?",
       "intentId": 2,
+      "intentName": "bot_challenge",
       "id": 14
     },
     {
       "name": "are you a human?",
       "intentId": 2,
+      "intentName": "bot_challenge",
       "id": 15
     },
     {
       "name": "am i talking to a bot?",
       "intentId": 2,
+      "intentName": "bot_challenge",
       "id": 16
     },
     {
       "name": "am i talking to a human?",
       "intentId": 2,
+      "intentName": "bot_challenge",
       "id": 17
+    },
+    {
+      "name": "hey xw",
+      "intentId": 1,
+      "intentName": "greet",
+      "id": 18
+    },
+    {
+      "name": "hello",
+      "intentId": 1,
+      "intentName": "greet",
+      "id": 19
+    },
+    {
+      "name": "hi",
+      "intentId": 1,
+      "intentName": "greet",
+      "id": 20
+    },
+    {
+      "name": "hello there",
+      "intentId": 1,
+      "intentName": "greet",
+      "id": 21
+    },
+    {
+      "name": "good morning",
+      "intentId": 1,
+      "intentName": "greet",
+      "id": 22
+    },
+    {
+      "name": "good evening",
+      "intentId": 1,
+      "intentName": "greet",
+      "id": 23
+    },
+    {
+      "name": "moin",
+      "intentId": 1,
+      "intentName": "greet",
+      "id": 24
+    },
+    {
+      "name": "hey there",
+      "intentId": 1,
+      "intentName": "greet",
+      "id": 25
+    },
+    {
+      "name": "let's go",
+      "intentId": 1,
+      "intentName": "greet",
+      "id": 26
+    },
+    {
+      "name": "hey dude",
+      "intentId": 1,
+      "intentName": "greet",
+      "id": 27
+    },
+    {
+      "name": "goodmorning",
+      "intentId": 1,
+      "intentName": "greet",
+      "id": 28
+    },
+    {
+      "name": "goodevening",
+      "intentId": 1,
+      "intentName": "greet",
+      "id": 29
+    },
+    {
+      "name": "there you go!",
+      "intentId": 2,
+      "intentName": "bot_challenge",
+      "id": 31
+    },
+    {
+      "name": "dawd",
+      "intentId": 1,
+      "intentName": "greet",
+      "id": 32
+    },
+    {
+      "name": "",
+      "intentId": 2,
+      "intentName": "bot_challenge",
+      "id": 33
     }
   ],
   "intentNodes": [
@@ -218,8 +235,8 @@
         "strokeWidth": 2,
         "strokeColor": "#6BA5D7"
       },
-      "offsetX": 831,
-      "offsetY": 272
+      "offsetX": 1025,
+      "offsetY": 319
     },
     {
       "id": "bot_challenge",
@@ -278,8 +295,8 @@
         "strokeWidth": 2,
         "strokeColor": "#FFD700"
       },
-      "offsetX": 465,
-      "offsetY": 345
+      "offsetX": 456,
+      "offsetY": 423
     }
   ],
   "connectors": [
@@ -288,10 +305,10 @@
       "sourceId": "greet",
       "targetId": "'Hello There!!!'",
       "type": "Orthogonal",
-      "sourcePointX": 831,
-      "sourcePointY": 210.45,
-      "targetPointX": 237,
-      "targetPointY": 191
+      "sourcePointX": 1025,
+      "sourcePointY": 257.45,
+      "targetPointX": 668,
+      "targetPointY": 174
     },
     {
       "id": "Link21ph64N",
@@ -314,34 +331,14 @@
       "targetPointY": 318.83
     },
     {
-      "id": "Link1eMB2X",
-      "sourceId": "",
-      "targetId": "",
-      "type": "Orthogonal",
-      "sourcePointX": 712,
-      "sourcePointY": 311,
-      "targetPointX": 766.86,
-      "targetPointY": 365.86
-    },
-    {
-      "id": "Link1fAB96",
-      "sourceId": "",
-      "targetId": "",
-      "type": "Orthogonal",
-      "sourcePointX": 928,
-      "sourcePointY": 132,
-      "targetPointX": 982.86,
-      "targetPointY": 186.86
-    },
-    {
-      "id": "link33w2wGS",
-      "sourceId": "",
-      "targetId": "",
+      "id": "link33MsRJr",
+      "sourceId": "TestIntent",
+      "targetId": "Test 2Intent",
       "type": "Bezier",
-      "sourcePointX": 71,
-      "sourcePointY": 634,
-      "targetPointX": 132.29,
-      "targetPointY": 695.29
+      "sourcePointX": 471,
+      "sourcePointY": 505,
+      "targetPointX": 456,
+      "targetPointY": 346
     }
   ],
   "services": [
@@ -359,11 +356,6 @@
       "name": "external_1",
       "uri": "\"bot/event/external_1\"",
       "id": 1
-    },
-    {
-      "name": "Google",
-      "uri": "www.google.gr",
-      "id": 2
     }
   ],
   "entities": [

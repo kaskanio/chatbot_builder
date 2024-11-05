@@ -5,6 +5,7 @@ import {
   Inject,
   Edit,
   Toolbar,
+  Page,
 } from '@syncfusion/ej2-react-grids';
 
 import {
@@ -83,11 +84,17 @@ function GlobalSlotsList() {
         actionComplete={handleActionComplete}
       >
         <ColumnsDirective>
+          <ColumnDirective
+            field="id"
+            headerText="ID"
+            isPrimaryKey={true}
+            width="40"
+          />
           <ColumnDirective field="name" headerText="Slot Name" width="160" />
           <ColumnDirective field="type" headerText="Type" width="100" />
           <ColumnDirective field="value" headerText="Value" width="250" />
         </ColumnsDirective>
-        <Inject services={[Edit, Toolbar]} />
+        <Inject services={[Edit, Toolbar, Page]} />
       </GridComponent>
     </div>
   );

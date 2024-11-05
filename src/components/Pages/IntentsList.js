@@ -38,28 +38,34 @@ function IntentsList() {
   }
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Intents</h1>
-      <form onSubmit={handleAddIntent} className="flex mb-4">
-        <input
-          type="text"
-          id="intentNameInput"
-          value={newIntentName}
-          onChange={handleIntentNameChange}
-          placeholder="Enter intent name"
-          className="p-2 border border-gray-400 rounded-l"
-        />
-        <Button
-          type="submit"
-          primary
-          loading={results.isLoading}
-          rounded
-          className="border-l-0 ml-2"
-        >
-          + Add Intent
-        </Button>
-      </form>
-      <div>{content}</div>
+    <div className="flex flex-col">
+      <div className="flex-grow p-4">
+        <h1 className="text-2xl font-bold mb-4">Intents</h1>
+        <form onSubmit={handleAddIntent} className="flex mb-4">
+          <input
+            type="text"
+            id="intentNameInput"
+            value={newIntentName}
+            onChange={handleIntentNameChange}
+            placeholder="Enter intent name"
+            className="p-2 border border-gray-400 rounded-l"
+          />
+          <Button
+            type="submit"
+            primary
+            loading={results.isLoading}
+            rounded
+            className="border-l-0 ml-2"
+          >
+            + Add Intent
+          </Button>
+        </form>
+        <div>{content}</div>
+      </div>
+      <div className="p-4 text-sm text-gray-600">
+        Note: Changes to this page will not apply to elements already inserted
+        into the Dialogues Diagram.
+      </div>
     </div>
   );
 }

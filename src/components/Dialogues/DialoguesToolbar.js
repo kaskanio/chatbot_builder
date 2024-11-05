@@ -4,7 +4,20 @@ import {
   BpmnDiagrams,
 } from '@syncfusion/ej2-react-diagrams';
 
-function DialoguesToolbar(diagramInstanceRef) {
+function DialoguesToolbar({
+  diagramInstanceRef,
+  selectedIntent,
+  relatedStrings,
+}) {
+  // You can now use selectedIntent and relatedStrings here
+
+  // // Log the variables to verify
+  // console.log(intentName, strings);
+
+  function createProperty(name, type) {
+    return { name: name, type: type };
+  }
+
   // Define the connector symbols
   let connectorSymbols = [
     {
@@ -57,23 +70,19 @@ function DialoguesToolbar(diagramInstanceRef) {
     },
   ];
 
-  // Define the node shapes
-  let triggerShape = [
+  let umlShapes = [
     {
       id: 'Intent',
-      text: 'Intent',
-      width: 30,
-      height: 30,
       shape: {
-        type: 'Bpmn',
-        shape: 'Gateway',
+        type: 'UmlClassifier',
+        enumerationShape: {
+          name: 'Hi',
+          members: [],
+          classifier: 'Enumeration',
+        },
       },
-      style: {
-        fill: '#6BA5D7',
-        strokeWidth: 2,
-        strokeColor: '#6BA5D7',
-      },
-      borderWidth: 1,
+      offsetX: 405,
+      offsetY: 105,
     },
   ];
 
@@ -81,8 +90,8 @@ function DialoguesToolbar(diagramInstanceRef) {
     {
       id: 'SpeakAction',
       text: 'Speak',
-      width: 35,
-      height: 35,
+      width: 170,
+      height: 100,
       shape: {
         type: 'Bpmn',
         shape: 'Activity',
@@ -103,8 +112,8 @@ function DialoguesToolbar(diagramInstanceRef) {
     {
       id: 'FireEventAction',
       text: 'Fire Event',
-      width: 35,
-      height: 35,
+      width: 170,
+      height: 100,
       shape: {
         type: 'Bpmn',
         shape: 'Activity',
@@ -125,8 +134,8 @@ function DialoguesToolbar(diagramInstanceRef) {
     {
       id: 'RESTCallAction',
       text: 'REST Call',
-      width: 35,
-      height: 35,
+      width: 170,
+      height: 100,
       shape: {
         type: 'Bpmn',
         shape: 'Activity',
@@ -147,8 +156,8 @@ function DialoguesToolbar(diagramInstanceRef) {
     {
       id: 'SetFormSlot',
       text: 'Form Slot',
-      width: 35,
-      height: 35,
+      width: 170,
+      height: 100,
       shape: {
         type: 'Bpmn',
         shape: 'Activity',
@@ -169,8 +178,8 @@ function DialoguesToolbar(diagramInstanceRef) {
     {
       id: 'SetGlobalSlot',
       text: 'Global Slot',
-      width: 35,
-      height: 35,
+      width: 170,
+      height: 100,
       shape: {
         type: 'Bpmn',
         shape: 'Activity',
@@ -199,20 +208,21 @@ function DialoguesToolbar(diagramInstanceRef) {
             expandMode="Multiple"
             palettes={[
               {
+                id: 'intents',
+                expanded: true,
+                symbols: umlShapes,
+                title: 'Intents',
+              },
+              {
                 id: 'connectors',
                 expanded: true,
                 symbols: connectorSymbols,
                 title: 'Connectors',
                 iconCss: 'e-ddb-icons e-connector',
               },
+
               {
-                id: 'Triggers',
-                expanded: true,
-                symbols: triggerShape,
-                title: 'Triggers',
-              },
-              {
-                id: 'ActionsForms',
+                id: 'actionsForms',
                 expanded: true,
                 symbols: actionShape,
                 title: 'Actions & Forms',

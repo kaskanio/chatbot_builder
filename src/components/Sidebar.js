@@ -18,60 +18,53 @@ function Sidebar() {
           </div>
           <ul className="space-y-0">
             {' '}
-            {/* Removed space between items */}
             <li className="mb-0">
               {' '}
-              {/* Further reduced margin between items */}
-              <div className="flex items-center py-1.5 px-4 rounded hover:bg-gray-800 cursor-pointer transition-colors duration-200">
-                <i className="fas fa-cog mr-3"></i>
-                <Link to="/dialogues" className="flex-grow">
+              <Link to="/dialogues" className="flex-grow">
+                <div className="flex items-center py-1.5 px-4 rounded hover:bg-gray-800 cursor-pointer transition-colors duration-200">
+                  <i className="fas fa-cog mr-3"></i>
                   Dialogues
-                </Link>
-              </div>
+                </div>
+              </Link>
             </li>
             <li className="mb-0">
               {' '}
-              {/* Further reduced margin between items */}
-              <div className="flex items-center py-1.5 px-4 rounded hover:bg-gray-800 cursor-pointer transition-colors duration-200">
-                <i className="fas fa-home mr-3"></i>
-                <Link to="/entities" className="flex-grow">
+              <Link to="/entities" className="flex-grow">
+                <div className="flex items-center py-1.5 px-4 rounded hover:bg-gray-800 cursor-pointer transition-colors duration-200">
+                  <i className="fas fa-home mr-3"></i>
                   Entities
-                </Link>
-              </div>
+                </div>
+              </Link>
             </li>
             <li className="mb-0">
               {' '}
-              {/* Further reduced margin between items */}
-              <div className="flex items-center py-1.5 px-4 rounded hover:bg-gray-800 cursor-pointer transition-colors duration-200">
-                <i className="fas fa-home mr-3"></i>
-                <Link to="/synonyms" className="flex-grow">
-                  Synonym
-                </Link>
-              </div>
+              <Link to="/synonyms" className="flex-grow">
+                <div className="flex items-center py-1.5 px-4 rounded hover:bg-gray-800 cursor-pointer transition-colors duration-200">
+                  <i className="fas fa-home mr-3"></i>
+                  Synonyms
+                </div>
+              </Link>
             </li>
             <li className="mb-0">
               {' '}
-              {/* Further reduced margin between items */}
-              <div className="flex items-center py-1.5 px-4 rounded hover:bg-gray-800 cursor-pointer transition-colors duration-200">
-                <i className="fas fa-home mr-3"></i>
-                <Link to="/globalSlots" className="flex-grow">
+              <Link to="/globalSlots" className="flex-grow">
+                <div className="flex items-center py-1.5 px-4 rounded hover:bg-gray-800 cursor-pointer transition-colors duration-200">
+                  <i className="fas fa-home mr-3"></i>
                   Global Slots
-                </Link>
-              </div>
+                </div>
+              </Link>
             </li>
             <li className="mb-0">
               {' '}
-              {/* Further reduced margin between items */}
-              <div className="flex items-center py-1.5 px-4 rounded hover:bg-gray-800 cursor-pointer transition-colors duration-200">
-                <i className="fas fa-home mr-3"></i>
-                <Link to="/services" className="flex-grow">
+              <Link to="/services" className="flex-grow">
+                <div className="flex items-center py-1.5 px-4 rounded hover:bg-gray-800 cursor-pointer transition-colors duration-200">
+                  <i className="fas fa-home mr-3"></i>
                   Services
-                </Link>
-              </div>
+                </div>
+              </Link>
             </li>
             <li className="mb-0">
               {' '}
-              {/* Further reduced margin between items */}
               <div
                 className="flex items-center py-1.5 px-4 rounded hover:bg-gray-800 cursor-pointer transition-colors duration-200"
                 onClick={toggleTriggers}
@@ -89,21 +82,19 @@ function Sidebar() {
                   {' '}
                   {/* Further reduced space between submenu items */}
                   <li>
-                    <Link
-                      to="/intents"
-                      className="flex items-center py-1.5 px-4 rounded hover:bg-gray-800 transition-colors duration-200"
-                    >
-                      <i className="fas fa-circle mr-3 text-xs"></i>
-                      Intents
+                    <Link to="/intents">
+                      <div className="flex items-center py-1.5 rounded hover:bg-gray-800 transition-colors duration-200">
+                        <i className="fas fa-circle mr-3 text-xs"></i>
+                        Intents
+                      </div>
                     </Link>
                   </li>
                   <li>
-                    <Link
-                      to="/events"
-                      className="flex items-center py-1.5 px-4 rounded hover:bg-gray-800 transition-colors duration-200"
-                    >
-                      <i className="fas fa-circle mr-3 text-xs"></i>
-                      Events
+                    <Link to="/events">
+                      <div className="flex items-center py-1.5 rounded hover:bg-gray-800 transition-colors duration-200">
+                        <i className="fas fa-circle mr-3 text-xs"></i>
+                        Events
+                      </div>
                     </Link>
                   </li>
                 </ul>
