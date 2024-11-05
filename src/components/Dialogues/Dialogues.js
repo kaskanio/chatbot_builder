@@ -10,7 +10,7 @@ import {
 import DialoguesToolbar from './DialoguesToolbar';
 import DialogSpeak from './DialogSpeak';
 import DialogEvent from './DialogEvent';
-import DialogIntentRefresh from './DialogIntentRefresh';
+import DialogIntent from './DialogIntent';
 import {
   handlePropertyChange,
   handleSymbolDrag,
@@ -21,13 +21,11 @@ import {
   useFetchAllStringsQuery,
   useEditStringMutation,
   useAddStringMutation,
+  useRemoveStringMutation,
 } from '../../store'; // Import the hook
 
-// handlers.js
-
-// Dialogues.js
-
 const Dialogues = forwardRef((props, ref) => {
+  const [nodes, setNodes] = useState([]);
   const [showDialogSpeak, setShowDialogSpeak] = useState(false);
   const [showDialogFireEvent, setShowDialogFireEvent] = useState(false);
   const [showDialogIntentRefresh, setShowDialogIntentRefresh] = useState(false);
@@ -39,9 +37,11 @@ const Dialogues = forwardRef((props, ref) => {
   const dispatch = useDispatch();
   const diagramData = useSelector((state) => state.diagram.diagramData);
 
+  const [previousStringsData, setPreviousStringsData] = useState(null);
   const { data: stringsData } = useFetchAllStringsQuery();
   const [editString] = useEditStringMutation();
   const [addString] = useAddStringMutation();
+  const [removeString] = useRemoveStringMutation();
 
   // Dispatch the action to load the diagram state from Redux when the component mounts
   useEffect(() => {
@@ -56,7 +56,7 @@ const Dialogues = forwardRef((props, ref) => {
       diagramInstanceRef.current.fitToPage();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Empty dependency array ensures this runs only once
+  }, []); // Add diagramData as a dependency
 
   // Save the diagram state to Redux
   const handleSaveDiagram = () => {
@@ -96,6 +96,7 @@ const Dialogues = forwardRef((props, ref) => {
         const diagramData = JSON.parse(e.target.result);
         if (diagramInstanceRef.current) {
           diagramInstanceRef.current.loadDiagram(diagramData);
+          setNodes(diagramData.nodes || []); // Update nodes state with loaded data
         }
       };
       reader.readAsText(file);
@@ -105,7 +106,6 @@ const Dialogues = forwardRef((props, ref) => {
   // Function to add a new node to the nodes array
   const addNewNode = (node) => {
     diagramInstanceRef.current.addNode(node);
-    // setNodes((prevNodes) => [...prevNodes, node]);
   };
 
   // Watch for changes to newNode and add it to nodes array
@@ -115,23 +115,42 @@ const Dialogues = forwardRef((props, ref) => {
     }
   }, [newNode]);
 
-  // const nodeTemplate = (node) => {
-  //   if (node.shape && node.shape.type === 'UmlClassifier') {
-  //     // Customize the node rendering here
-  //     return (
-  //       <div>
-  //         <div>{node.shape.classShape.name}</div>
-  //         {/* Render attributes as part of the node */}
-  //         <div>
-  //           {node.shape.classShape.attributes.map((attr, index) => (
-  //             <div key={index}>{attr.name}</div>
-  //           ))}
-  //         </div>
-  //       </div>
-  //     );
-  //   }
-  //   return null;
-  // };
+  // Function to fetch data from server and update nodes
+  const handleFetchFromServer = (args) => {
+    if (diagramInstanceRef.current && stringsData) {
+      let currentNodes = args.diagram.nodes;
+      console.log('Current nodes: ', currentNodes);
+      console.log('Strings data:', stringsData);
+
+      // Update the nodes with the latest strings data
+      const updatedNodes = currentNodes.map((node) => {
+        if (node.shape && node.shape.enumerationShape) {
+          const updatedEnumerationShape =
+            node.shape.enumerationShape.members.map((enumMember) => {
+              const matchingString = stringsData.find(
+                (string) => string.name === enumMember.name
+              );
+              if (matchingString && matchingString.value !== enumMember.value) {
+                return { ...enumMember, value: matchingString.value };
+              }
+              return enumMember;
+            });
+          return {
+            ...node,
+            shape: {
+              ...node.shape,
+              enumerationShape: updatedEnumerationShape,
+            },
+          };
+        }
+        return node;
+      });
+      console.log('Updated nodes: ', updatedNodes);
+      // setNodes(updatedNodes);
+      // console.log('Nodes updated:', updatedNodes);
+      // diagramInstanceRef.current.loadDiagram({ nodes: updatedNodes });
+    }
+  };
 
   let content;
   content = (
@@ -149,7 +168,7 @@ const Dialogues = forwardRef((props, ref) => {
           )
         }
         collectionChange={(args) => {
-          handleCollectionChange(args);
+          handleCollectionChange(args, removeString, stringsData);
         }}
         propertyChange={(args) => {
           handlePropertyChange(
@@ -159,6 +178,9 @@ const Dialogues = forwardRef((props, ref) => {
             stringsData,
             selectedIntent
           );
+        }}
+        loaded={(args) => {
+          handleFetchFromServer(args);
         }}
         ref={(diagram) => {
           diagramInstanceRef.current = diagram;
@@ -195,6 +217,12 @@ const Dialogues = forwardRef((props, ref) => {
         >
           Load Diagram
         </label>
+        <button
+          className="bg-yellow-500 text-white px-4 py-2 rounded"
+          onClick={handleFetchFromServer}
+        >
+          Fetch from Server
+        </button>
       </div>
       <div className="flex flex-1">
         <div className="flex-1 mb-9">{content}</div>
@@ -207,7 +235,7 @@ const Dialogues = forwardRef((props, ref) => {
       </div>
 
       <div>
-        <DialogIntentRefresh
+        <DialogIntent
           showDialogIntentRefresh={showDialogIntentRefresh}
           setShowDialogIntentRefresh={setShowDialogIntentRefresh}
           selectedIntent={selectedIntent}

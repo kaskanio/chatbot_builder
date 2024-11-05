@@ -41,7 +41,7 @@ function Sidebar() {
               <Link to="/synonyms" className="flex-grow">
                 <div className="flex items-center py-1.5 px-4 rounded hover:bg-gray-800 cursor-pointer transition-colors duration-200">
                   <i className="fas fa-home mr-3"></i>
-                  Synonym
+                  Synonyms
                 </div>
               </Link>
             </li>

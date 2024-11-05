@@ -11,40 +11,112 @@
   ],
   "strings": [
     {
-      "name": "hi girl",
+      "name": "are you a bot?",
       "intentId": 2,
       "intentName": "bot_challenge",
-      "id": 1
+      "id": 14
     },
     {
-      "name": "yo",
+      "name": "are you a human?",
       "intentId": 2,
       "intentName": "bot_challenge",
-      "id": 2
+      "id": 15
     },
     {
-      "name": "",
+      "name": "am i talking to a bot?",
       "intentId": 2,
       "intentName": "bot_challenge",
-      "id": 3
+      "id": 16
     },
     {
-      "name": "nice",
+      "name": "am i talking to a human?",
       "intentId": 2,
       "intentName": "bot_challenge",
-      "id": 4
+      "id": 17
     },
     {
-      "name": "cewl",
-      "intentId": 2,
-      "intentName": "bot_challenge",
-      "id": 5
+      "name": "hey xw",
+      "intentId": 1,
+      "intentName": "greet",
+      "id": 18
     },
     {
-      "name": "dfsagdg",
+      "name": "hello",
+      "intentId": 1,
+      "intentName": "greet",
+      "id": 19
+    },
+    {
+      "name": "hi",
+      "intentId": 1,
+      "intentName": "greet",
+      "id": 20
+    },
+    {
+      "name": "hello there",
+      "intentId": 1,
+      "intentName": "greet",
+      "id": 21
+    },
+    {
+      "name": "good morning",
+      "intentId": 1,
+      "intentName": "greet",
+      "id": 22
+    },
+    {
+      "name": "good evening",
+      "intentId": 1,
+      "intentName": "greet",
+      "id": 23
+    },
+    {
+      "name": "moin",
+      "intentId": 1,
+      "intentName": "greet",
+      "id": 24
+    },
+    {
+      "name": "hey there",
+      "intentId": 1,
+      "intentName": "greet",
+      "id": 25
+    },
+    {
+      "name": "let's go",
+      "intentId": 1,
+      "intentName": "greet",
+      "id": 26
+    },
+    {
+      "name": "hey dude",
+      "intentId": 1,
+      "intentName": "greet",
+      "id": 27
+    },
+    {
+      "name": "goodmorning",
+      "intentId": 1,
+      "intentName": "greet",
+      "id": 28
+    },
+    {
+      "name": "goodevening",
+      "intentId": 1,
+      "intentName": "greet",
+      "id": 29
+    },
+    {
+      "name": "there you go!",
       "intentId": 2,
       "intentName": "bot_challenge",
-      "id": 6
+      "id": 31
+    },
+    {
+      "name": "dawd",
+      "intentId": 1,
+      "intentName": "greet",
+      "id": 32
     }
   ],
   "intentNodes": [
@@ -280,11 +352,6 @@
       "name": "external_1",
       "uri": "\"bot/event/external_1\"",
       "id": 1
-    },
-    {
-      "name": "Google",
-      "uri": "www.google.gr",
-      "id": 2
     }
   ],
   "entities": [

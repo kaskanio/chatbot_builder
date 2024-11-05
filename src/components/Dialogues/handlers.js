@@ -1,5 +1,3 @@
-import { useFetchStringByNameQuery } from '../../store';
-
 // handlers.js
 export function handleSymbolDrag(
   args,
@@ -10,20 +8,29 @@ export function handleSymbolDrag(
   console.log('To stoixeio pou petaksa einai to: ', args);
 
   if (args.element.propName === 'nodes') {
-    if (
-      args.target.properties.shape.properties.classShape.propName ===
-      'classShape'
-    ) {
+    if (args.element.properties.shape.properties.type === 'UmlClassifier') {
       args.cancel = true;
       setShowDialogIntentRefresh(true);
-    } else if (args.element.shape === 'BpmnShape') {
-      if (args.element.activity.task.type === 'User') {
+    } else if (args.element.properties.shape.properties.type === 'Bpmn') {
+      if (args.element.properties.shape.activity.task.type === 'User') {
         setShowDialogSpeak(true);
       } else if (
         args.element.properties.shape.activity.task.type ===
         'InstantiatingReceive'
       ) {
         setShowDialogFireEvent(true);
+      } else if (
+        args.element.properties.shape.activity.task.type === 'Service'
+      ) {
+        console.log('REST Call');
+      } else if (
+        args.element.properties.shape.activity.task.type === 'BusinessRule'
+      ) {
+        console.log('BusinessRule');
+      } else if (
+        args.element.properties.shape.activity.task.type === 'Manual'
+      ) {
+        console.log('Manual');
       }
     }
   }
@@ -36,12 +43,9 @@ export function handlePropertyChange(
   stringsData,
   selectedIntent
 ) {
-  // PREPEI NA DW POS NA KANW DELETE TO STRING OTAN TO SVINW APO TO DIAGRAMA
-  console.log(args);
   if (args.diagramAction === 'TextEdit') {
     if (args.newValue.annotations) {
       console.log('To args einai: ', args);
-      // console.log('To stringsData ayto einai: ', stringsData);
 
       // Search for the object with a matching name
       const matchingString = stringsData.find(
@@ -68,13 +72,44 @@ export function handlePropertyChange(
   }
 }
 
-export function handleCollectionChange(args) {
-  // Cancels the addition of attributes as a seperate element in the diagram
+export function handleCollectionChange(args, removeString, stringsData) {
+  // Cancels the addition of attributes as a separate element in the diagram
   if (args.type === 'Addition' && !args.parentId) {
     args.cancel = true;
   }
-}
 
+  /* This is very weird, it is not working as expected. 
+  That's because i want the strings to be deleted from the db.json when i delete them from the diagram, 
+  but the intents should not be deleted from the db.json if i delete them from the diagram. 
+  The user will be confused with this behaviour. */
+
+  // if (
+  //   args.type === 'Removal' &&
+  //   args.state === 'Changed' &&
+  //   args.element.umlIndex
+  // ) {
+  //   // Check if the element being removed is part of a node
+  //   if (args.element.parentId) {
+  //     console.log('Element is part of a node, not removing string:', args);
+  //   }
+
+  //   console.log(
+  //     'Paw na sviso:  ',
+  //     args.element.properties.annotations[0].properties.content
+  //   );
+
+  //   const matchingString = stringsData.find(
+  //     (string) =>
+  //       string.name ===
+  //       args.element.properties.annotations[0].properties.content
+  //   );
+
+  //   if (matchingString) {
+  //     const stringId = matchingString.id;
+  //     removeString(stringId);
+  //   }
+  // }
+}
 // export function handleCollectionChange(
 //   args,
 //   deleteNode,
