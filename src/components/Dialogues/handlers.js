@@ -1,24 +1,24 @@
 // handlers.js
 export function handleSymbolDrag(
   args,
-  setShowDialogIntentRefresh,
   setShowDialogSpeak,
-  setShowDialogFireEvent
+  setShowDialogFireEvent,
+  setDraggedNode
 ) {
   console.log('To stoixeio pou petaksa einai to: ', args);
 
   if (args.element.propName === 'nodes') {
-    if (args.element.properties.shape.properties.type === 'UmlClassifier') {
-      args.cancel = true;
-      setShowDialogIntentRefresh(true);
-    } else if (args.element.properties.shape.properties.type === 'Bpmn') {
+    if (args.element.properties.shape.properties.type === 'Bpmn') {
       if (args.element.properties.shape.activity.task.type === 'User') {
         setShowDialogSpeak(true);
+        console.log('To petixa?');
       } else if (
         args.element.properties.shape.activity.task.type ===
         'InstantiatingReceive'
       ) {
         setShowDialogFireEvent(true);
+        setDraggedNode(args.element);
+        args.cancel = true;
       } else if (
         args.element.properties.shape.activity.task.type === 'Service'
       ) {
@@ -36,53 +36,15 @@ export function handleSymbolDrag(
   }
 }
 
-export function handlePropertyChange(
-  args,
-  editString,
-  addString,
-  stringsData,
-  selectedIntent
-) {
-  if (args.diagramAction === 'TextEdit') {
-    if (args.newValue.annotations) {
-      console.log('To args einai: ', args);
-
-      // Search for the object with a matching name
-      const matchingString = stringsData.find(
-        (string) => string.name === args.oldValue.annotations[0].content
-      );
-      let newName = args.newValue.annotations[0].content;
-      newName = newName.substring(2).trim();
-      if (matchingString) {
-        const stringId = matchingString.id;
-
-        console.log('To stringId einai: ', stringId);
-        console.log('To newName einai: ', newName);
-        editString({ stringId, newName })
-          .then((response) => {
-            console.log('String updated successfully:', response);
-          })
-          .catch((error) => {
-            console.error('Error updating string:', error);
-          });
-      } else {
-        addString({ intent: selectedIntent, newStringName: newName });
-      }
-    }
-  }
+export function handlePropertyChange(args) {
+  console.log('To stoixeio pou allaksa einai to: ', args);
 }
 
-export function handleCollectionChange(args, removeString, stringsData) {
-  // Cancels the addition of attributes as a separate element in the diagram
-  if (args.type === 'Addition' && !args.parentId) {
-    args.cancel = true;
-  }
-
+export function handleCollectionChange(args) {
   /* This is very weird, it is not working as expected. 
   That's because i want the strings to be deleted from the db.json when i delete them from the diagram, 
   but the intents should not be deleted from the db.json if i delete them from the diagram. 
   The user will be confused with this behaviour. */
-
   // if (
   //   args.type === 'Removal' &&
   //   args.state === 'Changed' &&
@@ -92,18 +54,15 @@ export function handleCollectionChange(args, removeString, stringsData) {
   //   if (args.element.parentId) {
   //     console.log('Element is part of a node, not removing string:', args);
   //   }
-
   //   console.log(
   //     'Paw na sviso:  ',
   //     args.element.properties.annotations[0].properties.content
   //   );
-
   //   const matchingString = stringsData.find(
   //     (string) =>
   //       string.name ===
   //       args.element.properties.annotations[0].properties.content
   //   );
-
   //   if (matchingString) {
   //     const stringId = matchingString.id;
   //     removeString(stringId);

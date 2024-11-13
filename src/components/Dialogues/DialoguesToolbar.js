@@ -1,7 +1,9 @@
+import React from 'react';
 import {
   SymbolPaletteComponent,
   Inject,
   BpmnDiagrams,
+  AnnotationConstraints,
 } from '@syncfusion/ej2-react-diagrams';
 
 function DialoguesToolbar({
@@ -9,14 +11,7 @@ function DialoguesToolbar({
   selectedIntent,
   relatedStrings,
 }) {
-  // You can now use selectedIntent and relatedStrings here
-
-  // // Log the variables to verify
-  // console.log(intentName, strings);
-
-  function createProperty(name, type) {
-    return { name: name, type: type };
-  }
+  // Fetch events from the API
 
   // Define the connector symbols
   let connectorSymbols = [
@@ -76,10 +71,10 @@ function DialoguesToolbar({
       shape: {
         type: 'UmlClassifier',
         enumerationShape: {
-          name: 'Hi',
+          name: 'Intent Name',
           members: [],
-          classifier: 'Enumeration',
         },
+        classifier: 'Enumeration',
       },
       offsetX: 405,
       offsetY: 105,
@@ -92,6 +87,45 @@ function DialoguesToolbar({
       text: 'Speak',
       width: 170,
       height: 100,
+      annotations: [
+        {
+          // Non-editable annotation at the top
+          content: 'Speak',
+          offset: { x: 0.5, y: 0.1 }, // Position at the top
+          style: {
+            color: '#000000', // Text color
+            fontSize: 12, // Font size
+            fontFamily: 'Arial', // Font family
+            bold: true, // Bold text
+            italic: false, // Italic text
+            textAlign: 'Center', // Text alignment
+          },
+          constraints: AnnotationConstraints.ReadOnly, // Make it non-editable
+        },
+        {
+          // Editable annotation for user input
+          content: 'Type String...',
+          offset: { x: 0.5, y: 0.5 }, // Position at the center
+          style: {
+            color: '#000000', // Text color
+            fontSize: 15, // Font size
+            fontFamily: 'Arial', // Font family
+            bold: true, // Bold text
+            italic: true, // Italic text
+            strokeColor: '#0056b3', // Border color
+            strokeWidth: 2, // Border width
+            textAlign: 'Center', // Text alignment
+            textOverflow: 'Wrap', // Text overflow
+            padding: { left: 10, right: 10, top: 5, bottom: 5 }, // Padding
+            shadow: {
+              angle: 45, // Shadow angle
+              distance: 5, // Shadow distance
+              opacity: 0.5, // Shadow opacity
+              color: '#000000', // Shadow color
+            },
+          },
+        },
+      ],
       shape: {
         type: 'Bpmn',
         shape: 'Activity',
@@ -114,6 +148,22 @@ function DialoguesToolbar({
       text: 'Fire Event',
       width: 170,
       height: 100,
+      annotations: [
+        {
+          // Non-editable annotation at the top
+          content: 'Fire Event',
+          offset: { x: 0.5, y: 0.1 }, // Position at the top
+          style: {
+            color: '#000000', // Text color
+            fontSize: 15, // Font size
+            fontFamily: 'Arial', // Font family
+            bold: true, // Bold text
+            italic: false, // Italic text
+            textAlign: 'Center', // Text alignment
+          },
+          constraints: AnnotationConstraints.ReadOnly, // Make it non-editable
+        },
+      ],
       shape: {
         type: 'Bpmn',
         shape: 'Activity',

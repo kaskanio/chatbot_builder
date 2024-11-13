@@ -1,10 +1,6 @@
 import { DialogComponent } from '@syncfusion/ej2-react-popups';
 import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns';
-import {
-  useFetchEventQuery,
-  useAddEventMutation,
-  useAddNodeMutation,
-} from '../../store';
+import { useFetchEventQuery, useAddEventMutation } from '../../store';
 import { useState, useRef } from 'react';
 import Skeleton from '../modules/Skeleton';
 import Button from '../modules/Button';
@@ -12,7 +8,7 @@ import Button from '../modules/Button';
 function DialogEvent({
   showDialogFireEvent,
   setShowDialogFireEvent,
-  nodeToAdd,
+  onSelectEvent,
 }) {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const newEventNameRef = useRef('');
@@ -23,9 +19,7 @@ function DialogEvent({
     isLoading: eventsLoading,
   } = useFetchEventQuery();
   const [addEvent, addEventResults] = useAddEventMutation();
-  const [addNode, addNodeResults] = useAddNodeMutation();
 
-  // Function to hide the dialog
   const hideDialog = () => {
     setShowDialogFireEvent(false);
   };
@@ -33,7 +27,6 @@ function DialogEvent({
 
   let eventsNames, content;
 
-  // Fetch the events from the database
   if (eventsLoading) {
     eventsNames = <Skeleton className="h-10 w-full" times={3} />;
   } else if (eventsError) {
@@ -64,38 +57,20 @@ function DialogEvent({
     e.preventDefault();
     const newEventName = newEventNameRef.current.value;
     const newEventUri = newEventUriRef.current.value;
-    console.log('To event poy paw na prosthesw einai: ', newEventName);
     if (selectedEvent === 'Add New Event') {
       addEvent({ name: newEventName, uri: newEventUri })
         .unwrap()
         .then((newEvent) => {
-          addNode({
-            nodeId: newEvent.name,
-            shape: nodeToAdd.shape.properties.shape,
-            type: nodeToAdd.shape.properties.type,
-            activity: nodeToAdd.shape.activity.activity,
-            taskType: nodeToAdd.shape.activity.task.type,
-            fill: nodeToAdd.style.fill,
-            strokeWidth: nodeToAdd.style.strokeWidth,
-            strokeColor: nodeToAdd.style.strokeColor,
-          });
-          hideDialog();
+          onSelectEvent(newEvent);
         })
         .catch((error) => {
           console.error('Error adding event:', error);
         });
     } else {
-      addNode({
-        nodeId: selectedEvent,
-        shape: nodeToAdd.shape.properties.shape,
-        type: nodeToAdd.shape.properties.type,
-        activity: nodeToAdd.shape.activity.activity,
-        taskType: nodeToAdd.shape.activity.task.type,
-        fill: nodeToAdd.style.fill,
-        strokeWidth: nodeToAdd.style.strokeWidth,
-        strokeColor: nodeToAdd.style.strokeColor,
-      });
-      hideDialog();
+      const selectedEventObj = eventsData.find(
+        (event) => `${event.name} (${event.uri})` === selectedEvent
+      );
+      onSelectEvent(selectedEventObj);
     }
   };
 
@@ -138,7 +113,7 @@ function DialogEvent({
           <Button
             type="submit"
             primary
-            loading={addNodeResults.isLoading || addEventResults.isLoading}
+            loading={addEventResults.isLoading}
             rounded
             className="mr-2"
             onClick={handleAddNodeEvent}
