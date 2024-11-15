@@ -1,0 +1,37 @@
+.e-dialog .e-dlg-content {
+  color: red;
+  font-size: 10px;
+  font-weight: normal;
+  line-height: normal;
+}
+
+.e-dlg-overlay {
+  background-color: slategray;
+  opacity: 0.6;
+}
+
+/* To change the icon content */
+.e-dialog .e-south-east::before,
+.e-dialog .e-south-west::before {
+  content: '\f047';
+}
+
+/* To specify font size and color */
+.e-dialog .e-btn .e-btn-icon.e-icon-dlg-close {
+  font-size: 12px;
+  color: red;
+}
+
+/* Add rounded corners to the dialog */
+.e-dialog {
+  border-radius: 15px !important;
+  overflow: hidden; /* Ensure the rounded corners are visible */
+}
+
+.e-dialog .e-dlg-header-content,
+.e-dialog .e-footer-content {
+  border-top-left-radius: 15px !important;
+  border-top-right-radius: 15px !important;
+  border-bottom-left-radius: 15px !important;
+  border-bottom-right-radius: 15px !important;
+}

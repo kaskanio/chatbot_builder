@@ -4,6 +4,9 @@ import { useFetchEventQuery, useAddEventMutation } from '../../store';
 import { useState, useRef } from 'react';
 import Skeleton from '../modules/Skeleton';
 import Button from '../modules/Button';
+import { Spinner } from '@syncfusion/ej2-react-popups';
+import { Box, Typography, Grid, TextField } from '@mui/material';
+import './dialog.css';
 
 function DialogEvent({
   showDialogFireEvent,
@@ -17,6 +20,7 @@ function DialogEvent({
     data: eventsData,
     error: eventsError,
     isLoading: eventsLoading,
+    refetch,
   } = useFetchEventQuery();
   const [addEvent, addEventResults] = useAddEventMutation();
 
@@ -32,12 +36,10 @@ function DialogEvent({
   } else if (eventsError) {
     eventsNames = <div>Error loading events.</div>;
   } else {
-    eventsNames = eventsData.map((event) => {
-      return `${event.name} (${event.uri})`;
-    });
+    eventsNames = eventsData.map((event) => event.name);
     eventsNames.push('Add New Event');
     content = eventsData.map((event) => {
-      if (selectedEvent === `${event.name} (${event.uri})`) {
+      if (selectedEvent === event.name) {
         if (event.strings) {
           return event.strings.map((string) => (
             <div
@@ -68,7 +70,7 @@ function DialogEvent({
         });
     } else {
       const selectedEventObj = eventsData.find(
-        (event) => `${event.name} (${event.uri})` === selectedEvent
+        (event) => event.name === selectedEvent
       );
       onSelectEvent(selectedEventObj);
     }
@@ -78,38 +80,38 @@ function DialogEvent({
     setSelectedEvent(e.value);
   };
 
-  const headerTemplate = () => {
-    return (
-      <div>
-        <div title="Select Event" className="e-icon-settings dlg-template">
-          Select Event
-        </div>
-      </div>
-    );
-  };
-
   const footerTemplate = () => {
     return (
-      <div className="flex flex-col w-full">
+      <Box display="flex" flexDirection="column" width="100%">
         {selectedEvent === 'Add New Event' && (
-          <div className="flex flex-col">
-            <input
-              id="eventNameInput"
-              ref={newEventNameRef}
-              type="text"
-              placeholder="Event Name"
-              className="w-full mb-2 p-2 border border-gray-300 rounded"
-            />
-            <input
-              id="eventUriInput"
-              ref={newEventUriRef}
-              type="text"
-              placeholder="Event URI"
-              className="w-full mb-2 p-2 border border-gray-300 rounded"
-            />
-          </div>
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <TextField
+                id="eventNameInput"
+                inputRef={newEventNameRef}
+                label="Event Name"
+                fullWidth
+                size="small"
+                margin="dense"
+                inputProps={{ style: { fontSize: 12 } }}
+                InputLabelProps={{ style: { fontSize: 12 } }}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                id="eventUriInput"
+                inputRef={newEventUriRef}
+                label="Event URI"
+                fullWidth
+                size="small"
+                margin="dense"
+                inputProps={{ style: { fontSize: 12 } }}
+                InputLabelProps={{ style: { fontSize: 12 } }}
+              />
+            </Grid>
+          </Grid>
         )}
-        <div className="flex justify-between mt-4">
+        <Box display="flex" justifyContent="space-between" mt={2}>
           <Button
             type="submit"
             primary
@@ -129,32 +131,81 @@ function DialogEvent({
           >
             Cancel
           </Button>
-        </div>
-      </div>
+        </Box>
+      </Box>
     );
   };
 
   return (
     <DialogComponent
       id="dialog"
-      header={headerTemplate}
+      header="Fire Event Action"
       visible={showDialogFireEvent}
       close={hideDialog}
       width="600px"
       animationSettings={settings}
       footerTemplate={footerTemplate}
       enableResize={true}
+      showCloseIcon={true}
+      position={{ X: 'center', Y: '250' }}
+      cssClass="custom-dialog"
     >
-      <div className="mt-4">
-        <DropDownListComponent
-          id="ddlelement"
-          dataSource={eventsNames}
-          placeholder="Select an Event"
-          className="w-full"
-          change={handleEventChange}
-        />
-        <div>{content}</div>
-      </div>
+      <Box mt={2}>
+        {eventsLoading ? (
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            height="100%"
+          >
+            <Spinner />
+          </Box>
+        ) : eventsError ? (
+          <Box mt={4} textAlign="center">
+            <Typography color="error">Error fetching events</Typography>
+            <Button onClick={refetch} primary rounded>
+              Retry
+            </Button>
+          </Box>
+        ) : (
+          <>
+            <Typography mb={2} color="textSecondary">
+              Please select an event from the list below:
+            </Typography>
+            <DropDownListComponent
+              id="ddlelement"
+              dataSource={eventsNames}
+              placeholder="Select an Event"
+              className="w-full"
+              change={handleEventChange}
+            />
+            {selectedEvent && (
+              <Box
+                mt={2}
+                p={2}
+                border={1}
+                borderColor="grey.300"
+                borderRadius={1}
+              >
+                <Typography variant="subtitle1" mb={1}>
+                  Event Details
+                </Typography>
+                <Typography variant="body2">
+                  <strong>Name:</strong> {selectedEvent}
+                </Typography>
+                <Typography variant="body2">
+                  <strong>URI:</strong>{' '}
+                  {
+                    eventsData.find((event) => event.name === selectedEvent)
+                      ?.uri
+                  }
+                </Typography>
+              </Box>
+            )}
+            <Box mt={-2}>{content}</Box>
+          </>
+        )}
+      </Box>
     </DialogComponent>
   );
 }

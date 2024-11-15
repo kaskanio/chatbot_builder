@@ -5,6 +5,7 @@ import {
   Inject,
   Edit,
   Toolbar,
+  Page,
 } from '@syncfusion/ej2-react-grids';
 
 import {
@@ -54,7 +55,6 @@ function ServicesList() {
         // Add new service
         addService({
           name: args.data.name,
-          customId: args.data.id,
           verb: args.data.verb,
           host: args.data.host,
           port: args.data.port,
@@ -63,7 +63,6 @@ function ServicesList() {
       } else if (args.action === 'edit') {
         // Edit existing service
         editService({
-          id: args.data.id,
           newName: args.data.name,
           verb: args.data.verb,
           host: args.data.host,
@@ -92,7 +91,8 @@ function ServicesList() {
             field="id"
             headerText="ID"
             isPrimaryKey={true}
-            width="40"
+            width="60"
+            isIdentity={true}
           />
           <ColumnDirective field="name" headerText="Service Name" width="160" />
           <ColumnDirective field="verb" headerText="verb" />
@@ -100,7 +100,7 @@ function ServicesList() {
           <ColumnDirective field="port" headerText="port" />
           <ColumnDirective field="path" headerText="path" />
         </ColumnsDirective>
-        <Inject services={[Edit, Toolbar]} />
+        <Inject services={[Edit, Toolbar, Page]} />
       </GridComponent>
     </div>
   );

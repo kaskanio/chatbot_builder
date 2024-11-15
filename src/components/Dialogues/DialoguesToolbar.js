@@ -85,8 +85,8 @@ function DialoguesToolbar({
     {
       id: 'SpeakAction',
       text: 'Speak',
-      width: 170,
-      height: 100,
+      width: 250,
+      height: 130,
       annotations: [
         {
           // Non-editable annotation at the top
@@ -94,36 +94,13 @@ function DialoguesToolbar({
           offset: { x: 0.5, y: 0.1 }, // Position at the top
           style: {
             color: '#000000', // Text color
-            fontSize: 12, // Font size
+            fontSize: 15, // Font size
             fontFamily: 'Arial', // Font family
             bold: true, // Bold text
             italic: false, // Italic text
             textAlign: 'Center', // Text alignment
           },
           constraints: AnnotationConstraints.ReadOnly, // Make it non-editable
-        },
-        {
-          // Editable annotation for user input
-          content: 'Type String...',
-          offset: { x: 0.5, y: 0.5 }, // Position at the center
-          style: {
-            color: '#000000', // Text color
-            fontSize: 15, // Font size
-            fontFamily: 'Arial', // Font family
-            bold: true, // Bold text
-            italic: true, // Italic text
-            strokeColor: '#0056b3', // Border color
-            strokeWidth: 2, // Border width
-            textAlign: 'Center', // Text alignment
-            textOverflow: 'Wrap', // Text overflow
-            padding: { left: 10, right: 10, top: 5, bottom: 5 }, // Padding
-            shadow: {
-              angle: 45, // Shadow angle
-              distance: 5, // Shadow distance
-              opacity: 0.5, // Shadow opacity
-              color: '#000000', // Shadow color
-            },
-          },
         },
       ],
       shape: {
@@ -184,8 +161,8 @@ function DialoguesToolbar({
     {
       id: 'RESTCallAction',
       text: 'REST Call',
-      width: 170,
-      height: 100,
+      width: 200,
+      height: 150,
       shape: {
         type: 'Bpmn',
         shape: 'Activity',
@@ -196,6 +173,22 @@ function DialoguesToolbar({
           },
         },
       },
+      annotations: [
+        {
+          // Non-editable annotation at the top
+          content: 'Rest Call Service',
+          offset: { x: 0.5, y: 0.1 }, // Position at the top
+          style: {
+            color: '#000000', // Text color
+            fontSize: 15, // Font size
+            fontFamily: 'Arial', // Font family
+            bold: true, // Bold text
+            italic: false, // Italic text
+            textAlign: 'Center', // Text alignment
+          },
+          constraints: AnnotationConstraints.ReadOnly, // Make it non-editable
+        },
+      ],
       style: {
         fill: '#FFD700',
         strokeWidth: 2,

@@ -19,11 +19,11 @@ function App() {
 
       {/* Main Content */}
       <div className="flex flex-col flex-1 overflow-y-auto">
-        <div className="bg-white h-16 sticky top-0 shadow flex items-center justify-center px-4 sm:px-8">
+        {/* <div className="bg-white h-16 sticky top-0 shadow flex items-center justify-center px-4 sm:px-8">
           <h1 className="text-lg font-semibold text-indigo-800 text-center">
             Main Content
           </h1>
-        </div>
+        </div> */}
         <div className="flex-1 p-4 sm:p-8 overflow-y-auto">
           <Route path="/intents">
             <IntentsList />

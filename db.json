@@ -344,33 +344,36 @@
   "services": [
     {
       "name": "weather_svc",
-      "id": "1",
       "verb": "GET",
       "host": "r4a.issel.ee.auth.gr",
       "port": "8080",
-      "path": "/weather"
+      "path": "/weather",
+      "id": 1
+    },
+    {
+      "name": "sdfg",
+      "verb": "sdfg",
+      "host": "sdfg",
+      "port": "345",
+      "path": "sdfg",
+      "id": 2
     }
   ],
   "events": [
     {
       "name": "external_1",
-      "uri": "\"bot/event/external_1\"",
+      "uri": "    bot/event/external_1",
       "id": 1
     },
     {
-      "name": "test",
-      "uri": "\"google\"",
+      "name": "asdf",
+      "uri": "asdf",
       "id": 2
     },
     {
-      "name": "sdfa",
-      "uri": "sdfad",
+      "name": "sdafgds",
+      "uri": "asdfasd",
       "id": 3
-    },
-    {
-      "name": "sadfdas",
-      "uri": "asdfasdf",
-      "id": 4
     }
   ],
   "entities": [

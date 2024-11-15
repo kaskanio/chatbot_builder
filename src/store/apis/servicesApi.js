@@ -18,11 +18,11 @@ const servicesApi = createApi({
       }),
       addService: builder.mutation({
         invalidatesTags: ['Service'],
-        query: ({ name, customId, verb, host, port, path }) => {
+        query: ({ name, verb, host, port, path }) => {
           return {
             url: '/services',
             method: 'POST',
-            body: { name: name, id: customId, verb, host, port, path }, // Include customId in the body
+            body: { name: name, verb, host, port, path }, // Include customId in the body
           };
         },
       }),

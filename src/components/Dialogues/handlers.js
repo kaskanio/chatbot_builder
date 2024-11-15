@@ -3,6 +3,7 @@ export function handleSymbolDrag(
   args,
   setShowDialogSpeak,
   setShowDialogFireEvent,
+  setShowDialogRest,
   setDraggedNode
 ) {
   console.log('To stoixeio pou petaksa einai to: ', args);
@@ -11,7 +12,8 @@ export function handleSymbolDrag(
     if (args.element.properties.shape.properties.type === 'Bpmn') {
       if (args.element.properties.shape.activity.task.type === 'User') {
         setShowDialogSpeak(true);
-        console.log('To petixa?');
+        setDraggedNode(args.element);
+        args.cancel = true;
       } else if (
         args.element.properties.shape.activity.task.type ===
         'InstantiatingReceive'
@@ -23,6 +25,9 @@ export function handleSymbolDrag(
         args.element.properties.shape.activity.task.type === 'Service'
       ) {
         console.log('REST Call');
+        setShowDialogRest(true);
+        setDraggedNode(args.element);
+        args.cancel = true;
       } else if (
         args.element.properties.shape.activity.task.type === 'BusinessRule'
       ) {
@@ -36,9 +41,7 @@ export function handleSymbolDrag(
   }
 }
 
-export function handlePropertyChange(args) {
-  console.log('To stoixeio pou allaksa einai to: ', args);
-}
+export function handlePropertyChange(args) {}
 
 export function handleCollectionChange(args) {
   /* This is very weird, it is not working as expected. 

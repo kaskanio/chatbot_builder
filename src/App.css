@@ -45,3 +45,89 @@
 @import '../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css';
 @import '../node_modules/@syncfusion/ej2-notifications/styles/material.css';
 @import '../node_modules/@syncfusion/ej2-react-grids/styles/material.css';
+
+:root {
+  --primary-color: #4f46e5; /* Indigo */
+  --secondary-color: #f3f4f6; /* Light Gray */
+  --text-color: #333;
+  --background-color: #f9fafb;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--text-color);
+  background-color: var(--background-color);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--primary-color);
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button.primary:hover {
+  background-color: #5a54e0; /* Slightly lighter shade of primary color */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+button.secondary:hover {
+  background-color: #333; /* Slightly lighter shade of secondary color */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+button.success:hover {
+  background-color: #4caf50; /* Slightly lighter shade of success color */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+button.warning:hover {
+  background-color: #ffb300; /* Slightly lighter shade of warning color */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+button.danger:hover {
+  background-color: #e53935; /* Slightly lighter shade of danger color */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+.label-hover-effect {
+  background-color: #38a169; /* Green color */
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem; /* Rounded corners */
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.label-hover-effect:hover {
+  background-color: #2f855a; /* Darker shade of green */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}

@@ -30,7 +30,7 @@ function EventsList() {
 
   const returnEvents =
     data?.map((event) => ({
-      id: event.id, // assuming you still have an `id` field for unique identification
+      id: event.id,
       name: event.name,
       uri: event.uri,
     })) || [];
@@ -74,13 +74,15 @@ function EventsList() {
         editSettings={editSettings}
         toolbar={toolbar}
         actionComplete={handleActionComplete}
+        isIdentity={true}
       >
         <ColumnsDirective>
           <ColumnDirective
             field="id"
             headerText="ID"
             isPrimaryKey={true}
-            width="40"
+            width="60"
+            isIdentity={true}
           />
           <ColumnDirective field="name" headerText="Event Name" width="160" />
           <ColumnDirective field="uri" headerText="URI" width="250" />
