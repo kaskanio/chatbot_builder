@@ -349,14 +349,6 @@
       "port": "8080",
       "path": "/weather",
       "id": 1
-    },
-    {
-      "name": "sdfg",
-      "verb": "sdfg",
-      "host": "sdfg",
-      "port": "345",
-      "path": "sdfg",
-      "id": 2
     }
   ],
   "events": [
@@ -364,16 +356,6 @@
       "name": "external_1",
       "uri": "    bot/event/external_1",
       "id": 1
-    },
-    {
-      "name": "asdf",
-      "uri": "asdf",
-      "id": 2
-    },
-    {
-      "name": "sdafgds",
-      "uri": "asdfasd",
-      "id": 3
     }
   ],
   "entities": [

@@ -40,13 +40,11 @@ const Dialogues = forwardRef((props, ref) => {
     if (diagramInstanceRef.current && diagramData) {
       diagramInstanceRef.current.loadDiagram(diagramData);
     }
-  }, [diagramData]);
+  }, []);
 
   const handleSaveDiagram = () => {
     if (diagramInstanceRef.current) {
-      const serializedData = diagramInstanceRef.current.saveDiagram({
-        exclude: ['width', 'height', 'viewport'],
-      });
+      const serializedData = diagramInstanceRef.current.saveDiagram();
       dispatch(saveDiagramState(serializedData));
     }
   };
@@ -189,47 +187,37 @@ const Dialogues = forwardRef((props, ref) => {
 
   let content;
   content = (
-    <div>
-      <DiagramComponent
-        id="container"
-        width={'100%'}
-        height={'800px'}
-        drop={(args) =>
-          handleSymbolDrag(
-            args,
-            setShowDialogSpeak,
-            setShowDialogFireEvent,
-            setShowDialogRest,
-            setDraggedNode
-          )
-        }
-        collectionChange={(args) => {
-          handleCollectionChange(args);
-        }}
-        propertyChange={(args) => {
-          handlePropertyChange(args);
-        }}
-        ref={(diagram) => {
-          diagramInstanceRef.current = diagram;
-        }}
-        click={handleSaveDiagram}
-        keyUp={(args = 'Delete' || 'Enter') => {
-          handleSaveDiagram();
-        }}
-        contextMenuSettings={{
-          show: true,
-        }}
-      >
-        <Inject
-          services={[BpmnDiagrams, ConnectorEditing, DiagramContextMenu]}
-        />
-      </DiagramComponent>
-    </div>
+    <DiagramComponent
+      id="container"
+      width={'100%'}
+      height={'800px'}
+      drop={(args) =>
+        handleSymbolDrag(
+          args,
+          setShowDialogSpeak,
+          setShowDialogFireEvent,
+          setShowDialogRest,
+          setDraggedNode
+        )
+      }
+      ref={(diagram) => {
+        diagramInstanceRef.current = diagram;
+      }}
+      // click={handleSaveDiagram}
+      // keyUp={(args = 'Delete' || 'Enter') => {
+      //   handleSaveDiagram();
+      // }}
+      contextMenuSettings={{
+        show: true,
+      }}
+    >
+      <Inject services={[BpmnDiagrams, ConnectorEditing, DiagramContextMenu]} />
+    </DiagramComponent>
   );
 
   return (
     <div>
-      <div className="flex flex-col h-full">
+      <div className=" flex-col h-full">
         <div className="flex justify-between mb-4">
           <Button onClick={handleSaveToFile} primary rounded>
             Save Diagram

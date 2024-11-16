@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import ExpandablePanel from '../modules/ExpandablePanel';
 import Button from '../modules/Button';
-import { GoXCircle } from 'react-icons/go';
+import { GoTrash } from 'react-icons/go';
 import {
   useAddSynonymValueMutation,
   useRemoveSynonymValueMutation,
@@ -59,9 +59,9 @@ function SynonymContent({ synonym, header }) {
         type="submit"
         danger
         rounded
-        className="text-xs p-1"
+        className="text-xs p-5"
       >
-        <GoXCircle className="w-4 h-4" />
+        <GoTrash className="w-4 h-4" />
       </Button>
     );
   };

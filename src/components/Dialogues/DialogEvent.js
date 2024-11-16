@@ -37,7 +37,7 @@ function DialogEvent({
     eventsNames = <div>Error loading events.</div>;
   } else {
     eventsNames = eventsData.map((event) => event.name);
-    eventsNames.push('Add New Event');
+    eventsNames.push('Add New Event...');
     content = eventsData.map((event) => {
       if (selectedEvent === event.name) {
         if (event.strings) {
@@ -59,7 +59,7 @@ function DialogEvent({
     e.preventDefault();
     const newEventName = newEventNameRef.current.value;
     const newEventUri = newEventUriRef.current.value;
-    if (selectedEvent === 'Add New Event') {
+    if (selectedEvent === 'Add New Event...') {
       addEvent({ name: newEventName, uri: newEventUri })
         .unwrap()
         .then((newEvent) => {
@@ -83,7 +83,7 @@ function DialogEvent({
   const footerTemplate = () => {
     return (
       <Box display="flex" flexDirection="column" width="100%">
-        {selectedEvent === 'Add New Event' && (
+        {selectedEvent === 'Add New Event...' && (
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <TextField
@@ -179,7 +179,7 @@ function DialogEvent({
               className="w-full"
               change={handleEventChange}
             />
-            {selectedEvent && (
+            {selectedEvent && selectedEvent !== 'Add New Event...' && (
               <Box
                 mt={2}
                 p={2}
@@ -187,13 +187,21 @@ function DialogEvent({
                 borderColor="grey.300"
                 borderRadius={1}
               >
-                <Typography variant="subtitle1" mb={1}>
+                <Typography
+                  variant="subtitle1"
+                  mb={1}
+                  sx={{
+                    fontWeight: 'bold',
+                    color: 'black',
+                    fontSize: '1.25rem',
+                  }}
+                >
                   Event Details
                 </Typography>
-                <Typography variant="body2">
+                <Typography variant="body2" sx={{ color: 'black' }}>
                   <strong>Name:</strong> {selectedEvent}
                 </Typography>
-                <Typography variant="body2">
+                <Typography variant="body2" sx={{ color: 'black' }}>
                   <strong>URI:</strong>{' '}
                   {
                     eventsData.find((event) => event.name === selectedEvent)

@@ -35,7 +35,7 @@ function DialogRest({ showDialogRest, setShowDialogRest, onSelectService }) {
   };
 
   const handleSelectService = (e) => {
-    if (e.itemData && e.itemData.name === 'Add New Service') {
+    if (e.itemData && e.itemData.name === 'Add New Service...') {
       setShowAddServiceForm(true);
       setSelectedService(null);
     } else {
@@ -238,7 +238,7 @@ function DialogRest({ showDialogRest, setShowDialogRest, onSelectService }) {
     );
   }
 
-  const dropdownData = [...services, { name: 'Add New Service' }];
+  const dropdownData = [...services, { name: 'Add New Service...' }];
 
   return (
     <DialogComponent
@@ -267,22 +267,26 @@ function DialogRest({ showDialogRest, setShowDialogRest, onSelectService }) {
         />
         {selectedService && (
           <Box mt={2} p={2} border={1} borderColor="grey.300" borderRadius={1}>
-            <Typography variant="subtitle1" mb={1}>
+            <Typography
+              variant="subtitle1"
+              mb={1}
+              sx={{ fontWeight: 'bold', color: 'black', fontSize: '1.25rem' }}
+            >
               Service Details
             </Typography>
-            <Typography variant="body2">
+            <Typography variant="body2" sx={{ color: 'black' }}>
               <strong>Name:</strong> {selectedService.name}
             </Typography>
-            <Typography variant="body2">
+            <Typography variant="body2" sx={{ color: 'black' }}>
               <strong>Verb:</strong> {selectedService.verb}
             </Typography>
-            <Typography variant="body2">
+            <Typography variant="body2" sx={{ color: 'black' }}>
               <strong>Host:</strong> {selectedService.host}
             </Typography>
-            <Typography variant="body2">
+            <Typography variant="body2" sx={{ color: 'black' }}>
               <strong>Port:</strong> {selectedService.port}
             </Typography>
-            <Typography variant="body2">
+            <Typography variant="body2" sx={{ color: 'black' }}>
               <strong>Path:</strong> {selectedService.path}
             </Typography>
           </Box>
