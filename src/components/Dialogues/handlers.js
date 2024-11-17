@@ -4,44 +4,47 @@ export function handleSymbolDrag(
   setShowDialogSpeak,
   setShowDialogFireEvent,
   setShowDialogRest,
+  setShowDialogGSlot,
   setDraggedNode
 ) {
-  console.log('To stoixeio pou petaksa einai to: ', args);
+  const { element } = args;
 
-  if (args.element.propName === 'nodes') {
-    if (args.element.properties.shape.properties.type === 'Bpmn') {
-      if (args.element.properties.shape.activity.task.type === 'User') {
+  if (
+    element.propName === 'nodes' &&
+    element.properties.shape.properties.type === 'Bpmn'
+  ) {
+    const taskType = element.properties.shape.activity.task.type;
+
+    switch (taskType) {
+      case 'User':
         setShowDialogSpeak(true);
-        setDraggedNode(args.element);
+        setDraggedNode(element);
         args.cancel = true;
-      } else if (
-        args.element.properties.shape.activity.task.type ===
-        'InstantiatingReceive'
-      ) {
+        break;
+      case 'InstantiatingReceive':
         setShowDialogFireEvent(true);
-        setDraggedNode(args.element);
+        setDraggedNode(element);
         args.cancel = true;
-      } else if (
-        args.element.properties.shape.activity.task.type === 'Service'
-      ) {
-        console.log('REST Call');
+        break;
+      case 'Service':
         setShowDialogRest(true);
-        setDraggedNode(args.element);
+        setDraggedNode(element);
         args.cancel = true;
-      } else if (
-        args.element.properties.shape.activity.task.type === 'BusinessRule'
-      ) {
+        break;
+      case 'BusinessRule':
         console.log('BusinessRule');
-      } else if (
-        args.element.properties.shape.activity.task.type === 'Manual'
-      ) {
+        break;
+      case 'Manual':
         console.log('Manual');
-      }
+        setShowDialogGSlot(true);
+        setDraggedNode(element);
+        args.cancel = true;
+        break;
+      default:
+        break;
     }
   }
 }
-
-export function handlePropertyChange(args) {}
 
 export function handleCollectionChange(args) {
   /* This is very weird, it is not working as expected. 

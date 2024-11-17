@@ -59,15 +59,6 @@ body {
   background-color: var(--background-color);
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: var(--primary-color);
-}
-
 a {
   color: var(--primary-color);
   text-decoration: none;
@@ -130,4 +121,12 @@ button.danger:hover {
   background-color: #2f855a; /* Darker shade of green */
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
   transform: translateY(-2px);
+}
+
+.submenu {
+  font-size: 0.875rem; /* Smaller font size */
+  padding: 0.5rem; /* Smaller padding */
+  border: 1px solid #ccc; /* Optional: Add a border to distinguish the submenu */
+  border-radius: 4px; /* Optional: Add rounded corners */
+  background-color: #f9f9f9; /* Optional: Add a background color */
 }

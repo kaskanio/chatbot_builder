@@ -8,6 +8,7 @@ import EventsList from './components/Pages/EventsList';
 import EntitiesList from './components/Pages/EntitiesList';
 import SynonymsList from './components/Pages/SynonymsList';
 import GlobalSlotsList from './components/Pages/GlobalSlotsList';
+import FormSlotsList from './components/Pages/FormSlotsList';
 
 function App() {
   return (
@@ -45,6 +46,9 @@ function App() {
           </Route>
           <Route path="/globalSlots">
             <GlobalSlotsList />
+          </Route>
+          <Route path="/formSlots">
+            <FormSlotsList />
           </Route>
         </div>
       </div>

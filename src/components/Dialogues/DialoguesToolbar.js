@@ -197,8 +197,46 @@ function DialoguesToolbar({
       borderWidth: 1,
     },
     {
+      id: 'SetGlobalSlot',
+      text: 'Set Global Slot',
+      width: 170,
+      height: 100,
+      shape: {
+        type: 'Bpmn',
+        shape: 'Activity',
+        activity: {
+          activity: 'Task',
+          task: {
+            type: 'Manual',
+          },
+        },
+      },
+      annotations: [
+        {
+          // Non-editable annotation at the top
+          content: 'Set Global Slot',
+          offset: { x: 0.5, y: 0.1 }, // Position at the top
+          style: {
+            color: '#000000', // Text color
+            fontSize: 15, // Font size
+            fontFamily: 'Arial', // Font family
+            bold: true, // Bold text
+            italic: false, // Italic text
+            textAlign: 'Center', // Text alignment
+          },
+          constraints: AnnotationConstraints.ReadOnly, // Make it non-editable
+        },
+      ],
+      style: {
+        fill: '#FFD700',
+        strokeWidth: 2,
+        strokeColor: '#FFD700',
+      },
+      borderWidth: 1, // Set the border width
+    },
+    {
       id: 'SetFormSlot',
-      text: 'Form Slot',
+      text: 'Set Form Slot',
       width: 170,
       height: 100,
       shape: {
@@ -217,28 +255,6 @@ function DialoguesToolbar({
         strokeColor: '#FFD700',
       },
       borderWidth: 1,
-    },
-    {
-      id: 'SetGlobalSlot',
-      text: 'Global Slot',
-      width: 170,
-      height: 100,
-      shape: {
-        type: 'Bpmn',
-        shape: 'Activity',
-        activity: {
-          activity: 'Task',
-          task: {
-            type: 'Manual',
-          },
-        },
-      },
-      style: {
-        fill: '#FFD700',
-        strokeWidth: 2,
-        strokeColor: '#FFD700',
-      },
-      borderWidth: 1, // Set the border width
     },
   ];
 
@@ -272,7 +288,7 @@ function DialoguesToolbar({
               },
             ]}
             symbolHeight={100}
-            symbolWidth={100}
+            symbolWidth={110}
             getSymbolInfo={(symbol) => {
               if (symbol['text'] !== undefined) {
                 return {

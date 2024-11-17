@@ -12,6 +12,8 @@ import DialoguesToolbar from './DialoguesToolbar';
 import DialogSpeak from './DialogSpeak';
 import DialogEvent from './DialogEvent';
 import DialogRest from './DialogRest';
+import DialogGSlot from './DialogGSlot';
+
 import {
   handlePropertyChange,
   handleSymbolDrag,
@@ -24,6 +26,8 @@ const Dialogues = forwardRef((props, ref) => {
   const [showDialogSpeak, setShowDialogSpeak] = useState(false);
   const [showDialogFireEvent, setShowDialogFireEvent] = useState(false);
   const [showDialogRest, setShowDialogRest] = useState(false);
+  const [showDialogGSlot, setShowDialogGSlot] = useState(false);
+
   const [draggedNode, setDraggedNode] = useState(null);
 
   const diagramInstanceRef = useRef(null);
@@ -185,6 +189,32 @@ const Dialogues = forwardRef((props, ref) => {
     }
   };
 
+  const handleSelectGSlot = (slot) => {
+    if (draggedNode) {
+      const newAnnotation = {
+        content: `${slot.name}\nType: ${slot.type}\nValue: ${slot.value}`,
+        offset: { x: 0.5, y: 0.5 }, // Position at the center
+        style: {
+          color: '#000000', // Text color
+          fontSize: 12, // Font size
+          fontFamily: 'Arial', // Font family
+          textAlign: 'Center', // Text alignment
+          textOverflow: 'Wrap', // Text overflow
+          padding: { left: 10, right: 10, top: 5, bottom: 5 }, // Padding
+          border: { color: '#0056b3', width: 1 }, // Border
+          background: '#f0f0f0', // Background color
+        },
+        constraints: AnnotationConstraints.ReadOnly, // Make it non-editable
+      };
+      draggedNode.properties.annotations = [
+        ...(draggedNode.properties.annotations || []),
+        newAnnotation,
+      ];
+      addNewNode(draggedNode);
+      setDraggedNode(null);
+    }
+  };
+
   let content;
   content = (
     <DiagramComponent
@@ -197,13 +227,14 @@ const Dialogues = forwardRef((props, ref) => {
           setShowDialogSpeak,
           setShowDialogFireEvent,
           setShowDialogRest,
+          setShowDialogGSlot,
           setDraggedNode
         )
       }
       ref={(diagram) => {
         diagramInstanceRef.current = diagram;
       }}
-      // click={handleSaveDiagram}
+      click={handleSaveDiagram}
       // keyUp={(args = 'Delete' || 'Enter') => {
       //   handleSaveDiagram();
       // }}
@@ -263,6 +294,13 @@ const Dialogues = forwardRef((props, ref) => {
               showDialogRest={showDialogRest}
               setShowDialogRest={setShowDialogRest}
               onSelectService={handleSelectService}
+            />
+          )}
+          {showDialogGSlot && (
+            <DialogGSlot
+              showDialogGSlot={showDialogGSlot}
+              setShowDialogGSlot={setShowDialogGSlot}
+              handleSelectGSlot={handleSelectGSlot} // Pass the function
             />
           )}
         </div>

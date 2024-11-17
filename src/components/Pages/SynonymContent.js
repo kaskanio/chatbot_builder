@@ -59,9 +59,9 @@ function SynonymContent({ synonym, header }) {
         type="submit"
         danger
         rounded
-        className="text-xs p-5"
+        className="text-xs px-2 py-1 w-6 h-6"
       >
-        <GoTrash className="w-4 h-4" />
+        <GoTrash className="w-5 h-5" />
       </Button>
     );
   };

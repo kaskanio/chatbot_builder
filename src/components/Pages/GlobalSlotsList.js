@@ -89,6 +89,7 @@ function GlobalSlotsList() {
             headerText="ID"
             isPrimaryKey={true}
             width="40"
+            isIdentity={true}
           />
           <ColumnDirective field="name" headerText="Slot Name" width="160" />
           <ColumnDirective field="type" headerText="Type" width="100" />

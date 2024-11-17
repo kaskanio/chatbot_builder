@@ -9,17 +9,21 @@ import {
 } from '@syncfusion/ej2-react-grids';
 
 import {
-  useFetchEventQuery,
-  useAddEventMutation,
-  useEditEventMutation,
-  useRemoveEventMutation,
+  useFetchFormSlotsQuery,
+  useAddFormSlotMutation,
+  useEditFormSlotMutation,
+  useRemoveFormSlotMutation,
 } from '../../store';
 
-function EventsList() {
-  const { data, error, isLoading } = useFetchEventQuery();
-  const [addEvent] = useAddEventMutation();
-  const [editEvent] = useEditEventMutation();
-  const [removeEvent] = useRemoveEventMutation();
+function FormSlotsList() {
+  const { data, error, isLoading } = useFetchFormSlotsQuery();
+  const [addFormSlot] = useAddFormSlotMutation();
+  const [editFormSlot] = useEditFormSlotMutation();
+  const [removeFormSlot] = useRemoveFormSlotMutation();
+
+  console.log('Data:', data);
+  console.log('Error:', error);
+  console.log('Is Loading:', isLoading);
 
   const toolbar = ['Add', 'Edit', 'Delete', 'Update', 'Cancel'];
   const editSettings = {
@@ -28,11 +32,12 @@ function EventsList() {
     allowDeleting: true,
   };
 
-  const returnEvents =
-    data?.map((event) => ({
-      id: event.id,
-      name: event.name,
-      uri: event.uri,
+  const returnFormSlots =
+    data?.map((slot) => ({
+      id: slot.id, // assuming you still have an `id` field for unique identification
+      name: slot.name,
+      type: slot.type,
+      value: slot.value,
     })) || [];
 
   if (isLoading) {
@@ -47,28 +52,31 @@ function EventsList() {
     console.log(args);
     if (args.requestType === 'save') {
       if (args.action === 'add') {
-        // Add new event
-        addEvent({
+        // Add new form slot
+        addFormSlot({
           name: args.data.name,
-          uri: args.data.uri,
+          type: args.data.type,
+          value: args.data.value,
         });
       } else if (args.action === 'edit') {
-        // Edit existing event
-        editEvent({
+        // Edit existing form slot
+        editFormSlot({
+          id: args.data.id,
           newName: args.data.name,
-          uri: args.data.uri,
+          type: args.data.type,
+          value: args.data.value,
         });
       }
     } else if (args.requestType === 'delete') {
-      // Remove event
-      removeEvent({ id: args.data[0].id });
+      // Remove form slot
+      removeFormSlot({ id: args.data[0].id });
     }
   };
 
   const content = (
     <div className="p-4">
       <GridComponent
-        dataSource={returnEvents || []}
+        dataSource={returnFormSlots || []}
         allowPaging={true}
         pageSettings={{ pageSize: 10 }}
         editSettings={editSettings}
@@ -80,22 +88,24 @@ function EventsList() {
             field="id"
             headerText="ID"
             isPrimaryKey={true}
-            width="60"
+            width="40"
             isIdentity={true}
           />
-          <ColumnDirective field="name" headerText="Event Name" width="160" />
-          <ColumnDirective field="uri" headerText="URI" width="250" />
+          <ColumnDirective field="name" headerText="Slot Name" width="160" />
+          <ColumnDirective field="type" headerText="Type" width="100" />
+          <ColumnDirective field="value" headerText="Value" width="250" />
         </ColumnsDirective>
         <Inject services={[Edit, Toolbar, Page]} />
       </GridComponent>
     </div>
   );
+
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Events</h1>
+      <h1 className="text-2xl font-bold mb-4">Form Slots</h1>
       <div>{content}</div>
     </div>
   );
 }
 
-export default EventsList;
+export default FormSlotsList;

@@ -396,13 +396,27 @@
     {
       "name": "slotA",
       "type": "int",
-      "value": "10",
+      "value": "120",
       "id": 1
     },
     {
       "name": "slotB",
       "type": "str",
-      "value": "asdas",
+      "value": "Dasd",
+      "id": 2
+    }
+  ],
+  "formSlots": [
+    {
+      "name": "formSlotA",
+      "type": "int",
+      "value": "120",
+      "id": 1
+    },
+    {
+      "name": "formSlotB",
+      "type": "str",
+      "value": "City",
       "id": 2
     }
   ]

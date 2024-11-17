@@ -16,12 +16,12 @@ function Sidebar() {
   const isActive = (link) => link === activeLink;
 
   return (
-    <div className="sidebar bg-gray-900 text-white w-64 p-4 h-screen top-0 transform shadow-lg">
+    <div className="sidebar bg-gray-900 text-white w-50 p-4 h-screen top-0 transform shadow-lg">
       <div className="flex flex-col justify-between h-full">
         <div>
-          <div className="mb-8">
+          <div className="mb-8 text-center">
             <h2 className="text-3xl font-bold">Chat Builder</h2>
-            <p className="mt-2 text-sm text-gray-400">Welcome!</p>
+            <p className="mt-1 text-sm text-gray-400">Welcome!</p>
           </div>
           <ul className="space-y-0">
             <li className="mb-0">
@@ -64,6 +64,17 @@ function Sidebar() {
                 Global Slots
               </Link>
             </li>
+            <li className="mb-0">
+              <Link
+                to="/formSlots"
+                isActive={isActive('/formSlots')}
+                onClick={() => handleLinkClick('/formSlots')}
+              >
+                <i className="fas fa-home mr-3"></i>
+                Form Slots
+              </Link>
+            </li>
+
             <li className="mb-0">
               <Link
                 to="/services"

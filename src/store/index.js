@@ -10,6 +10,7 @@ import { entitiesApi } from './apis/entitiesApi';
 import { synonymsApi } from './apis/synonymsApi';
 import { globalSlotsApi } from './apis/globalSlotsApi';
 import { intentNodesApi } from './apis/intentNodesApi';
+import { formSlotsApi } from './apis/formSlotsApi';
 import diagramReducer from './diagramSlice'; // Import the diagramSlice reducer
 
 export const store = configureStore({
@@ -24,6 +25,7 @@ export const store = configureStore({
     [synonymsApi.reducerPath]: synonymsApi.reducer,
     [globalSlotsApi.reducerPath]: globalSlotsApi.reducer,
     [intentNodesApi.reducerPath]: intentNodesApi.reducer,
+    [formSlotsApi.reducerPath]: formSlotsApi.reducer,
     diagram: diagramReducer, // Add the diagramSlice reducer
   },
   middleware: (getDefaultMiddleware) => {
@@ -37,7 +39,8 @@ export const store = configureStore({
       .concat(entitiesApi.middleware)
       .concat(synonymsApi.middleware)
       .concat(globalSlotsApi.middleware)
-      .concat(intentNodesApi.middleware);
+      .concat(intentNodesApi.middleware)
+      .concat(formSlotsApi.middleware);
   },
 });
 
@@ -117,3 +120,10 @@ export {
   useUpdateIntentNodeMutation,
   useDeleteIntentNodeMutation,
 } from './apis/intentNodesApi';
+
+export {
+  useFetchFormSlotsQuery,
+  useAddFormSlotMutation,
+  useEditFormSlotMutation,
+  useRemoveFormSlotMutation,
+} from './apis/formSlotsApi';
