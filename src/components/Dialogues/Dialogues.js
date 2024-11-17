@@ -8,6 +8,7 @@ import {
   DiagramContextMenu,
   AnnotationConstraints,
 } from '@syncfusion/ej2-react-diagrams';
+import { MenuEventArgs } from '@syncfusion/ej2-navigations'; // Import MenuEventArgs
 import DialoguesToolbar from './DialoguesToolbar';
 import DialogSpeak from './DialogSpeak';
 import DialogEvent from './DialogEvent';
@@ -215,12 +216,20 @@ const Dialogues = forwardRef((props, ref) => {
     }
   };
 
+  const handleContextMenuClick = (args) => {
+    if (args.item.id === 'delete') {
+      if (diagramInstanceRef.current) {
+        diagramInstanceRef.current.remove();
+      }
+    }
+  };
+
   let content;
   content = (
     <DiagramComponent
       id="container"
       width={'100%'}
-      height={'800px'}
+      height={'1200px'}
       drop={(args) =>
         handleSymbolDrag(
           args,
@@ -235,12 +244,14 @@ const Dialogues = forwardRef((props, ref) => {
         diagramInstanceRef.current = diagram;
       }}
       click={handleSaveDiagram}
-      // keyUp={(args = 'Delete' || 'Enter') => {
-      //   handleSaveDiagram();
-      // }}
       contextMenuSettings={{
         show: true,
+        items: [
+          { text: 'Delete', id: 'delete' }, // Add the Delete option
+        ],
+        showCustomMenuOnly: false,
       }}
+      contextMenuClick={handleContextMenuClick} // Handle context menu click
     >
       <Inject services={[BpmnDiagrams, ConnectorEditing, DiagramContextMenu]} />
     </DiagramComponent>
