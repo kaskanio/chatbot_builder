@@ -222,6 +222,9 @@ const Dialogues = forwardRef((props, ref) => {
         diagramInstanceRef.current.remove();
       }
     }
+    if (args.item.id === 'entity') {
+      console.log(diagramInstanceRef.current);
+    }
   };
 
   let content;
@@ -248,6 +251,7 @@ const Dialogues = forwardRef((props, ref) => {
         show: true,
         items: [
           { text: 'Delete', id: 'delete' }, // Add the Delete option
+          { text: 'Set as Entity', id: 'entity' }, // Add a custom menu option
         ],
         showCustomMenuOnly: false,
       }}

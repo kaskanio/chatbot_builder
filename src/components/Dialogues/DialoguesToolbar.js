@@ -68,6 +68,7 @@ function DialoguesToolbar({
   let umlShapes = [
     {
       id: 'Intent',
+      text: 'Intent',
       shape: {
         type: 'UmlClassifier',
         enumerationShape: {
@@ -75,6 +76,34 @@ function DialoguesToolbar({
           members: [],
         },
         classifier: 'Enumeration',
+      },
+      offsetX: 405,
+      offsetY: 105,
+    },
+
+    // TA FORMS PROSPATHEIS NA KANEIS. Θα τα κάνω όλα σε ένα Dialog να είναι όμορφα και ωραία ενώ τα φτιάχνει ο χρήστης. Μετά θα πετάει την πληροφορία απλά σε ένα HTML Element.
+    {
+      id: 'Form',
+      text: 'Form',
+      shape: {
+        type: 'UmlClassifier',
+        classShape: {
+          name: 'Form Name',
+          attributes: [
+            {
+              name: 'name',
+              type: 'str',
+              default: "HRI('What\\'s your name?', [PE:PERSON])",
+            },
+            {
+              name: 'age',
+              type: 'int',
+              default: "HRI('How old are you?')",
+            },
+          ],
+          methods: [],
+        },
+        classifier: 'Class',
       },
       offsetX: 405,
       offsetY: 105,
