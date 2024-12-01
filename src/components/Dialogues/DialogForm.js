@@ -1,0 +1,289 @@
+import { useState, useEffect, useRef } from 'react';
+import { DialogComponent } from '@syncfusion/ej2-react-popups';
+import {
+  GridComponent,
+  ColumnsDirective,
+  ColumnDirective,
+  Edit,
+  Inject,
+  Toolbar,
+} from '@syncfusion/ej2-react-grids';
+import { DataManager, Query } from '@syncfusion/ej2-data';
+import { Box, Typography } from '@mui/material';
+import {
+  TabComponent,
+  TabItemDirective,
+  TabItemsDirective,
+} from '@syncfusion/ej2-react-navigations';
+import Button from '../modules/Button';
+import { useFetchEntitiesQuery } from '../../store';
+import { useFetchServiceQuery } from '../../store';
+
+const formSlotTypes = ['int', 'float', 'str', 'bool', 'list', 'dict'];
+const pretrainedEntities = [
+  'PERSON',
+  'NORP',
+  'FAC',
+  'ORG',
+  'GPE',
+  'LOC',
+  'PRODUCT',
+  'EVENT',
+  'WORK_OF_ART',
+  'LAW',
+  'LANGUAGE',
+  'DATE',
+  'TIME',
+  'PERCENT',
+  'MONEY',
+  'QUANTITY',
+  'ORDINAL',
+  'CARDINAL',
+];
+const entityTypes = ['Pretrained', 'Trainable'];
+
+function DialogForm({ showDialogForm, setShowDialogForm }) {
+  const { data: trainableEntities = [] } = useFetchEntitiesQuery();
+  const { data: services = [] } = useFetchServiceQuery();
+  const [gridDataHRI, setGridDataHRI] = useState([]);
+  const [gridDataService, setGridDataService] = useState([]);
+  const gridRefHRI = useRef(null);
+  const gridRefService = useRef(null);
+
+  const settings = { effect: 'Zoom', duration: 400, delay: 0 };
+
+  const hideDialog = () => {
+    setShowDialogForm(false);
+  };
+
+  const handleActionComplete = (args, gridType) => {
+    if (gridType === 'HRI') {
+      if (args.requestType === 'save') {
+        const updatedData = [...gridDataHRI];
+        if (args.action === 'add') {
+          const existingIndex = updatedData.findIndex(
+            (item) => item.id === args.data.id
+          );
+          if (existingIndex === -1) {
+            updatedData.push(args.data);
+          }
+        } else if (args.action === 'edit') {
+          const index = updatedData.findIndex(
+            (item) => item.id === args.data.id
+          );
+          if (index !== -1) {
+            updatedData[index] = args.data;
+          }
+        }
+        setGridDataHRI(updatedData);
+      } else if (args.requestType === 'delete') {
+        const updatedData = gridDataHRI.filter(
+          (item) => item.id !== args.data[0].id
+        );
+        setGridDataHRI(updatedData);
+      }
+    } else if (gridType === 'Service') {
+      if (args.requestType === 'save') {
+        const updatedData = [...gridDataService];
+        if (args.action === 'add') {
+          const existingIndex = updatedData.findIndex(
+            (item) => item.id === args.data.id
+          );
+          if (existingIndex === -1) {
+            updatedData.push(args.data);
+          }
+        } else if (args.action === 'edit') {
+          const index = updatedData.findIndex(
+            (item) => item.id === args.data.id
+          );
+          if (index !== -1) {
+            updatedData[index] = args.data;
+          }
+        }
+        setGridDataService(updatedData);
+      }
+    }
+  };
+
+  const allEntities = [
+    ...trainableEntities.map((entity) => ({
+      value: entity.name,
+      displayText: `${entity.name} (TE)`,
+    })),
+    ...pretrainedEntities.map((entity) => ({
+      value: entity,
+      displayText: `${entity} (PE)`,
+    })),
+  ];
+
+  const typeParams = {
+    params: {
+      actionComplete: () => false,
+      dataSource: new DataManager(formSlotTypes.map((type) => ({ type }))),
+      sortOrder: 'None',
+      fields: { text: 'type', value: 'type' },
+      placeholder: 'Select a type',
+    },
+  };
+
+  const serviceParams = {
+    params: {
+      actionComplete: () => false,
+      dataSource: new DataManager(services),
+      sortOrder: 'None',
+      fields: { text: 'name', value: 'name' },
+      placeholder: 'Select a service',
+      query: new Query(),
+    },
+  };
+
+  const entityParams = {
+    params: {
+      actionComplete: () => false,
+      dataSource: new DataManager(allEntities),
+      sortOrder: 'None',
+      fields: { text: 'displayText', value: 'displayText' },
+      placeholder: 'Select an entity',
+      query: new Query(),
+    },
+  };
+
+  return (
+    <DialogComponent
+      id="dialogForm"
+      header="Form Dialog"
+      visible={showDialogForm}
+      close={hideDialog}
+      width="1000px"
+      animationSettings={settings}
+      enableResize={true}
+      showCloseIcon={true}
+      position={{ X: 'center', Y: 'center' }}
+    >
+      <TabComponent>
+        <TabItemsDirective>
+          <TabItemDirective
+            header={{ text: 'Form Slot with HRI' }}
+            content={() => (
+              <Box mt={2} textAlign="center">
+                <Typography variant="h6" mb={2}>
+                  Add Form Slot
+                </Typography>
+                <GridComponent
+                  ref={gridRefHRI}
+                  dataSource={gridDataHRI}
+                  editSettings={{
+                    allowEditing: true,
+                    allowAdding: true,
+                    allowDeleting: true,
+                  }}
+                  toolbar={['Add', 'Edit', 'Delete', 'Update', 'Cancel']}
+                  actionComplete={(args) => handleActionComplete(args, 'HRI')}
+                >
+                  <ColumnsDirective>
+                    <ColumnDirective
+                      field="name"
+                      headerText="Slot Name"
+                      width="100"
+                      textAlign="Center"
+                      isPrimaryKey={true}
+                    />
+                    <ColumnDirective
+                      field="type"
+                      headerText="Type"
+                      width="100"
+                      textAlign="Center"
+                      editType="dropdownedit"
+                      edit={typeParams}
+                    />
+                    <ColumnDirective
+                      field="hriString"
+                      headerText="HRI String"
+                      width="200"
+                      textAlign="Center"
+                    />
+                    <ColumnDirective
+                      field="entity"
+                      headerText="Extract from Entity"
+                      width="100"
+                      textAlign="Center"
+                      editType="dropdownedit"
+                      edit={entityParams}
+                    />
+                  </ColumnsDirective>
+                  <Inject services={[Edit, Toolbar]} />
+                </GridComponent>
+                <Button onClick={hideDialog} primary rounded>
+                  Close
+                </Button>
+              </Box>
+            )}
+          />
+          <TabItemDirective
+            header={{ text: 'Form Slot with eService' }}
+            content={() => (
+              <Box mt={2} textAlign="center">
+                <Typography variant="h6" mb={2}>
+                  Add eService
+                </Typography>
+                <GridComponent
+                  ref={gridRefService}
+                  dataSource={gridDataService}
+                  editSettings={{
+                    allowEditing: true,
+                    allowAdding: true,
+                    allowDeleting: true,
+                  }}
+                  toolbar={['Add', 'Edit', 'Delete', 'Update', 'Cancel']}
+                  actionComplete={(args) =>
+                    handleActionComplete(args, 'Service')
+                  }
+                >
+                  <ColumnsDirective>
+                    <ColumnDirective
+                      field="name"
+                      headerText="Slot Name"
+                      width="100"
+                      textAlign="Center"
+                      isPrimaryKey={true}
+                    />
+                    <ColumnDirective
+                      field="type"
+                      headerText="Type"
+                      width="100"
+                      textAlign="Center"
+                      editType="dropdownedit"
+                      edit={typeParams}
+                    />
+                    <ColumnDirective
+                      field="eServiceName"
+                      headerText="eService"
+                      width="200"
+                      textAlign="Center"
+                      editType="dropdownedit"
+                      edit={serviceParams}
+                    />
+                    <ColumnDirective
+                      field="entity"
+                      headerText="Extract from Entity"
+                      width="100"
+                      textAlign="Center"
+                      editType="dropdownedit"
+                      edit={entityParams}
+                    />
+                  </ColumnsDirective>
+                  <Inject services={[Edit, Toolbar]} />
+                </GridComponent>
+                <Button onClick={hideDialog} primary rounded>
+                  Close
+                </Button>
+              </Box>
+            )}
+          />
+        </TabItemsDirective>
+      </TabComponent>
+    </DialogComponent>
+  );
+}
+
+export default DialogForm;

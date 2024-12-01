@@ -296,10 +296,10 @@ function DialoguesToolbar({
             expandMode="Multiple"
             palettes={[
               {
-                id: 'intents',
+                id: 'intentsForms',
                 expanded: true,
                 symbols: umlShapes,
-                title: 'Intents',
+                title: 'Intents & Forms',
               },
               {
                 id: 'connectors',
@@ -310,10 +310,10 @@ function DialoguesToolbar({
               },
 
               {
-                id: 'actionsForms',
+                id: 'actions',
                 expanded: true,
                 symbols: actionShape,
-                title: 'Actions & Forms',
+                title: 'Actions',
               },
             ]}
             symbolHeight={100}

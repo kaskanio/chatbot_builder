@@ -5,43 +5,48 @@ export function handleSymbolDrag(
   setShowDialogFireEvent,
   setShowDialogRest,
   setShowDialogGSlot,
+  setShowDialogForm,
   setDraggedNode
 ) {
   const { element } = args;
+  console.log(args);
 
-  if (
-    element.propName === 'nodes' &&
-    element.properties.shape.properties.type === 'Bpmn'
-  ) {
-    const taskType = element.properties.shape.activity.task.type;
+  if (element.propName === 'nodes') {
+    if (element.properties.shape.properties.type === 'Bpmn') {
+      const taskType = element.properties.shape.activity.task.type;
 
-    switch (taskType) {
-      case 'User':
-        setShowDialogSpeak(true);
-        setDraggedNode(element);
-        args.cancel = true;
-        break;
-      case 'InstantiatingReceive':
-        setShowDialogFireEvent(true);
-        setDraggedNode(element);
-        args.cancel = true;
-        break;
-      case 'Service':
-        setShowDialogRest(true);
-        setDraggedNode(element);
-        args.cancel = true;
-        break;
-      case 'BusinessRule':
-        console.log('BusinessRule');
-        break;
-      case 'Manual':
-        console.log('Manual');
-        setShowDialogGSlot(true);
-        setDraggedNode(element);
-        args.cancel = true;
-        break;
-      default:
-        break;
+      switch (taskType) {
+        case 'User':
+          setShowDialogSpeak(true);
+          setDraggedNode(element);
+          args.cancel = true;
+          break;
+        case 'InstantiatingReceive':
+          setShowDialogFireEvent(true);
+          setDraggedNode(element);
+          args.cancel = true;
+          break;
+        case 'Service':
+          setShowDialogRest(true);
+          setDraggedNode(element);
+          args.cancel = true;
+          break;
+        case 'BusinessRule':
+          console.log('BusinessRule');
+          break;
+        case 'Manual':
+          console.log('Manual');
+          setShowDialogGSlot(true);
+          setDraggedNode(element);
+          args.cancel = true;
+          break;
+        default:
+          break;
+      }
+    } else if (element.properties.shape.classifier === 'Class') {
+      console.log('Yo');
+      setShowDialogForm(true);
+      args.cancel = true;
     }
   }
 }

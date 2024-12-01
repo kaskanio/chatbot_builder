@@ -8,18 +8,14 @@ import {
   DiagramContextMenu,
   AnnotationConstraints,
 } from '@syncfusion/ej2-react-diagrams';
-import { MenuEventArgs } from '@syncfusion/ej2-navigations'; // Import MenuEventArgs
 import DialoguesToolbar from './DialoguesToolbar';
 import DialogSpeak from './DialogSpeak';
 import DialogEvent from './DialogEvent';
 import DialogRest from './DialogRest';
 import DialogGSlot from './DialogGSlot';
+import DialogForm from './DialogForm';
 
-import {
-  handlePropertyChange,
-  handleSymbolDrag,
-  handleCollectionChange,
-} from './handlers';
+import { handleSymbolDrag } from './handlers';
 import { saveDiagramState, loadDiagramState } from '../../store/diagramSlice';
 import Button from '../modules/Button';
 
@@ -28,6 +24,7 @@ const Dialogues = forwardRef((props, ref) => {
   const [showDialogFireEvent, setShowDialogFireEvent] = useState(false);
   const [showDialogRest, setShowDialogRest] = useState(false);
   const [showDialogGSlot, setShowDialogGSlot] = useState(false);
+  const [showDialogForm, setShowDialogForm] = useState(false);
 
   const [draggedNode, setDraggedNode] = useState(null);
 
@@ -240,6 +237,7 @@ const Dialogues = forwardRef((props, ref) => {
           setShowDialogFireEvent,
           setShowDialogRest,
           setShowDialogGSlot,
+          setShowDialogForm,
           setDraggedNode
         )
       }
@@ -316,6 +314,12 @@ const Dialogues = forwardRef((props, ref) => {
               showDialogGSlot={showDialogGSlot}
               setShowDialogGSlot={setShowDialogGSlot}
               handleSelectGSlot={handleSelectGSlot} // Pass the function
+            />
+          )}
+          {showDialogForm && (
+            <DialogForm
+              showDialogForm={showDialogForm}
+              setShowDialogForm={setShowDialogForm}
             />
           )}
         </div>
