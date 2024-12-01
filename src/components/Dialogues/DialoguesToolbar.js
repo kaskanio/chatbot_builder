@@ -80,30 +80,22 @@ function DialoguesToolbar({
       offsetX: 405,
       offsetY: 105,
     },
-
-    // TA FORMS PROSPATHEIS NA KANEIS. Θα τα κάνω όλα σε ένα Dialog να είναι όμορφα και ωραία ενώ τα φτιάχνει ο χρήστης. Μετά θα πετάει την πληροφορία απλά σε ένα HTML Element.
     {
       id: 'Form',
       text: 'Form',
       shape: {
-        type: 'UmlClassifier',
-        classShape: {
-          name: 'Form Name',
-          attributes: [
-            {
-              name: 'name',
-              type: 'str',
-              default: "HRI('What\\'s your name?', [PE:PERSON])",
-            },
-            {
-              name: 'age',
-              type: 'int',
-              default: "HRI('How old are you?')",
-            },
-          ],
-          methods: [],
-        },
-        classifier: 'Class',
+        type: 'HTML',
+        content: `
+          <div style="padding: 5px; border: 1px solid #0056b3; border-radius: 5px; background-color: #f9f9f9; font-size: 8px;">
+            <h3 style="text-align: center; color: #0056b3; font-size: 10px;">Form</h3>
+            <div style="margin-top: 5px;">
+              <div style="border: 1px solid #ccc; padding: 5px; margin: 2px; border-radius: 3px; font-size: 8px;">
+              </div>
+              <div style="border: 1px solid #ccc; padding: 5px; margin: 2px; border-radius: 3px; font-size: 8px;">
+              </div>
+            </div>
+          </div>
+        `,
       },
       offsetX: 405,
       offsetY: 105,

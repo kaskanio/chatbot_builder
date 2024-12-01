@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { DialogComponent } from '@syncfusion/ej2-react-popups';
 import {
   GridComponent,
@@ -41,15 +41,29 @@ const pretrainedEntities = [
   'CARDINAL',
 ];
 
-function DialogForm({ showDialogForm, setShowDialogForm, handleForm }) {
-  // Add handleForm to props
+function DialogForm({
+  showDialogForm,
+  setShowDialogForm,
+  handleForm,
+  initialFormName = '',
+  initialGridDataHRI = [],
+  initialGridDataService = [],
+}) {
   const { data: trainableEntities = [] } = useFetchEntitiesQuery();
   const { data: services = [] } = useFetchServiceQuery();
-  const [gridDataHRI, setGridDataHRI] = useState([]);
-  const [gridDataService, setGridDataService] = useState([]);
-  const [formName, setFormName] = useState('');
+  const [gridDataHRI, setGridDataHRI] = useState(initialGridDataHRI);
+  const [gridDataService, setGridDataService] = useState(
+    initialGridDataService
+  );
+  const [formName, setFormName] = useState(initialFormName);
   const gridRefHRI = useRef(null);
   const gridRefService = useRef(null);
+
+  useEffect(() => {
+    setFormName(initialFormName);
+    setGridDataHRI(initialGridDataHRI);
+    setGridDataService(initialGridDataService);
+  }, [initialFormName, initialGridDataHRI, initialGridDataService]);
 
   const settings = { effect: 'Zoom', duration: 400, delay: 0 };
 
@@ -76,11 +90,6 @@ function DialogForm({ showDialogForm, setShowDialogForm, handleForm }) {
             updatedData[index] = args.data;
           }
         }
-        setGridDataHRI(updatedData);
-      } else if (args.requestType === 'delete') {
-        const updatedData = gridDataHRI.filter(
-          (item) => item.id !== args.data[0].id
-        );
         setGridDataHRI(updatedData);
       }
     } else if (gridType === 'Service') {
@@ -152,6 +161,9 @@ function DialogForm({ showDialogForm, setShowDialogForm, handleForm }) {
   const handleInsert = (e) => {
     e.preventDefault(); // Prevent default form submission behavior
     handleForm(formName, gridDataHRI, gridDataService);
+    setFormName(''); // Clear the form name after inserting
+    setGridDataHRI([]); // Clear the grid data after inserting
+    setGridDataService([]); // Clear the grid data after inserting
     hideDialog(); // Hide the dialog after inserting
   };
 
@@ -166,15 +178,6 @@ function DialogForm({ showDialogForm, setShowDialogForm, handleForm }) {
           className="mr-2"
         >
           Insert
-        </Button>
-        <Button
-          onClick={hideDialog}
-          type="button"
-          danger
-          rounded
-          className="text-xs p-1"
-        >
-          Cancel
         </Button>
       </div>
     );

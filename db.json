@@ -414,12 +414,6 @@
       "type": "int",
       "value": "120",
       "id": 1
-    },
-    {
-      "name": "slotB",
-      "type": "str",
-      "value": "Dasd",
-      "id": 2
     }
   ],
   "formSlots": [

@@ -14,7 +14,6 @@ import DialogEvent from './DialogEvent';
 import DialogRest from './DialogRest';
 import DialogGSlot from './DialogGSlot';
 import DialogForm from './DialogForm';
-import HelloWorldDialog from './HelloWorldDialog'; // Import the new dialog component
 
 import { handleSymbolDrag } from './handlers';
 import { saveDiagramState, loadDiagramState } from '../../store/diagramSlice';
@@ -26,9 +25,7 @@ const Dialogues = forwardRef((props, ref) => {
   const [showDialogRest, setShowDialogRest] = useState(false);
   const [showDialogGSlot, setShowDialogGSlot] = useState(false);
   const [showDialogForm, setShowDialogForm] = useState(false);
-  const [showHelloWorldDialog, setShowHelloWorldDialog] = useState(false); // State for Hello World dialog
-  const [dialogContent, setDialogContent] = useState(''); // State for dialog content
-  const [dialogAddInfo, setDialogAddInfo] = useState(null); // State for addInfo
+  const [currentNode, setCurrentNode] = useState(null); // State to keep track of the current node being edited
 
   const [draggedNode, setDraggedNode] = useState(null);
 
@@ -249,37 +246,53 @@ const Dialogues = forwardRef((props, ref) => {
       )
       .join('');
 
-    const newNode = {
-      id: `formNode_${Date.now()}`,
-      offsetX: 300,
-      offsetY: 300,
-      width: 400,
-      height: 300,
-      shape: {
-        type: 'HTML',
-        content: `
-          <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9;">
-            <h3 style="text-align: center; color: #0056b3;">${formName}</h3>
-            <div style="margin-top: 10px;">
-              <h4 style="color: #0056b3;">Form Slots with HRI</h4>
-              ${formSlotsHRI}
-            </div>
-            <div style="margin-top: 10px;">
-              <h4 style="color: #0056b3;">Form Slots with eService</h4>
-              ${formSlotsService}
-            </div>
-          </div>
-        `,
-      },
-      annotations: [],
-      addInfo: {
+    const newNodeContent = `
+      <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9;">
+        <h3 style="text-align: center; color: #0056b3;">${formName}</h3>
+        <div style="margin-top: 10px;">
+          <h4 style="color: #0056b3;">Form Slots with HRI</h4>
+          ${formSlotsHRI}
+        </div>
+        <div style="margin-top: 10px;">
+          <h4 style="color: #0056b3;">Form Slots with eService</h4>
+          ${formSlotsService}
+        </div>
+      </div>
+    `;
+
+    if (currentNode) {
+      // Update the existing node
+      currentNode.properties.shape.content = newNodeContent;
+      currentNode.properties.addInfo = {
         formName,
         gridDataHRI,
         gridDataService,
-      },
-    };
+      };
+      diagramInstanceRef.current.dataBind(); // Refresh the diagram to reflect changes
+    } else {
+      // Create a new node
+      const newNode = {
+        id: `formNode_${Date.now()}`,
+        offsetX: 300,
+        offsetY: 300,
+        width: 400,
+        height: 300,
+        shape: {
+          type: 'HTML',
+          content: newNodeContent,
+        },
+        annotations: [],
+        addInfo: {
+          formName,
+          gridDataHRI,
+          gridDataService,
+        },
+      };
+      addNewNode(newNode);
+    }
 
-    addNewNode(newNode);
+    setShowDialogForm(false); // Close the dialog form
+    setCurrentNode(null); // Reset the current node
   };
 
   const handleContextMenuClick = (args) => {
@@ -295,13 +308,22 @@ const Dialogues = forwardRef((props, ref) => {
 
   const handleNodeDoubleClick = (args) => {
     if (args.source.properties.shape.type === 'HTML') {
-      setDialogContent(args.source.properties.shape.content);
-      console.log('Psaxnontas to add info: ', args);
-
-      setDialogAddInfo(args.source.properties.addInfo);
-      setShowHelloWorldDialog(true);
+      const { formName, gridDataHRI, gridDataService } =
+        args.source.properties.addInfo;
+      setShowDialogForm(true);
+      setInitialFormName(formName);
+      setInitialGridDataHRI(gridDataHRI);
+      setInitialGridDataService(gridDataService);
+      setCurrentNode(args.source); // Set the current node being edited
+      setIsDoubleClick(true); // Set the flag to indicate double-click
     }
   };
+
+  // Add state to hold initial values for the form
+  const [initialFormName, setInitialFormName] = useState('');
+  const [initialGridDataHRI, setInitialGridDataHRI] = useState([]);
+  const [initialGridDataService, setInitialGridDataService] = useState([]);
+  const [isDoubleClick, setIsDoubleClick] = useState(false); // State to track if the dialog is opened by double-click
 
   let content;
   content = (
@@ -309,7 +331,7 @@ const Dialogues = forwardRef((props, ref) => {
       id="container"
       width={'100%'}
       height={'1200px'}
-      drop={(args) =>
+      drop={(args) => {
         handleSymbolDrag(
           args,
           setShowDialogSpeak,
@@ -318,8 +340,9 @@ const Dialogues = forwardRef((props, ref) => {
           setShowDialogGSlot,
           setShowDialogForm,
           setDraggedNode
-        )
-      }
+        );
+        setIsDoubleClick(false); // Reset the flag when dragging from the symbol palette
+      }}
       ref={(diagram) => {
         diagramInstanceRef.current = diagram;
       }}
@@ -401,14 +424,11 @@ const Dialogues = forwardRef((props, ref) => {
               showDialogForm={showDialogForm}
               setShowDialogForm={setShowDialogForm}
               handleForm={handleForm} // Pass handleForm as a prop
-            />
-          )}
-          {showHelloWorldDialog && (
-            <HelloWorldDialog
-              visible={showHelloWorldDialog}
-              onClose={() => setShowHelloWorldDialog(false)}
-              content={dialogContent} // Pass the content to the dialog
-              addInfo={dialogAddInfo} // Pass the addInfo to the dialog
+              initialFormName={isDoubleClick ? initialFormName : ''}
+              initialGridDataHRI={isDoubleClick ? initialGridDataHRI : []}
+              initialGridDataService={
+                isDoubleClick ? initialGridDataService : []
+              }
             />
           )}
         </div>
