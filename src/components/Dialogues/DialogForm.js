@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { DialogComponent } from '@syncfusion/ej2-react-popups';
 import {
   GridComponent,
@@ -9,15 +9,15 @@ import {
   Toolbar,
 } from '@syncfusion/ej2-react-grids';
 import { DataManager, Query } from '@syncfusion/ej2-data';
-import { Box, Typography } from '@mui/material';
+import { Box, TextField } from '@mui/material';
 import {
   TabComponent,
   TabItemDirective,
   TabItemsDirective,
 } from '@syncfusion/ej2-react-navigations';
-import Button from '../modules/Button';
 import { useFetchEntitiesQuery } from '../../store';
 import { useFetchServiceQuery } from '../../store';
+import Button from '../modules/Button'; // Import Button component
 
 const formSlotTypes = ['int', 'float', 'str', 'bool', 'list', 'dict'];
 const pretrainedEntities = [
@@ -40,13 +40,14 @@ const pretrainedEntities = [
   'ORDINAL',
   'CARDINAL',
 ];
-const entityTypes = ['Pretrained', 'Trainable'];
 
-function DialogForm({ showDialogForm, setShowDialogForm }) {
+function DialogForm({ showDialogForm, setShowDialogForm, handleForm }) {
+  // Add handleForm to props
   const { data: trainableEntities = [] } = useFetchEntitiesQuery();
   const { data: services = [] } = useFetchServiceQuery();
   const [gridDataHRI, setGridDataHRI] = useState([]);
   const [gridDataService, setGridDataService] = useState([]);
+  const [formName, setFormName] = useState('');
   const gridRefHRI = useRef(null);
   const gridRefService = useRef(null);
 
@@ -148,6 +149,37 @@ function DialogForm({ showDialogForm, setShowDialogForm }) {
     },
   };
 
+  const handleInsert = (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+    handleForm(formName, gridDataHRI, gridDataService);
+    hideDialog(); // Hide the dialog after inserting
+  };
+
+  const footerTemplate = () => {
+    return (
+      <div className="flex justify-between mt-4">
+        <Button
+          type="submit"
+          onClick={handleInsert}
+          primary
+          rounded
+          className="mr-2"
+        >
+          Insert
+        </Button>
+        <Button
+          onClick={hideDialog}
+          type="button"
+          danger
+          rounded
+          className="text-xs p-1"
+        >
+          Cancel
+        </Button>
+      </div>
+    );
+  };
+
   return (
     <DialogComponent
       id="dialogForm"
@@ -158,130 +190,138 @@ function DialogForm({ showDialogForm, setShowDialogForm }) {
       animationSettings={settings}
       enableResize={true}
       showCloseIcon={true}
+      footerTemplate={footerTemplate}
       position={{ X: 'center', Y: 'center' }}
     >
-      <TabComponent>
-        <TabItemsDirective>
-          <TabItemDirective
-            header={{ text: 'Form Slot with HRI' }}
-            content={() => (
-              <Box mt={2} textAlign="center">
-                <Typography variant="h6" mb={2}>
-                  Add Form Slot
-                </Typography>
-                <GridComponent
-                  ref={gridRefHRI}
-                  dataSource={gridDataHRI}
-                  editSettings={{
-                    allowEditing: true,
-                    allowAdding: true,
-                    allowDeleting: true,
-                  }}
-                  toolbar={['Add', 'Edit', 'Delete', 'Update', 'Cancel']}
-                  actionComplete={(args) => handleActionComplete(args, 'HRI')}
-                >
-                  <ColumnsDirective>
-                    <ColumnDirective
-                      field="name"
-                      headerText="Slot Name"
-                      width="100"
-                      textAlign="Center"
-                      isPrimaryKey={true}
-                    />
-                    <ColumnDirective
-                      field="type"
-                      headerText="Type"
-                      width="100"
-                      textAlign="Center"
-                      editType="dropdownedit"
-                      edit={typeParams}
-                    />
-                    <ColumnDirective
-                      field="hriString"
-                      headerText="HRI String"
-                      width="200"
-                      textAlign="Center"
-                    />
-                    <ColumnDirective
-                      field="entity"
-                      headerText="Extract from Entity"
-                      width="100"
-                      textAlign="Center"
-                      editType="dropdownedit"
-                      edit={entityParams}
-                    />
-                  </ColumnsDirective>
-                  <Inject services={[Edit, Toolbar]} />
-                </GridComponent>
-                <Button onClick={hideDialog} primary rounded>
-                  Close
-                </Button>
-              </Box>
-            )}
-          />
-          <TabItemDirective
-            header={{ text: 'Form Slot with eService' }}
-            content={() => (
-              <Box mt={2} textAlign="center">
-                <Typography variant="h6" mb={2}>
-                  Add eService
-                </Typography>
-                <GridComponent
-                  ref={gridRefService}
-                  dataSource={gridDataService}
-                  editSettings={{
-                    allowEditing: true,
-                    allowAdding: true,
-                    allowDeleting: true,
-                  }}
-                  toolbar={['Add', 'Edit', 'Delete', 'Update', 'Cancel']}
-                  actionComplete={(args) =>
-                    handleActionComplete(args, 'Service')
-                  }
-                >
-                  <ColumnsDirective>
-                    <ColumnDirective
-                      field="name"
-                      headerText="Slot Name"
-                      width="100"
-                      textAlign="Center"
-                      isPrimaryKey={true}
-                    />
-                    <ColumnDirective
-                      field="type"
-                      headerText="Type"
-                      width="100"
-                      textAlign="Center"
-                      editType="dropdownedit"
-                      edit={typeParams}
-                    />
-                    <ColumnDirective
-                      field="eServiceName"
-                      headerText="eService"
-                      width="200"
-                      textAlign="Center"
-                      editType="dropdownedit"
-                      edit={serviceParams}
-                    />
-                    <ColumnDirective
-                      field="entity"
-                      headerText="Extract from Entity"
-                      width="100"
-                      textAlign="Center"
-                      editType="dropdownedit"
-                      edit={entityParams}
-                    />
-                  </ColumnsDirective>
-                  <Inject services={[Edit, Toolbar]} />
-                </GridComponent>
-                <Button onClick={hideDialog} primary rounded>
-                  Close
-                </Button>
-              </Box>
-            )}
-          />
-        </TabItemsDirective>
-      </TabComponent>
+      <Box mt={2} mb={2} textAlign="center">
+        <TextField
+          label="Form Name"
+          variant="outlined"
+          size="small"
+          value={formName}
+          onChange={(e) => setFormName(e.target.value)}
+          style={{ width: '300px' }}
+        />
+      </Box>
+      <Box mt={2} mb={2} textAlign="center">
+        <TabComponent headerPlacement="Top" style={{ display: 'inline-block' }}>
+          <TabItemsDirective>
+            <TabItemDirective
+              header={{ text: 'Form Slot with HRI' }}
+              content={() => (
+                <Box mt={2} textAlign="center">
+                  <GridComponent
+                    ref={gridRefHRI}
+                    dataSource={gridDataHRI}
+                    editSettings={{
+                      allowEditing: true,
+                      allowAdding: true,
+                      allowDeleting: true,
+                    }}
+                    toolbar={['Add', 'Edit', 'Delete', 'Update', 'Cancel']}
+                    actionComplete={(args) => handleActionComplete(args, 'HRI')}
+                  >
+                    <ColumnsDirective>
+                      <ColumnDirective
+                        field="name"
+                        headerText="Slot Name"
+                        width="100"
+                        textAlign="Center"
+                        isPrimaryKey={true}
+                      />
+                      <ColumnDirective
+                        field="type"
+                        headerText="Type"
+                        width="100"
+                        textAlign="Center"
+                        editType="dropdownedit"
+                        edit={typeParams}
+                      />
+                      <ColumnDirective
+                        field="hriString"
+                        headerText="HRI String"
+                        width="200"
+                        textAlign="Center"
+                      />
+                      <ColumnDirective
+                        field="entity"
+                        headerText="Extract from Entity"
+                        width="100"
+                        textAlign="Center"
+                        editType="dropdownedit"
+                        edit={entityParams}
+                      />
+                    </ColumnsDirective>
+                    <Inject services={[Edit, Toolbar]} />
+                  </GridComponent>
+                </Box>
+              )}
+            />
+            <TabItemDirective
+              header={{ text: 'Form Slot with eService' }}
+              content={() => (
+                <Box mt={2} textAlign="center">
+                  <GridComponent
+                    ref={gridRefService}
+                    dataSource={gridDataService}
+                    editSettings={{
+                      allowEditing: true,
+                      allowAdding: true,
+                      allowDeleting: true,
+                    }}
+                    toolbar={['Add', 'Edit', 'Delete', 'Update', 'Cancel']}
+                    actionComplete={(args) =>
+                      handleActionComplete(args, 'Service')
+                    }
+                  >
+                    <ColumnsDirective>
+                      <ColumnDirective
+                        field="name"
+                        headerText="Slot Name"
+                        width="100"
+                        textAlign="Center"
+                        isPrimaryKey={true}
+                      />
+                      <ColumnDirective
+                        field="type"
+                        headerText="Type"
+                        width="80"
+                        textAlign="Center"
+                        editType="dropdownedit"
+                        edit={typeParams}
+                      />
+                      <ColumnDirective
+                        field="eServiceName"
+                        headerText="eService"
+                        width="100"
+                        textAlign="Center"
+                        editType="dropdownedit"
+                        edit={serviceParams}
+                      />
+                      <ColumnDirective
+                        field="eServiceInfo"
+                        headerText="Service Info"
+                        width="200"
+                        textAlign="Center"
+                      />
+                      <ColumnDirective
+                        field="entity"
+                        headerText="Extract from Entity"
+                        width="130"
+                        textAlign="Center"
+                        editType="dropdownedit"
+                        edit={entityParams}
+                      />
+                    </ColumnsDirective>
+                    <Inject services={[Edit, Toolbar]} />
+                  </GridComponent>
+                </Box>
+              )}
+            />
+          </TabItemsDirective>
+        </TabComponent>
+      </Box>
+      <Box mt={2} mb={2} textAlign="left"></Box>
     </DialogComponent>
   );
 }

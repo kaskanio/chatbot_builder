@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, forwardRef } from 'react';
+import React, { useRef, useState, useEffect, forwardRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   DiagramComponent,
@@ -14,6 +14,7 @@ import DialogEvent from './DialogEvent';
 import DialogRest from './DialogRest';
 import DialogGSlot from './DialogGSlot';
 import DialogForm from './DialogForm';
+import HelloWorldDialog from './HelloWorldDialog'; // Import the new dialog component
 
 import { handleSymbolDrag } from './handlers';
 import { saveDiagramState, loadDiagramState } from '../../store/diagramSlice';
@@ -25,6 +26,9 @@ const Dialogues = forwardRef((props, ref) => {
   const [showDialogRest, setShowDialogRest] = useState(false);
   const [showDialogGSlot, setShowDialogGSlot] = useState(false);
   const [showDialogForm, setShowDialogForm] = useState(false);
+  const [showHelloWorldDialog, setShowHelloWorldDialog] = useState(false); // State for Hello World dialog
+  const [dialogContent, setDialogContent] = useState(''); // State for dialog content
+  const [dialogAddInfo, setDialogAddInfo] = useState(null); // State for addInfo
 
   const [draggedNode, setDraggedNode] = useState(null);
 
@@ -213,6 +217,71 @@ const Dialogues = forwardRef((props, ref) => {
     }
   };
 
+  const handleForm = (formName, gridDataHRI, gridDataService) => {
+    console.log('Form Name:', formName);
+    console.log('HRI Grid Data:', gridDataHRI);
+    console.log('Service Grid Data:', gridDataService);
+
+    const formSlotsHRI = gridDataHRI
+      .map(
+        (slot) => `
+      <div style="border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;">
+        <strong>Slot Name:</strong> ${slot.name}<br>
+        <strong>Type:</strong> ${slot.type}<br>
+        <strong>HRI String:</strong> ${slot.hriString}<br>
+        <strong>Entity:</strong> ${slot.entity}
+      </div>
+    `
+      )
+      .join('');
+
+    const formSlotsService = gridDataService
+      .map(
+        (slot) => `
+      <div style="border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;">
+        <strong>Slot Name:</strong> ${slot.name}<br>
+        <strong>Type:</strong> ${slot.type}<br>
+        <strong>eService Name:</strong> ${slot.eServiceName}<br>
+        <strong>Service Info:</strong> ${slot.eServiceInfo}<br>
+        <strong>Entity:</strong> ${slot.entity}
+      </div>
+    `
+      )
+      .join('');
+
+    const newNode = {
+      id: `formNode_${Date.now()}`,
+      offsetX: 300,
+      offsetY: 300,
+      width: 400,
+      height: 300,
+      shape: {
+        type: 'HTML',
+        content: `
+          <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9;">
+            <h3 style="text-align: center; color: #0056b3;">${formName}</h3>
+            <div style="margin-top: 10px;">
+              <h4 style="color: #0056b3;">Form Slots with HRI</h4>
+              ${formSlotsHRI}
+            </div>
+            <div style="margin-top: 10px;">
+              <h4 style="color: #0056b3;">Form Slots with eService</h4>
+              ${formSlotsService}
+            </div>
+          </div>
+        `,
+      },
+      annotations: [],
+      addInfo: {
+        formName,
+        gridDataHRI,
+        gridDataService,
+      },
+    };
+
+    addNewNode(newNode);
+  };
+
   const handleContextMenuClick = (args) => {
     if (args.item.id === 'delete') {
       if (diagramInstanceRef.current) {
@@ -221,6 +290,16 @@ const Dialogues = forwardRef((props, ref) => {
     }
     if (args.item.id === 'entity') {
       console.log(diagramInstanceRef.current);
+    }
+  };
+
+  const handleNodeDoubleClick = (args) => {
+    if (args.source.properties.shape.type === 'HTML') {
+      setDialogContent(args.source.properties.shape.content);
+      console.log('Psaxnontas to add info: ', args);
+
+      setDialogAddInfo(args.source.properties.addInfo);
+      setShowHelloWorldDialog(true);
     }
   };
 
@@ -245,6 +324,7 @@ const Dialogues = forwardRef((props, ref) => {
         diagramInstanceRef.current = diagram;
       }}
       click={handleSaveDiagram}
+      doubleClick={handleNodeDoubleClick} // Add double click event handler
       contextMenuSettings={{
         show: true,
         items: [
@@ -320,6 +400,15 @@ const Dialogues = forwardRef((props, ref) => {
             <DialogForm
               showDialogForm={showDialogForm}
               setShowDialogForm={setShowDialogForm}
+              handleForm={handleForm} // Pass handleForm as a prop
+            />
+          )}
+          {showHelloWorldDialog && (
+            <HelloWorldDialog
+              visible={showHelloWorldDialog}
+              onClose={() => setShowHelloWorldDialog(false)}
+              content={dialogContent} // Pass the content to the dialog
+              addInfo={dialogAddInfo} // Pass the addInfo to the dialog
             />
           )}
         </div>

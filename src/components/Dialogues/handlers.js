@@ -9,7 +9,6 @@ export function handleSymbolDrag(
   setDraggedNode
 ) {
   const { element } = args;
-  console.log(args);
 
   if (element.propName === 'nodes') {
     if (element.properties.shape.properties.type === 'Bpmn') {
@@ -44,8 +43,8 @@ export function handleSymbolDrag(
           break;
       }
     } else if (element.properties.shape.classifier === 'Class') {
-      console.log('Yo');
       setShowDialogForm(true);
+      setDraggedNode(element);
       args.cancel = true;
     }
   }
