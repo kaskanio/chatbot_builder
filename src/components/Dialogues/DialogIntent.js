@@ -1,89 +1,177 @@
+import React, { useState, useEffect } from 'react';
 import { DialogComponent } from '@syncfusion/ej2-react-popups';
-import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns';
-import { useFetchIntentQuery, useFetchStringQuery } from '../../store';
-import { useState, useEffect, useRef } from 'react';
-import Skeleton from '../modules/Skeleton';
-import Button from '../modules/Button';
+import {
+  GridComponent,
+  ColumnsDirective,
+  ColumnDirective,
+  Edit,
+  Inject,
+  Toolbar,
+  Page,
+} from '@syncfusion/ej2-react-grids';
+import {
+  TabComponent,
+  TabItemDirective,
+  TabItemsDirective,
+} from '@syncfusion/ej2-react-navigations';
+import { DataManager } from '@syncfusion/ej2-data';
+import {
+  useFetchEntitiesQuery,
+  useEditEntityMutation,
+  useFetchSynonymsQuery,
+  useEditSynonymMutation,
+} from '../../store';
+import { TextBoxComponent } from '@syncfusion/ej2-react-inputs'; // Import TextBoxComponent
+import { Box } from '@mui/material';
 
-function DialogIntent({
-  showDialogIntentRefresh,
-  setShowDialogIntentRefresh,
-  selectedIntent,
-  setSelectedIntent,
-  diagramInstanceRef,
-  setNewNode, // Receive the callback function as a prop
-}) {
-  const dialogRef = useRef(null);
-  const {
-    data: intentsData,
-    error: intentsError,
-    isLoading: intentsLoading,
-  } = useFetchIntentQuery();
-  const {
-    data: stringsData,
-    error: stringsError,
-    isLoading: stringsLoading,
-  } = useFetchStringQuery(
-    { id: selectedIntent?.id },
-    { skip: !selectedIntent }
-  );
-  const [dropIt, setDropIt] = useState(false);
+import Button from '../modules/Button'; // Import Button component
 
-  // Function to hide the dialog
-  const hideDialog = () => {
-    setShowDialogIntentRefresh(false);
-    setDropIt(true);
-  };
+const pretrainedEntities = [
+  'PERSON',
+  'NORP',
+  'FAC',
+  'ORG',
+  'GPE',
+  'LOC',
+  'PRODUCT',
+  'EVENT',
+  'WORK_OF_ART',
+  'LAW',
+  'LANGUAGE',
+  'DATE',
+  'TIME',
+  'PERCENT',
+  'MONEY',
+  'QUANTITY',
+  'ORDINAL',
+  'CARDINAL',
+];
+
+function DialogIntent({ showDialogIntent, setShowDialogIntent, handleIntent }) {
   const settings = { effect: 'Zoom', duration: 400, delay: 0 };
 
-  let intentsNames, content;
-
-  // Fetch the intents from the database
-  if (intentsLoading) {
-    intentsNames = <Skeleton className="h-10 w-full" times={3} />;
-  } else if (intentsError) {
-    intentsNames = <div>Error loading intents.</div>;
-  } else {
-    intentsNames = intentsData.map((intent) => {
-      return intent.name;
-    });
-  }
-
-  // Fetch the strings related to the selected intent
-  if (selectedIntent) {
-    if (stringsLoading) {
-      content = <Skeleton className="h-10 w-full" times={3} />;
-    } else if (stringsError) {
-      content = <div>Error loading strings.</div>;
-    } else if (stringsData) {
-      content = (
-        <div className="mt-4">
-          {stringsData.map((string) => (
-            <div
-              key={string.id}
-              className="mb-2 mt-2 p-2 bg-gray-100 rounded shadow-sm text-sm"
-            >
-              "{string.name}"
-            </div>
-          ))}
-        </div>
-      );
-    }
-  }
-
-  // Function to handle the change of the selected intent
-  const handleIntentChange = (e) => {
-    const selected = intentsData.find((intent) => intent.name === e.value);
-    setSelectedIntent(selected);
+  const hideDialog = () => {
+    setShowDialogIntent(false);
   };
 
-  // Define the footer template for the dialog
+  const [intentName, setIntentName] = useState(''); // State for Intent name
+  const [stringsData, setStringsData] = useState([]);
+  const [pretrainedEntitiesData, setPretrainedEntitiesData] = useState([]);
+  const [trainableEntitiesData, setTrainableEntitiesData] = useState([]);
+  const [entitiesData, setEntitiesData] = useState([]);
+  const [synonymsData, setSynonymsData] = useState([]);
+
+  const { data: fetchedEntities } = useFetchEntitiesQuery();
+  const { data: fetchedSynonyms } = useFetchSynonymsQuery();
+  const [editEntity] = useEditEntityMutation();
+  const [editSynonym] = useEditSynonymMutation();
+
+  useEffect(() => {
+    const initialPretrainedEntitiesData = pretrainedEntities.map((entity) => ({
+      entity,
+      values: '',
+    }));
+    setPretrainedEntitiesData(initialPretrainedEntitiesData);
+  }, []);
+
+  useEffect(() => {
+    if (fetchedEntities) {
+      const formattedEntities = fetchedEntities.map((entity) => ({
+        ...entity,
+        values: entity.values.join(', '), // Add space after comma
+      }));
+      setEntitiesData(formattedEntities);
+    }
+  }, [fetchedEntities]);
+
+  useEffect(() => {
+    if (fetchedSynonyms) {
+      const formattedSynonyms = fetchedSynonyms.map((synonym) => ({
+        ...synonym,
+        values: synonym.values.join(', '), // Add space after comma
+      }));
+      setSynonymsData(formattedSynonyms);
+    }
+  }, [fetchedSynonyms]);
+
+  const handleActionComplete = (args, gridType) => {
+    if (args.requestType === 'save') {
+      if (gridType === 'Strings') {
+        const updatedData = [...stringsData];
+        if (args.action === 'add') {
+          if (!updatedData.some((item) => item.id === args.data.id)) {
+            updatedData.push(args.data);
+          }
+        } else if (args.action === 'edit') {
+          const index = updatedData.findIndex(
+            (item) => item.id === args.data.id
+          );
+          if (index !== -1) {
+            updatedData[index] = args.data;
+          }
+        }
+        setStringsData(updatedData);
+      } else if (gridType === 'PretrainedEntities') {
+        const updatedData = [...pretrainedEntitiesData];
+        if (args.action === 'edit') {
+          const index = updatedData.findIndex(
+            (item) => item.entity === args.data.entity
+          );
+          if (index !== -1) {
+            updatedData[index] = args.data;
+          }
+        }
+        setPretrainedEntitiesData(updatedData);
+      } else if (gridType === 'TrainableEntities') {
+        const updatedData = [...trainableEntitiesData];
+        if (args.action === 'add') {
+          if (!updatedData.some((item) => item.entity === args.data.entity)) {
+            updatedData.push(args.data);
+          }
+        } else if (args.action === 'edit') {
+          const index = updatedData.findIndex(
+            (item) => item.entity === args.data.entity
+          );
+          if (index !== -1) {
+            updatedData[index] = args.data;
+          }
+        }
+        setTrainableEntitiesData(updatedData);
+      }
+    }
+  };
+
+  const entityParams = {
+    params: {
+      actionComplete: () => false,
+      dataSource: new DataManager(
+        pretrainedEntities.map((entity) => ({ entity }))
+      ),
+      sortOrder: 'None',
+      fields: { text: 'entity', value: 'entity' },
+      placeholder: 'Select an entity',
+    },
+  };
+
+  const boldEntities = (props) => {
+    const text = props.entity || props.string || '';
+    const boldText = text
+      .replace(/PE: (\w+)/g, '<b>PE: $1</b>')
+      .replace(/TE: (\w+)/g, '<b>TE: $1</b>');
+    return <span dangerouslySetInnerHTML={{ __html: boldText }} />;
+  };
+
+  const handleInsert = () => {
+    handleIntent(intentName, stringsData);
+    hideDialog();
+  };
+
   const footerTemplate = () => {
     return (
-      <div className="flex justify-between">
+      <div className="flex justify-between mt-4">
         <Button
           type="submit"
-          onClick={hideDialog}
+          onClick={handleInsert}
           primary
           rounded
           className="mr-2"
@@ -94,75 +182,163 @@ function DialogIntent({
     );
   };
 
-  const className = selectedIntent?.name;
-
-  // Add the new node to the diagram
-  useEffect(() => {
-    // Check if stringsData is defined and is an array
-    const members = Array.isArray(stringsData)
-      ? stringsData.map((data) => ({
-          ...data,
-        }))
-      : [];
-
-    let newNode;
-    newNode = {
-      id: className, // Unique ID for the new node
-      shape: {
-        type: 'UmlClassifier',
-        enumerationShape: {
-          name: className,
-          members: members,
-        },
-        classifier: 'Enumeration',
-      },
-      offsetX: 300,
-      offsetY: 300,
-    };
-
-    if (dropIt === true) {
-      setNewNode(newNode);
-      setDropIt(false);
-    }
-  }, [dropIt, className, setNewNode, stringsData]);
-
-  // Adjust the dialog position based on content height
-  useEffect(() => {
-    if (dialogRef.current) {
-      const dialogElement = dialogRef.current.element;
-      const contentHeight =
-        dialogElement.querySelector('.e-dlg-content').scrollHeight;
-      const windowHeight = window.innerHeight;
-      const dialogHeight = Math.min(contentHeight, windowHeight * 0.8); // Limit dialog height to 80% of window height
-      dialogElement.style.height = `${dialogHeight}px`;
-      dialogElement.style.top = `${(windowHeight - dialogHeight) / 2}px`;
-    }
-  }, [content]);
-
   return (
     <DialogComponent
-      id="dialog"
-      header="Select Intent"
-      visible={showDialogIntentRefresh}
+      id="dialogIntent"
+      header="Intent Dialog"
+      visible={showDialogIntent}
       close={hideDialog}
-      width="600px"
+      width="1000px"
+      height="700px"
       animationSettings={settings}
+      showCloseIcon={true}
       footerTemplate={footerTemplate}
-      enableResize={true}
-      position={{ X: 'center', Y: 'center' }} // Adjust the position here
-      ref={dialogRef}
-      minHeight="200px" // Set a minimum height for the dialog
+      position={{ X: 'center', Y: 'center' }}
     >
-      <div className="mt-4">
-        <DropDownListComponent
-          id="ddlelement"
-          dataSource={intentsNames}
-          placeholder="Select an Intent"
-          className="w-full"
-          change={handleIntentChange}
-        />
-        <div>{content}</div>
+      <div style={{ marginBottom: '10px', color: 'gray' }}>
+        To insert a pretrained entity in your string, type "PE: entity_name". To
+        insert a trainable entity, type "TE: entity_name".
+        <br />
+        <i>For example, "PE: PERSON" or "TE: color".</i>
       </div>
+      <Box mt={2} mb={2} textAlign="center">
+        <TextBoxComponent
+          value={intentName}
+          change={(e) => setIntentName(e.value)}
+          placeholder="Enter Intent name"
+          floatLabelType="Auto"
+          width="300px"
+          height="40px"
+        />
+      </Box>
+      <TabComponent>
+        <TabItemsDirective>
+          <TabItemDirective
+            header={{ text: 'Strings' }}
+            content={() => (
+              <GridComponent
+                dataSource={stringsData}
+                editSettings={{
+                  allowEditing: true,
+                  allowAdding: true,
+                  allowDeleting: true,
+                }}
+                allowPaging={true}
+                pageSettings={{ pageSize: 10 }}
+                toolbar={['Add', 'Edit', 'Delete', 'Update', 'Cancel']}
+                actionComplete={(args) => handleActionComplete(args, 'Strings')}
+              >
+                <ColumnsDirective>
+                  <ColumnDirective
+                    field="string"
+                    headerText="String"
+                    width="200"
+                    textAlign="Center"
+                    isPrimaryKey={true}
+                    template={boldEntities}
+                  />
+                </ColumnsDirective>
+                <Inject services={[Edit, Toolbar, Page]} />
+              </GridComponent>
+            )}
+          />
+          <TabItemDirective
+            header={{ text: 'Pretrained Entities' }}
+            content={() => (
+              <GridComponent
+                dataSource={pretrainedEntitiesData}
+                editSettings={{
+                  allowEditing: true,
+                  allowAdding: false,
+                  allowDeleting: false,
+                }}
+                allowPaging={true}
+                pageSettings={{ pageSize: 10 }}
+                toolbar={['Edit', 'Update', 'Cancel']}
+                actionComplete={(args) =>
+                  handleActionComplete(args, 'PretrainedEntities')
+                }
+              >
+                <ColumnsDirective>
+                  <ColumnDirective
+                    field="entity"
+                    headerText="Pretrained Entity"
+                    width="50"
+                    textAlign="Center"
+                    textBold={true}
+                    editType="dropdownedit"
+                    edit={entityParams}
+                    isPrimaryKey={true}
+                    template={boldEntities}
+                  />
+                  <ColumnDirective
+                    field="values"
+                    headerText="Values (separated by a comma)"
+                    width="200"
+                    textAlign="Center"
+                  />
+                </ColumnsDirective>
+                <Inject services={[Edit, Toolbar, Page]} />
+              </GridComponent>
+            )}
+          />
+
+          <TabItemDirective
+            header={{ text: 'Trainable Entities' }}
+            content={() => (
+              <GridComponent
+                dataSource={entitiesData}
+                allowPaging={true}
+                pageSettings={{ pageSize: 10 }}
+              >
+                <ColumnsDirective>
+                  <ColumnDirective
+                    field="name"
+                    headerText="Trainable Entity"
+                    width="50"
+                    textAlign="Center"
+                    isPrimaryKey={true}
+                  />
+                  <ColumnDirective
+                    field="values"
+                    headerText="Values (separated by a comma)"
+                    width="200"
+                    textAlign="Center"
+                  />
+                </ColumnsDirective>
+                <Inject services={[Edit, Toolbar, Page]} />
+              </GridComponent>
+            )}
+          />
+          <TabItemDirective
+            header={{ text: 'Synonyms' }}
+            content={() => (
+              <GridComponent
+                dataSource={synonymsData}
+                allowPaging={true}
+                pageSettings={{ pageSize: 10 }}
+              >
+                <ColumnsDirective>
+                  <ColumnDirective
+                    field="name"
+                    headerText="Synonym"
+                    width="50"
+                    textAlign="Center"
+                    isPrimaryKey={true}
+                  />
+                  <ColumnDirective
+                    field="values"
+                    headerText="Values (separated by a comma)"
+                    width="200"
+                    textAlign="Center"
+                  />
+                </ColumnsDirective>
+                <Inject services={[Edit, Toolbar, Page]} />
+              </GridComponent>
+            )}
+          />
+        </TabItemsDirective>
+      </TabComponent>
     </DialogComponent>
   );
 }

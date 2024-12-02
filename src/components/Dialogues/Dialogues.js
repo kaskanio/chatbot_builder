@@ -14,6 +14,7 @@ import DialogEvent from './DialogEvent';
 import DialogRest from './DialogRest';
 import DialogGSlot from './DialogGSlot';
 import DialogForm from './DialogForm';
+import DialogIntent from './DialogIntent';
 
 import { handleSymbolDrag } from './handlers';
 import { saveDiagramState, loadDiagramState } from '../../store/diagramSlice';
@@ -25,6 +26,7 @@ const Dialogues = forwardRef((props, ref) => {
   const [showDialogRest, setShowDialogRest] = useState(false);
   const [showDialogGSlot, setShowDialogGSlot] = useState(false);
   const [showDialogForm, setShowDialogForm] = useState(false);
+  const [showDialogIntent, setShowDialogIntent] = useState(false);
   const [currentNode, setCurrentNode] = useState(null); // State to keep track of the current node being edited
 
   const [draggedNode, setDraggedNode] = useState(null);
@@ -295,6 +297,41 @@ const Dialogues = forwardRef((props, ref) => {
     setCurrentNode(null); // Reset the current node
   };
 
+  const handleIntent = (intentName, intentStrings) => {
+    const intentContent = intentStrings
+      .map(
+        (str) => `
+        <div style="border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;">
+          <strong>Intent String:</strong> ${str.string}
+        </div>
+      `
+      )
+      .join('');
+
+    const newNodeContent = `
+      <div style="padding: 10px; border: 2px solid #ff5733; border-radius: 10px; background-color: #fff3e6;">
+        <h3 style="text-align: center; color: #ff5733;">${intentName}</h3>
+        <div style="margin-top: 10px;">
+          ${intentContent}
+        </div>
+      </div>
+    `;
+
+    const newNode = {
+      id: `intentNode_${Date.now()}`,
+      offsetX: 300,
+      offsetY: 300,
+      width: 400,
+      height: 300,
+      shape: {
+        type: 'HTML',
+        content: newNodeContent,
+      },
+      annotations: [],
+    };
+    addNewNode(newNode);
+  };
+
   const handleContextMenuClick = (args) => {
     if (args.item.id === 'delete') {
       if (diagramInstanceRef.current) {
@@ -339,6 +376,7 @@ const Dialogues = forwardRef((props, ref) => {
           setShowDialogRest,
           setShowDialogGSlot,
           setShowDialogForm,
+          setShowDialogIntent,
           setDraggedNode
         );
         setIsDoubleClick(false); // Reset the flag when dragging from the symbol palette
@@ -429,6 +467,13 @@ const Dialogues = forwardRef((props, ref) => {
               initialGridDataService={
                 isDoubleClick ? initialGridDataService : []
               }
+            />
+          )}
+          {showDialogIntent && (
+            <DialogIntent
+              showDialogIntent={showDialogIntent}
+              setShowDialogIntent={setShowDialogIntent}
+              handleIntent={handleIntent} // Pass handleIntent as a prop
             />
           )}
         </div>

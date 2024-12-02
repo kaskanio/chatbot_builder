@@ -255,28 +255,6 @@ function DialoguesToolbar({
       },
       borderWidth: 1, // Set the border width
     },
-    {
-      id: 'SetFormSlot',
-      text: 'Set Form Slot',
-      width: 170,
-      height: 100,
-      shape: {
-        type: 'Bpmn',
-        shape: 'Activity',
-        activity: {
-          activity: 'Task',
-          task: {
-            type: 'BusinessRule',
-          },
-        },
-      },
-      style: {
-        fill: '#FFD700',
-        strokeWidth: 2,
-        strokeColor: '#FFD700',
-      },
-      borderWidth: 1,
-    },
   ];
 
   return (

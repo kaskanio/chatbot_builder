@@ -7,16 +7,17 @@ import {
   Edit,
   Inject,
   Toolbar,
+  Page,
 } from '@syncfusion/ej2-react-grids';
 import { DataManager, Query } from '@syncfusion/ej2-data';
-import { Box, TextField } from '@mui/material';
+import { Box } from '@mui/material';
 import {
   TabComponent,
   TabItemDirective,
   TabItemsDirective,
 } from '@syncfusion/ej2-react-navigations';
-import { useFetchEntitiesQuery } from '../../store';
-import { useFetchServiceQuery } from '../../store';
+import { TextBoxComponent } from '@syncfusion/ej2-react-inputs'; // Import TextBoxComponent
+import { useFetchEntitiesQuery, useFetchServiceQuery } from '../../store';
 import Button from '../modules/Button'; // Import Button component
 
 const formSlotTypes = ['int', 'float', 'str', 'bool', 'list', 'dict'];
@@ -60,7 +61,7 @@ function DialogForm({
   const gridRefService = useRef(null);
 
   useEffect(() => {
-    setFormName(initialFormName);
+    // setFormName(initialFormName);
     setGridDataHRI(initialGridDataHRI);
     setGridDataService(initialGridDataService);
   }, [initialFormName, initialGridDataHRI, initialGridDataService]);
@@ -190,6 +191,7 @@ function DialogForm({
       visible={showDialogForm}
       close={hideDialog}
       width="1000px"
+      height="700px"
       animationSettings={settings}
       enableResize={true}
       showCloseIcon={true}
@@ -197,13 +199,13 @@ function DialogForm({
       position={{ X: 'center', Y: 'center' }}
     >
       <Box mt={2} mb={2} textAlign="center">
-        <TextField
-          label="Form Name"
-          variant="outlined"
-          size="small"
+        <TextBoxComponent
           value={formName}
-          onChange={(e) => setFormName(e.target.value)}
-          style={{ width: '300px' }}
+          change={(e) => setFormName(e.value)}
+          placeholder="Enter Form name"
+          floatLabelType="Auto"
+          width="300px"
+          height="40px"
         />
       </Box>
       <Box mt={2} mb={2} textAlign="center">
@@ -221,6 +223,8 @@ function DialogForm({
                       allowAdding: true,
                       allowDeleting: true,
                     }}
+                    allowPaging={true}
+                    pageSettings={{ pageSize: 10 }}
                     toolbar={['Add', 'Edit', 'Delete', 'Update', 'Cancel']}
                     actionComplete={(args) => handleActionComplete(args, 'HRI')}
                   >
@@ -255,7 +259,7 @@ function DialogForm({
                         edit={entityParams}
                       />
                     </ColumnsDirective>
-                    <Inject services={[Edit, Toolbar]} />
+                    <Inject services={[Edit, Toolbar, Page]} />
                   </GridComponent>
                 </Box>
               )}
@@ -272,6 +276,8 @@ function DialogForm({
                       allowAdding: true,
                       allowDeleting: true,
                     }}
+                    allowPaging={true}
+                    pageSettings={{ pageSize: 10 }}
                     toolbar={['Add', 'Edit', 'Delete', 'Update', 'Cancel']}
                     actionComplete={(args) =>
                       handleActionComplete(args, 'Service')
@@ -316,7 +322,7 @@ function DialogForm({
                         edit={entityParams}
                       />
                     </ColumnsDirective>
-                    <Inject services={[Edit, Toolbar]} />
+                    <Inject services={[Edit, Toolbar, Page]} />
                   </GridComponent>
                 </Box>
               )}
