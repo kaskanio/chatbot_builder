@@ -2,7 +2,8 @@
 export function handleSymbolDrag(
   args,
   setShowDialogSpeak,
-  setShowDialogFireEvent,
+  setShowDialogEvent,
+  setEventType,
   setShowDialogRest,
   setShowDialogGSlot,
   setShowDialogFSlot,
@@ -18,7 +19,13 @@ export function handleSymbolDrag(
     setDraggedNode(element);
     args.cancel = true;
   } else if (element.id.startsWith('FireEventAction')) {
-    setShowDialogFireEvent(true);
+    setShowDialogEvent(true);
+    setEventType('Fire');
+    setDraggedNode(element);
+    args.cancel = true;
+  } else if (element.id.startsWith('EventTrigger')) {
+    setShowDialogEvent(true);
+    setEventType('Trigger');
     setDraggedNode(element);
     args.cancel = true;
   } else if (element.id.startsWith('RESTCallAction')) {

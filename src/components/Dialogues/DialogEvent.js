@@ -9,8 +9,9 @@ import { Box, Typography, Grid, TextField } from '@mui/material';
 import './dialog.css';
 
 function DialogEvent({
-  showDialogFireEvent,
-  setShowDialogFireEvent,
+  showDialogEvent,
+  setShowDialogEvent,
+  eventType,
   onSelectEvent,
 }) {
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -25,7 +26,7 @@ function DialogEvent({
   const [addEvent, addEventResults] = useAddEventMutation();
 
   const hideDialog = () => {
-    setShowDialogFireEvent(false);
+    setShowDialogEvent(false);
   };
   const settings = { effect: 'Zoom', duration: 400, delay: 0 };
 
@@ -136,11 +137,13 @@ function DialogEvent({
     );
   };
 
+  const header = eventType === 'Fire' ? 'Fire Event Action' : 'Event Trigger';
+
   return (
     <DialogComponent
       id="dialog"
-      header="Fire Event Action"
-      visible={showDialogFireEvent}
+      header={header}
+      visible={showDialogEvent}
       close={hideDialog}
       width="600px"
       animationSettings={settings}

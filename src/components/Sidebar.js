@@ -2,12 +2,12 @@ import { useState } from 'react';
 import Link from './Link';
 
 function Sidebar() {
-  const [isTriggersOpen, setIsTriggersOpen] = useState(true); // Start open
+  // const [isTriggersOpen, setIsTriggersOpen] = useState(true); // Start open
   const [activeLink, setActiveLink] = useState('/dialogues'); // Default active link
 
-  const toggleTriggers = () => {
-    setIsTriggersOpen(!isTriggersOpen);
-  };
+  // const toggleTriggers = () => {
+  //   setIsTriggersOpen(!isTriggersOpen);
+  // };
 
   const handleLinkClick = (link) => {
     setActiveLink(link);
@@ -85,7 +85,17 @@ function Sidebar() {
                 Services
               </Link>
             </li>
-            <li className="mb-0">
+            <li>
+              <Link
+                to="/events"
+                isActive={isActive('/events')}
+                onClick={() => handleLinkClick('/events')}
+              >
+                <i className="fas fa-circle mr-3 text-xs"></i>
+                Events
+              </Link>
+            </li>
+            {/* <li className="mb-0">
               <div
                 className="flex items-center py-1.5 px-4 rounded hover:bg-gray-800 cursor-pointer transition-colors duration-200"
                 onClick={toggleTriggers}
@@ -110,19 +120,9 @@ function Sidebar() {
                       Intents
                     </Link>
                   </li>
-                  <li>
-                    <Link
-                      to="/events"
-                      isActive={isActive('/events')}
-                      onClick={() => handleLinkClick('/events')}
-                    >
-                      <i className="fas fa-circle mr-3 text-xs"></i>
-                      Events
-                    </Link>
-                  </li>
                 </ul>
               )}
-            </li>
+            </li> */}
           </ul>
         </div>
         <div className="text-center">

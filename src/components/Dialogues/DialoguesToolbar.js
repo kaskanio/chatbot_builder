@@ -1,17 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   SymbolPaletteComponent,
   Inject,
   BpmnDiagrams,
-  AnnotationConstraints,
 } from '@syncfusion/ej2-react-diagrams';
+import { SidebarComponent } from '@syncfusion/ej2-react-navigations';
+import { GoChevronRight, GoChevronLeft } from 'react-icons/go';
 
-function DialoguesToolbar({
-  diagramInstanceRef,
-  selectedIntent,
-  relatedStrings,
-}) {
-  // Fetch events from the API
+function DialoguesToolbar({ diagramInstanceRef }) {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   // Define the connector symbols
   let connectorSymbols = [
@@ -45,27 +46,9 @@ function DialoguesToolbar({
         shape: 'Arrow',
       },
     },
-    {
-      id: 'link33',
-      type: 'Bezier',
-      sourcePoint: {
-        x: 0,
-        y: 0,
-      },
-      targetPoint: {
-        x: 40,
-        y: 40,
-      },
-      style: {
-        strokeWidth: 2,
-      },
-      targetDecorator: {
-        shape: 'None',
-      },
-    },
   ];
 
-  let umlShapes = [
+  let triggerShapes = [
     {
       id: 'Intent',
       text: 'Intent',
@@ -87,8 +70,43 @@ function DialoguesToolbar({
       offsetY: 105,
     },
     {
+      id: 'EventTrigger',
+      text: 'Event',
+      shape: {
+        type: 'HTML',
+        content: `
+          <div style="padding: 10px; border: 2px solid #ff5733; border-radius: 10px; background-color: #fff3e6;">
+            <h3 style="text-align: center; color: #ff5733; font-size: 10px; font-weight: bold;">Event Trigger</h3>
+            <div style="margin-top: 5px;">
+              <div style="border: 1px solid #ccc; padding: 5px; margin: 2px; border-radius: 3px; font-size: 8px;">
+              </div>
+            </div>
+          </div>
+        `,
+      },
+      offsetX: 405,
+      offsetY: 105,
+    },
+  ];
+
+  let actionShape = [
+    {
+      id: 'SpeakAction',
+      shape: {
+        type: 'HTML',
+        content: `
+          <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9;">
+            <h3 style="text-align: center; color: #0056b3; font-size: 10px; font-weight: bold;">Speak Action</h3>
+            <div style="margin-top: 5px; font-style: italic;">
+            </div>
+          </div>
+        `,
+      },
+      offsetX: 405,
+      offsetY: 105,
+    },
+    {
       id: 'Form',
-      text: 'Form',
       shape: {
         type: 'HTML',
         content: `
@@ -106,262 +124,149 @@ function DialoguesToolbar({
       offsetX: 405,
       offsetY: 105,
     },
-  ];
-
-  let actionShape = [
-    {
-      id: 'SpeakAction',
-      text: 'Speak',
-      width: 350,
-      height: 130,
-      annotations: [
-        {
-          // Non-editable annotation at the top
-          content: 'Speak',
-          offset: { x: 0.5, y: 0.1 }, // Position at the top
-          style: {
-            color: '#000000', // Text color
-            fontSize: 15, // Font size
-            fontFamily: 'Arial', // Font family
-            bold: true, // Bold text
-            italic: false, // Italic text
-            textAlign: 'Center', // Text alignment
-          },
-          constraints: AnnotationConstraints.ReadOnly, // Make it non-editable
-        },
-      ],
-      shape: {
-        type: 'Bpmn',
-        shape: 'Activity',
-        activity: {
-          activity: 'Task',
-          task: {
-            type: 'User',
-          },
-        },
-      },
-      style: {
-        fill: '#FFD700',
-        strokeWidth: 2,
-        strokeColor: '#FFD700',
-      },
-      borderWidth: 1,
-    },
     {
       id: 'FireEventAction',
-      text: 'Fire Event',
-      width: 170,
-      height: 100,
-      annotations: [
-        {
-          // Non-editable annotation at the top
-          content: 'Fire Event',
-          offset: { x: 0.5, y: 0.1 }, // Position at the top
-          style: {
-            color: '#000000', // Text color
-            fontSize: 15, // Font size
-            fontFamily: 'Arial', // Font family
-            bold: true, // Bold text
-            italic: false, // Italic text
-            textAlign: 'Center', // Text alignment
-          },
-          constraints: AnnotationConstraints.ReadOnly, // Make it non-editable
-        },
-      ],
       shape: {
-        type: 'Bpmn',
-        shape: 'Activity',
-        activity: {
-          activity: 'Task',
-          task: {
-            type: 'InstantiatingReceive',
-          },
-        },
+        type: 'HTML',
+        content: `
+          <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9;">
+            <h3 style="text-align: center; color: #0056b3; font-size: 10px; font-weight: bold;">Fire Event</h3>
+            <div style="margin-top: 5px;">
+            </div>
+          </div>
+        `,
       },
-      style: {
-        fill: '#FFD700',
-        strokeWidth: 2,
-        strokeColor: '#FFD700',
-      },
-      borderWidth: 1,
+      offsetX: 405,
+      offsetY: 105,
     },
     {
       id: 'RESTCallAction',
-      text: 'REST Call',
-      width: 200,
-      height: 150,
       shape: {
-        type: 'Bpmn',
-        shape: 'Activity',
-        activity: {
-          activity: 'Task',
-          task: {
-            type: 'Service',
-          },
-        },
+        type: 'HTML',
+        content: `
+          <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9;">
+            <h3 style="text-align: center; color: #0056b3; font-size: 10px; font-weight: bold;">Service</h3>
+            <div style="margin-top: 5px;">
+            </div>
+          </div>
+        `,
       },
-      annotations: [
-        {
-          // Non-editable annotation at the top
-          content: 'Rest Call Service',
-          offset: { x: 0.5, y: 0.1 }, // Position at the top
-          style: {
-            color: '#000000', // Text color
-            fontSize: 15, // Font size
-            fontFamily: 'Arial', // Font family
-            bold: true, // Bold text
-            italic: false, // Italic text
-            textAlign: 'Center', // Text alignment
-          },
-          constraints: AnnotationConstraints.ReadOnly, // Make it non-editable
-        },
-      ],
-      style: {
-        fill: '#FFD700',
-        strokeWidth: 2,
-        strokeColor: '#FFD700',
-      },
-      borderWidth: 1,
+      offsetX: 405,
+      offsetY: 105,
     },
     {
       id: 'SetGlobalSlot',
-      text: 'Set Global Slot',
-      width: 250,
-      height: 100,
       shape: {
-        type: 'Bpmn',
-        shape: 'Activity',
-        activity: {
-          activity: 'Task',
-          task: {
-            type: 'Manual',
-          },
-        },
+        type: 'HTML',
+        content: `
+          <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9;">
+            <h3 style="text-align: center; color: #0056b3; font-size: 10px; font-weight: bold;">Set Global Slot</h3>
+            <div style="margin-top: 5px;">
+            </div>
+          </div>
+        `,
       },
-      annotations: [
-        {
-          // Non-editable annotation at the top
-          content: 'Set Global Slot',
-          offset: { x: 0.5, y: 0.1 }, // Position at the top
-          style: {
-            color: '#000000', // Text color
-            fontSize: 15, // Font size
-            fontFamily: 'Arial', // Font family
-            bold: true, // Bold text
-            italic: false, // Italic text
-            textAlign: 'Center', // Text alignment
-          },
-          constraints: AnnotationConstraints.ReadOnly, // Make it non-editable
-        },
-      ],
-      style: {
-        fill: '#FFD700',
-        strokeWidth: 2,
-        strokeColor: '#FFD700',
-      },
-      borderWidth: 1, // Set the border width
+      offsetX: 405,
+      offsetY: 105,
     },
     {
       id: 'SetFormSlot',
-      text: 'Set Form Slot',
-      width: 250,
-      height: 100,
       shape: {
-        type: 'Bpmn',
-        shape: 'Activity',
-        activity: {
-          activity: 'Task',
-          task: {
-            type: 'Manual',
-          },
-        },
+        type: 'HTML',
+        content: `
+          <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9;">
+            <h3 style="text-align: center; color: #0056b3; font-size: 10px; font-weight: bold;">Set Form Slot</h3>
+            <div style="margin-top: 5px;">
+       
+            </div>
+          </div>
+        `,
       },
-      annotations: [
-        {
-          // Non-editable annotation at the top
-          content: 'Set Form Slot',
-          offset: { x: 0.5, y: 0.1 }, // Position at the top
-          style: {
-            color: '#000000', // Text color
-            fontSize: 15, // Font size
-            fontFamily: 'Arial', // Font family
-            bold: true, // Bold text
-            italic: false, // Italic text
-            textAlign: 'Center', // Text alignment
-          },
-          constraints: AnnotationConstraints.ReadOnly, // Make it non-editable
-        },
-      ],
-      style: {
-        fill: '#FFD700',
-        strokeWidth: 2,
-        strokeColor: '#FFD700',
-      },
-      borderWidth: 1, // Set the border width
+      offsetX: 405,
+      offsetY: 105,
     },
   ];
 
   return (
-    <div className="p-4">
-      <div className="flex justify-between">
-        <div className="flex">
-          <SymbolPaletteComponent
-            id="palette1"
-            expandMode="Multiple"
-            palettes={[
-              {
-                id: 'intentsForms',
-                expanded: true,
-                symbols: umlShapes,
-                title: 'Intents & Forms',
-              },
-              {
-                id: 'connectors',
-                expanded: true,
-                symbols: connectorSymbols,
-                title: 'Connectors',
-                iconCss: 'e-ddb-icons e-connector',
-              },
-
-              {
-                id: 'actions',
-                expanded: true,
-                symbols: actionShape,
-                title: 'Actions',
-              },
-            ]}
-            symbolHeight={100}
-            symbolWidth={110}
-            getSymbolInfo={(symbol) => {
-              if (symbol['text'] !== undefined) {
+    <div className="absolute top-0 right-0 h-full flex">
+      <SidebarComponent
+        isOpen={isSidebarOpen}
+        width="300px"
+        target=".content-area"
+        position="Right"
+        type="Over"
+        enableGestures={false}
+      >
+        <div className="flex justify-between">
+          <div className="flex">
+            <SymbolPaletteComponent
+              id="palette1"
+              expandMode="Multiple"
+              palettes={[
+                {
+                  id: 'intentsForms',
+                  expanded: true,
+                  symbols: triggerShapes,
+                  title: 'Intents & Forms',
+                },
+                {
+                  id: 'connectors',
+                  expanded: true,
+                  symbols: connectorSymbols,
+                  title: 'Connectors',
+                  iconCss: 'e-ddb-icons e-connector',
+                },
+                {
+                  id: 'actions',
+                  expanded: true,
+                  symbols: actionShape,
+                  title: 'Actions',
+                },
+              ]}
+              symbolHeight={100}
+              symbolWidth={110}
+              getSymbolInfo={(symbol) => {
+                if (symbol['text'] !== undefined) {
+                  return {
+                    width: 75,
+                    height: 60,
+                    description: {
+                      text: symbol['text'],
+                      overflow: 'Wrap',
+                      orientation: 'Bottom',
+                    },
+                  };
+                }
                 return {
                   width: 75,
                   height: 60,
-                  //Add or Remove the Text for Symbol palette item.
                   description: {
-                    //Defines the symbol description
-                    text: symbol['text'],
-                    //Defines how to handle the text when its size exceeds the given symbol size
+                    text: symbol.shape['shape'],
                     overflow: 'Wrap',
-                    orientation: 'Bottom', // Position the text below the symbol
+                    orientation: 'Bottom',
                   },
                 };
-              }
-              return {
-                width: 75,
-                height: 60,
-                description: {
-                  text: symbol.shape['shape'],
-                  overflow: 'Wrap',
-                  orientation: 'Bottom', // Position the text below the symbol
-                },
-              };
-            }}
-          >
-            <Inject services={[BpmnDiagrams]} />
-          </SymbolPaletteComponent>
+              }}
+            >
+              <Inject services={[BpmnDiagrams]} />
+            </SymbolPaletteComponent>
+          </div>
         </div>
-      </div>
+      </SidebarComponent>
+      <button
+        onClick={toggleSidebar}
+        className="m-2 p-2 bg-gray-200 rounded-full shadow-lg absolute transform transition-transform"
+        style={{
+          zIndex: 1000,
+          top: '40%',
+          transform: 'translateY(-50%)',
+          right: isSidebarOpen ? '300px' : '0',
+          transition:
+            'right 0.5s ease' /* Ensure the button has the same transition duration */,
+        }}
+      >
+        {isSidebarOpen ? <GoChevronRight /> : <GoChevronLeft />}
+      </button>
     </div>
   );
 }

@@ -6,7 +6,6 @@ import {
   BpmnDiagrams,
   ConnectorEditing,
   DiagramContextMenu,
-  AnnotationConstraints,
 } from '@syncfusion/ej2-react-diagrams';
 import DialoguesToolbar from './DialoguesToolbar';
 import DialogSpeak from './DialogSpeak';
@@ -16,14 +15,15 @@ import DialogGSlot from './DialogGSlot';
 import DialogForm from './DialogForm';
 import DialogIntent from './DialogIntent';
 import DialogFSlot from './DialogFSlot'; // Add this import
+import { MenuComponent } from '@syncfusion/ej2-react-navigations'; // Add this import
 
 import { handleSymbolDrag } from './handlers';
 import { saveDiagramState, loadDiagramState } from '../../store/diagramSlice';
-import Button from '../modules/Button';
 
 const Dialogues = forwardRef((props, ref) => {
   const [showDialogSpeak, setShowDialogSpeak] = useState(false);
-  const [showDialogFireEvent, setShowDialogFireEvent] = useState(false);
+  const [showDialogEvent, setShowDialogEvent] = useState(false);
+  const [eventType, setEventType] = useState('');
   const [showDialogRest, setShowDialogRest] = useState(false);
   const [showDialogGSlot, setShowDialogGSlot] = useState(false);
   const [showDialogFSlot, setShowDialogFSlot] = useState(false);
@@ -99,95 +99,145 @@ const Dialogues = forwardRef((props, ref) => {
   };
 
   const handleSpeakAction = (actionString) => {
-    if (draggedNode) {
-      if (draggedNode.properties.shape.activity.task.type === 'User') {
-        const newNodeContent = `
-          <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9;">
-            <h3 style="text-align: center; color: #0056b3; font-size: 24px; font-weight: bold;">Speak Action</h3>
-            <div style="margin-top: 10px; font-style: italic;">
-              "${actionString}"
-            </div>
-          </div>
-        `;
-        draggedNode.properties.shape = {
-          type: 'HTML',
-          content: newNodeContent,
-        };
-        setShowDialogSpeak(false);
-        addNewNode(draggedNode);
-        setDraggedNode(null);
-      }
-    }
+    const newNodeContent = `
+      <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9;">
+        <h3 style="text-align: center; color: #0056b3; font-size: 24px; font-weight: bold;">Speak Action</h3>
+        <div style="margin-top: 10px; font-style: italic;">
+          "${actionString}"
+        </div>
+      </div>
+    `;
+    const newNode = {
+      id: `speakNode_${Date.now()}`,
+      offsetX: draggedNode.offsetX,
+      offsetY: draggedNode.offsetY,
+      width: 350,
+      height: 130,
+      shape: {
+        type: 'HTML',
+        content: newNodeContent,
+      },
+      annotations: [],
+    };
+    addNewNode(newNode);
+    setShowDialogSpeak(false);
   };
 
   const handleSelectEvent = (event) => {
-    if (draggedNode) {
-      if (
-        draggedNode.properties.shape.activity.task.type ===
-        'InstantiatingReceive'
-      ) {
-        const newNodeContent = `
-          <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9;">
-            <h3 style="text-align: center; color: #0056b3; font-size: 24px; font-weight: bold;">Fire Event</h3>
-            <div style="margin-top: 10px;">
-              <strong>Name:</strong> ${event.name}<br>
-              <strong>URI:</strong> <i>${event.uri}</i>
-            </div>
-          </div>
-        `;
-        draggedNode.properties.shape = {
-          type: 'HTML',
-          content: newNodeContent,
-        };
-        setShowDialogFireEvent(false);
-        addNewNode(draggedNode);
-        setDraggedNode(null);
-      }
-    }
+    const isFireEvent = eventType === 'Fire';
+    const headerText = isFireEvent ? 'Fire Event' : 'Event Trigger';
+    const borderColor = isFireEvent ? '#0056b3' : '#ff5733';
+    const backgroundColor = isFireEvent ? '#f9f9f9' : '#fff3e6';
+    const headerColor = isFireEvent ? '#0056b3' : '#ff5733';
+
+    const newNodeContent = `
+      <div style="padding: 10px; border: 2px solid ${borderColor}; border-radius: 10px; background-color: ${backgroundColor};">
+        <h3 style="text-align: center; color: ${headerColor}; font-size: 18px; font-weight: bold;">${headerText}</h3>
+        <div style="margin-top: 10px;">
+          <strong>Name:</strong> ${event.name}<br>
+          <strong>URI:</strong> <i>${event.uri}</i>
+        </div>
+      </div>
+    `;
+
+    const newNode = {
+      id: `eventNode_${Date.now()}`,
+      offsetX: draggedNode.offsetX,
+      offsetY: draggedNode.offsetY,
+      width: 170,
+      height: 100,
+      shape: {
+        type: 'HTML',
+        content: newNodeContent,
+      },
+      annotations: [],
+    };
+
+    addNewNode(newNode);
+    setShowDialogEvent(false);
   };
 
   const handleSelectService = (service) => {
-    if (draggedNode) {
-      const newNodeContent = `
-        <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9;">
-          <h3 style="text-align: center; color: #0056b3; font-size: 24px; font-weight: bold;">Service</h3>
-          <div style="margin-top: 10px;">
-            <strong>Name:</strong> ${service.name}<br>
-            <strong>HTTP Verb:</strong> ${service.verb}<br>
-            <strong>Host:</strong> ${service.host}<br>
-            <strong>Port:</strong> ${service.port}<br>
-            <strong>Path:</strong> ${service.path}
-          </div>
+    const newNodeContent = `
+      <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9;">
+        <h3 style="text-align: center; color: #0056b3; font-size: 18px; font-weight: bold;">Service</h3>
+        <div style="margin-top: 10px;">
+          <strong>Name:</strong> ${service.name}<br>
+          <strong>HTTP Verb:</strong> ${service.verb}<br>
+          <strong>Host:</strong> ${service.host}<br>
+          <strong>Port:</strong> ${service.port}<br>
+          <strong>Path:</strong> ${service.path}
         </div>
-      `;
-      draggedNode.properties.shape = {
+      </div>
+    `;
+    const newNode = {
+      id: `serviceNode_${Date.now()}`,
+      offsetX: draggedNode.offsetX,
+      offsetY: draggedNode.offsetY,
+      width: 200,
+      height: 150,
+      shape: {
         type: 'HTML',
         content: newNodeContent,
-      };
-      addNewNode(draggedNode);
-      setDraggedNode(null);
-    }
+      },
+      annotations: [],
+    };
+    addNewNode(newNode);
+    setShowDialogRest(false);
   };
 
   const handleSelectGSlot = (slot) => {
-    if (draggedNode) {
-      const newNodeContent = `
-        <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9;">
-          <h3 style="text-align: center; color: #0056b3; font-size: 24px; font-weight: bold;">Set Global Slot</h3>
-          <div style="margin-top: 10px;">
-            <strong>Name:</strong> ${slot.name}<br>
-            <strong>Type:</strong> ${slot.type}<br>
-            <strong>Value:</strong> ${slot.value}
-          </div>
+    const newNodeContent = `
+      <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9;">
+        <h3 style="text-align: center; color: #0056b3; font-size: 18px; font-weight: bold;">Set Global Slot</h3>
+        <div style="margin-top: 10px;">
+          <strong>Name:</strong> ${slot.name}<br>
+          <strong>Type:</strong> ${slot.type}<br>
+          <strong>Value:</strong> ${slot.value}
         </div>
-      `;
-      draggedNode.properties.shape = {
+      </div>
+    `;
+    const newNode = {
+      id: `gSlotNode_${Date.now()}`,
+      offsetX: draggedNode.offsetX,
+      offsetY: draggedNode.offsetY,
+      width: 250,
+      height: 100,
+      shape: {
         type: 'HTML',
         content: newNodeContent,
-      };
-      addNewNode(draggedNode);
-      setDraggedNode(null);
-    }
+      },
+      annotations: [],
+    };
+    addNewNode(newNode);
+    setShowDialogGSlot(false);
+  };
+
+  const handleSelectFSlot = (slot) => {
+    const newNodeContent = `
+      <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9;">
+        <h3 style="text-align: center; color: #0056b3; font-size: 18px; font-weight: bold;">Set Form Slot</h3>
+        <div style="margin-top: 10px;">
+          <strong>Name:</strong> ${slot.name}<br>
+          <strong>Type:</strong> ${slot.type}<br>
+          <strong>Value:</strong> ${slot.value}
+        </div>
+      </div>
+    `;
+    const newNode = {
+      id: `fSlotNode_${Date.now()}`,
+      offsetX: draggedNode.offsetX,
+      offsetY: draggedNode.offsetY,
+      width: 250,
+      height: 100,
+      shape: {
+        type: 'HTML',
+        content: newNodeContent,
+      },
+      annotations: [],
+    };
+    addNewNode(newNode);
+    setShowDialogFSlot(false);
   };
 
   const handleForm = (formName, gridDataHRI, gridDataService) => {
@@ -222,17 +272,31 @@ const Dialogues = forwardRef((props, ref) => {
       )
       .join('');
 
+    const formSlotsHRISection =
+      gridDataHRI.length > 0
+        ? `
+      <div style="margin-top: 10px;">
+        <h4 style="color: #0056b3;">Form Slots with HRI</h4>
+        ${formSlotsHRI}
+      </div>
+    `
+        : '';
+
+    const formSlotsServiceSection =
+      gridDataService.length > 0
+        ? `
+      <div style="margin-top: 10px;">
+        <h4 style="color: #0056b3;">Form Slots with eService</h4>
+        ${formSlotsService}
+      </div>
+    `
+        : '';
+
     const newNodeContent = `
       <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9;">
-        <h3 style="text-align: center; color: #0056b3;">${formName}</h3>
-        <div style="margin-top: 10px;">
-          <h4 style="color: #0056b3;">Form Slots with HRI</h4>
-          ${formSlotsHRI}
-        </div>
-        <div style="margin-top: 10px;">
-          <h4 style="color: #0056b3;">Form Slots with eService</h4>
-          ${formSlotsService}
-        </div>
+        <h3 style="text-align: center; font-size: 18px; bold; color: #0056b3;">${formName}</h3>
+        ${formSlotsHRISection}
+        ${formSlotsServiceSection}
       </div>
     `;
 
@@ -249,8 +313,8 @@ const Dialogues = forwardRef((props, ref) => {
       // Create a new node
       const newNode = {
         id: `formNode_${Date.now()}`,
-        offsetX: 300,
-        offsetY: 300,
+        offsetX: draggedNode.offsetX,
+        offsetY: draggedNode.offsetY,
         width: 400,
         height: 300,
         shape: {
@@ -290,7 +354,7 @@ const Dialogues = forwardRef((props, ref) => {
 
     const newNodeContent = `
       <div style="padding: 10px; border: 2px solid #ff5733; border-radius: 10px; background-color: #fff3e6;">
-        <h3 style="text-align: center; color: #ff5733; font-size: 24px; font-weight: bold;">${intentName}</h3>
+        <h3 style="text-align: center; color: #ff5733; font-size: 24px; font-weight: font-size: 18px; bold;;">${intentName}</h3>
         <div style="margin-top: 10px;">
           ${intentContent}
         </div>
@@ -309,8 +373,8 @@ const Dialogues = forwardRef((props, ref) => {
       // Create a new node
       const newNode = {
         id: `intentNode_${Date.now()}`,
-        offsetX: 300,
-        offsetY: 300,
+        offsetX: draggedNode.offsetX,
+        offsetY: draggedNode.offsetY,
         width: 600,
         height: 300,
         shape: {
@@ -368,26 +432,41 @@ const Dialogues = forwardRef((props, ref) => {
   const [isDoubleClick, setIsDoubleClick] = useState(false); // State to track if the dialog is opened by double-click
   const [initialIntentName, setInitialIntentName] = useState('');
   const [initialIntentStrings, setInitialIntentStrings] = useState([]);
-  const handleSelectFSlot = (slot) => {
-    if (draggedNode) {
-      const newNodeContent = `
-        <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9;">
-          <h3 style="text-align: center; color: #0056b3; font-size: 24px; font-weight: bold;">Set Form Slot</h3>
-          <div style="margin-top: 10px;">
-            <strong>Name:</strong> ${slot.name}<br>
-            <strong>Type:</strong> ${slot.type}<br>
-            <strong>Value:</strong> ${slot.value}
-          </div>
-        </div>
-      `;
-      draggedNode.properties.shape = {
-        type: 'HTML',
-        content: newNodeContent,
-      };
-      addNewNode(draggedNode);
-      setDraggedNode(null);
+
+  const menuItems = [
+    {
+      text: 'Diagram',
+      items: [
+        { text: 'Save Diagram', id: 'saveDiagram' },
+        { text: 'Load Diagram', id: 'loadDiagram' },
+        { text: 'Reset Diagram', id: 'resetDiagram' },
+      ],
+    },
+    {
+      text: 'Placeholder Options',
+      items: [
+        { text: 'Placeholder Option 1' },
+        { text: 'Placeholder Option 2' },
+      ],
+    },
+  ];
+
+  const handleMenuClick = (args) => {
+    switch (args.item.id) {
+      case 'saveDiagram':
+        handleSaveToFile();
+        break;
+      case 'loadDiagram':
+        document.getElementById('loadDiagramInput').click();
+        break;
+      case 'resetDiagram':
+        handleResetDiagram();
+        break;
+      default:
+        break;
     }
   };
+
   let content;
   content = (
     <DiagramComponent
@@ -398,7 +477,8 @@ const Dialogues = forwardRef((props, ref) => {
         handleSymbolDrag(
           args,
           setShowDialogSpeak,
-          setShowDialogFireEvent,
+          setShowDialogEvent,
+          setEventType,
           setShowDialogRest,
           setShowDialogGSlot,
           setShowDialogFSlot,
@@ -428,12 +508,10 @@ const Dialogues = forwardRef((props, ref) => {
   );
 
   return (
-    <div>
-      <div className=" flex-col h-full">
+    <div className="content-area relative">
+      <MenuComponent items={menuItems} select={handleMenuClick} />
+      <div className="flex-col h-full">
         <div className="flex justify-between mb-4">
-          <Button onClick={handleSaveToFile} primary rounded>
-            Save Diagram
-          </Button>
           <input
             type="file"
             accept=".json"
@@ -441,21 +519,9 @@ const Dialogues = forwardRef((props, ref) => {
             id="loadDiagramInput"
             onChange={handleLoadFromFile}
           />
-          <label
-            htmlFor="loadDiagramInput"
-            className="label-hover-effect flex items-center px-4 py-1.5 h-12 rounded-full"
-          >
-            Load Diagram
-          </label>
-          <Button rounded danger onClick={handleResetDiagram}>
-            Reset Diagram
-          </Button>
         </div>
         <div className="flex flex-1">
           <div className="flex-1 mb-9">{content}</div>
-          <div className="w-1/4 mb-9">
-            <DialoguesToolbar diagramInstanceRef={diagramInstanceRef} />
-          </div>
           {showDialogSpeak && (
             <DialogSpeak
               showDialogSpeak={showDialogSpeak}
@@ -463,10 +529,11 @@ const Dialogues = forwardRef((props, ref) => {
               onTypeString={handleSpeakAction} // Pass handleSpeakAction directly
             />
           )}
-          {showDialogFireEvent && (
+          {showDialogEvent && (
             <DialogEvent
-              showDialogFireEvent={showDialogFireEvent}
-              setShowDialogFireEvent={setShowDialogFireEvent}
+              showDialogEvent={showDialogEvent}
+              setShowDialogEvent={setShowDialogEvent}
+              eventType={eventType}
               onSelectEvent={handleSelectEvent}
             />
           )}
@@ -514,6 +581,7 @@ const Dialogues = forwardRef((props, ref) => {
           )}
         </div>
       </div>
+      <DialoguesToolbar diagramInstanceRef={diagramInstanceRef} />
     </div>
   );
 });

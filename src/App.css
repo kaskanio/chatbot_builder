@@ -5,7 +5,7 @@
 @import '../node_modules/@syncfusion/ej2-buttons/styles/material.css';
 
 .e-sidebar {
-  background: #898b2b;
+  background-color: white; /* Set the background color to white */
 }
 
 .e-sidebar.e-left {
@@ -13,11 +13,11 @@
 }
 
 .e-sidebar.e-left.e-open {
-  transition: transform 1s ease;
+  transition: transform 0.5s ease;
 }
 
 .e-sidebar.e-left.e-transition.e-close {
-  transition: transform 2.5s ease, visibility 1200ms;
+  transition: transform 0.5s ease, visibility 1200ms;
 }
 
 .e-sidebar.e-dock {
@@ -150,3 +150,46 @@ button.danger:hover {
   border: 2px solid #00b5ff;
   font-family: cursive;
 } */
+
+.e-sidebar.e-right {
+  border-left: 2px solid red;
+}
+
+.e-sidebar.e-left.e-open {
+  transition: transform 2.5s ease;
+}
+
+.e-sidebar.e-right.e-open {
+  transition: transform 0.5s ease; /* Adjust the duration as needed */
+}
+
+.e-sidebar.e-right.e-transition.e-close {
+  transition: transform 0.5s ease, visibility 0.5s; /* Adjust the duration as needed */
+}
+
+.e-menu-wrapper {
+  background-color: #111827;
+  color: #fff;
+  width: 100%; /* Make the main menu expand all the way to the right */
+  border-radius: 8px; /* Add rounded corners */
+}
+
+.e-menu-wrapper.e-menu-popup {
+  background-color: #444;
+  border-radius: 8px; /* Add rounded corners */
+  width: auto; /* Ensure submenus do not expand to the full width */
+}
+
+.e-menu-wrapper ul .e-menu-item {
+  color: #fff;
+  border-radius: 8px; /* Add rounded corners */
+}
+
+.e-menu-wrapper.e-menu-popup .e-menu-item {
+  color: #fff;
+  border-radius: 8px; /* Add rounded corners */
+}
+
+.e-menu-wrapper ul .e-menu-item .e-caret {
+  border-top-color: #fff;
+}
