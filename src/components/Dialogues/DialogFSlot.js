@@ -127,7 +127,7 @@ function DialogFSlot({
   return (
     <DialogComponent
       id="dialog"
-      header="Edit Form Slot"
+      header="Set Form Slot"
       visible={showDialogFSlot}
       close={hideDialog}
       width="400px"

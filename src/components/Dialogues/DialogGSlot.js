@@ -160,7 +160,7 @@ function DialogGSlot({
   return (
     <DialogComponent
       id="dialog"
-      header="Edit Global Slot"
+      header="Set Global Slot"
       visible={showDialogGSlot}
       close={hideDialog}
       width="400px"

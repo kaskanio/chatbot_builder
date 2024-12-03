@@ -100,19 +100,35 @@ const Dialogues = forwardRef((props, ref) => {
 
   const handleSpeakAction = (actionString) => {
     const newNodeContent = `
-      <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9;">
+      <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9; height:100%;">
         <h3 style="text-align: center; color: #0056b3; font-size: 24px; font-weight: bold;">Speak Action</h3>
         <div style="margin-top: 10px; font-style: italic;">
           "${actionString}"
         </div>
       </div>
     `;
+
+    // Create a temporary element to measure the content size
+    const tempElement = document.createElement('div');
+    tempElement.style.position = 'absolute';
+    tempElement.style.visibility = 'hidden';
+    tempElement.innerHTML = newNodeContent;
+    document.body.appendChild(tempElement);
+
+    // Measure the size of the content using getBoundingClientRect
+    const rect = tempElement.getBoundingClientRect();
+    const contentWidth = rect.width;
+    const contentHeight = rect.height;
+
+    // Remove the temporary element
+    document.body.removeChild(tempElement);
+
     const newNode = {
       id: `speakNode_${Date.now()}`,
       offsetX: draggedNode.offsetX,
       offsetY: draggedNode.offsetY,
-      width: 350,
-      height: 130,
+      width: contentWidth,
+      height: contentHeight,
       shape: {
         type: 'HTML',
         content: newNodeContent,
@@ -131,7 +147,7 @@ const Dialogues = forwardRef((props, ref) => {
     const headerColor = isFireEvent ? '#0056b3' : '#ff5733';
 
     const newNodeContent = `
-      <div style="padding: 10px; border: 2px solid ${borderColor}; border-radius: 10px; background-color: ${backgroundColor};">
+      <div style="padding: 10px; border: 2px solid ${borderColor}; border-radius: 10px; background-color: ${backgroundColor}; height:100%;">
         <h3 style="text-align: center; color: ${headerColor}; font-size: 18px; font-weight: bold;">${headerText}</h3>
         <div style="margin-top: 10px;">
           <strong>Name:</strong> ${event.name}<br>
@@ -140,12 +156,27 @@ const Dialogues = forwardRef((props, ref) => {
       </div>
     `;
 
+    // Create a temporary element to measure the content size
+    const tempElement = document.createElement('div');
+    tempElement.style.position = 'absolute';
+    tempElement.style.visibility = 'hidden';
+    tempElement.innerHTML = newNodeContent;
+    document.body.appendChild(tempElement);
+
+    // Measure the size of the content using getBoundingClientRect
+    const rect = tempElement.getBoundingClientRect();
+    const contentWidth = rect.width;
+    const contentHeight = rect.height;
+
+    // Remove the temporary element
+    document.body.removeChild(tempElement);
+
     const newNode = {
       id: `eventNode_${Date.now()}`,
       offsetX: draggedNode.offsetX,
       offsetY: draggedNode.offsetY,
-      width: 170,
-      height: 100,
+      width: contentWidth,
+      height: contentHeight,
       shape: {
         type: 'HTML',
         content: newNodeContent,
@@ -159,7 +190,7 @@ const Dialogues = forwardRef((props, ref) => {
 
   const handleSelectService = (service) => {
     const newNodeContent = `
-      <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9;">
+      <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9; height:100%;">
         <h3 style="text-align: center; color: #0056b3; font-size: 18px; font-weight: bold;">Service</h3>
         <div style="margin-top: 10px;">
           <strong>Name:</strong> ${service.name}<br>
@@ -170,12 +201,28 @@ const Dialogues = forwardRef((props, ref) => {
         </div>
       </div>
     `;
+
+    // Create a temporary element to measure the content size
+    const tempElement = document.createElement('div');
+    tempElement.style.position = 'absolute';
+    tempElement.style.visibility = 'hidden';
+    tempElement.innerHTML = newNodeContent;
+    document.body.appendChild(tempElement);
+
+    // Measure the size of the content using getBoundingClientRect
+    const rect = tempElement.getBoundingClientRect();
+    const contentWidth = rect.width;
+    const contentHeight = rect.height;
+
+    // Remove the temporary element
+    document.body.removeChild(tempElement);
+
     const newNode = {
       id: `serviceNode_${Date.now()}`,
       offsetX: draggedNode.offsetX,
       offsetY: draggedNode.offsetY,
-      width: 200,
-      height: 150,
+      width: contentWidth,
+      height: contentHeight,
       shape: {
         type: 'HTML',
         content: newNodeContent,
@@ -188,7 +235,7 @@ const Dialogues = forwardRef((props, ref) => {
 
   const handleSelectGSlot = (slot) => {
     const newNodeContent = `
-      <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9;">
+      <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9; height:100%;">
         <h3 style="text-align: center; color: #0056b3; font-size: 18px; font-weight: bold;">Set Global Slot</h3>
         <div style="margin-top: 10px;">
           <strong>Name:</strong> ${slot.name}<br>
@@ -197,12 +244,28 @@ const Dialogues = forwardRef((props, ref) => {
         </div>
       </div>
     `;
+
+    // Create a temporary element to measure the content size
+    const tempElement = document.createElement('div');
+    tempElement.style.position = 'absolute';
+    tempElement.style.visibility = 'hidden';
+    tempElement.innerHTML = newNodeContent;
+    document.body.appendChild(tempElement);
+
+    // Measure the size of the content using getBoundingClientRect
+    const rect = tempElement.getBoundingClientRect();
+    const contentWidth = rect.width;
+    const contentHeight = rect.height;
+
+    // Remove the temporary element
+    document.body.removeChild(tempElement);
+
     const newNode = {
       id: `gSlotNode_${Date.now()}`,
       offsetX: draggedNode.offsetX,
       offsetY: draggedNode.offsetY,
-      width: 250,
-      height: 100,
+      width: contentWidth,
+      height: contentHeight,
       shape: {
         type: 'HTML',
         content: newNodeContent,
@@ -215,7 +278,7 @@ const Dialogues = forwardRef((props, ref) => {
 
   const handleSelectFSlot = (slot) => {
     const newNodeContent = `
-      <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9;">
+      <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9; height:100%;">
         <h3 style="text-align: center; color: #0056b3; font-size: 18px; font-weight: bold;">Set Form Slot</h3>
         <div style="margin-top: 10px;">
           <strong>Name:</strong> ${slot.name}<br>
@@ -224,12 +287,28 @@ const Dialogues = forwardRef((props, ref) => {
         </div>
       </div>
     `;
+
+    // Create a temporary element to measure the content size
+    const tempElement = document.createElement('div');
+    tempElement.style.position = 'absolute';
+    tempElement.style.visibility = 'hidden';
+    tempElement.innerHTML = newNodeContent;
+    document.body.appendChild(tempElement);
+
+    // Measure the size of the content using getBoundingClientRect
+    const rect = tempElement.getBoundingClientRect();
+    const contentWidth = rect.width;
+    const contentHeight = rect.height;
+
+    // Remove the temporary element
+    document.body.removeChild(tempElement);
+
     const newNode = {
       id: `fSlotNode_${Date.now()}`,
       offsetX: draggedNode.offsetX,
       offsetY: draggedNode.offsetY,
-      width: 250,
-      height: 100,
+      width: contentWidth,
+      height: contentHeight,
       shape: {
         type: 'HTML',
         content: newNodeContent,
@@ -248,7 +327,7 @@ const Dialogues = forwardRef((props, ref) => {
     const formSlotsHRI = gridDataHRI
       .map(
         (slot) => `
-      <div style="border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;">
+      <div style="border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px; height:100%;">
         <strong>Slot Name:</strong> ${slot.name}<br>
         <strong>Type:</strong> ${slot.type}<br>
         <strong>HRI String:</strong> ${slot.hriString}<br>
@@ -261,7 +340,7 @@ const Dialogues = forwardRef((props, ref) => {
     const formSlotsService = gridDataService
       .map(
         (slot) => `
-      <div style="border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;">
+      <div style="border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px; height:100%;">
         <strong>Slot Name:</strong> ${slot.name}<br>
         <strong>Type:</strong> ${slot.type}<br>
         <strong>eService Name:</strong> ${slot.eServiceName}<br>
@@ -293,12 +372,27 @@ const Dialogues = forwardRef((props, ref) => {
         : '';
 
     const newNodeContent = `
-      <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9;">
+      <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9; height:100%; ">
         <h3 style="text-align: center; font-size: 18px; bold; color: #0056b3;">${formName}</h3>
         ${formSlotsHRISection}
         ${formSlotsServiceSection}
       </div>
     `;
+
+    // Create a temporary element to measure the content size
+    const tempElement = document.createElement('div');
+    tempElement.style.position = 'absolute';
+    tempElement.style.visibility = 'hidden';
+    tempElement.innerHTML = newNodeContent;
+    document.body.appendChild(tempElement);
+
+    // Measure the size of the content using getBoundingClientRect
+    const rect = tempElement.getBoundingClientRect();
+    const contentWidth = rect.width;
+    const contentHeight = rect.height;
+
+    // Remove the temporary element
+    document.body.removeChild(tempElement);
 
     if (currentNode) {
       // Update the existing node
@@ -315,8 +409,8 @@ const Dialogues = forwardRef((props, ref) => {
         id: `formNode_${Date.now()}`,
         offsetX: draggedNode.offsetX,
         offsetY: draggedNode.offsetY,
-        width: 400,
-        height: 300,
+        width: contentWidth,
+        height: contentHeight,
         shape: {
           type: 'HTML',
           content: newNodeContent,
@@ -335,8 +429,6 @@ const Dialogues = forwardRef((props, ref) => {
     setCurrentNode(null); // Reset the current node
   };
 
-  //DOULEIA EDW NA TA KANOUME OMORFA OLA TA HTML TEMPLATES
-
   const handleIntent = (intentName, intentStrings) => {
     const intentContent = intentStrings
       .map((str) => {
@@ -353,13 +445,28 @@ const Dialogues = forwardRef((props, ref) => {
       .join('');
 
     const newNodeContent = `
-      <div style="padding: 10px; border: 2px solid #ff5733; border-radius: 10px; background-color: #fff3e6;">
+      <div style="padding: 10px; border: 2px solid #ff5733; border-radius: 10px; background-color: #fff3e6; height:100%;">
         <h3 style="text-align: center; color: #ff5733; font-size: 24px; font-weight: font-size: 18px; bold;;">${intentName}</h3>
         <div style="margin-top: 10px;">
           ${intentContent}
         </div>
       </div>
     `;
+
+    // Create a temporary element to measure the content size
+    const tempElement = document.createElement('div');
+    tempElement.style.position = 'absolute';
+    tempElement.style.visibility = 'hidden';
+    tempElement.innerHTML = newNodeContent;
+    document.body.appendChild(tempElement);
+
+    // Measure the size of the content using getBoundingClientRect
+    const rect = tempElement.getBoundingClientRect();
+    const contentWidth = rect.width;
+    const contentHeight = rect.height;
+
+    // Remove the temporary element
+    document.body.removeChild(tempElement);
 
     if (currentNode) {
       // Update the existing node
@@ -375,8 +482,8 @@ const Dialogues = forwardRef((props, ref) => {
         id: `intentNode_${Date.now()}`,
         offsetX: draggedNode.offsetX,
         offsetY: draggedNode.offsetY,
-        width: 600,
-        height: 300,
+        width: contentWidth,
+        height: contentHeight,
         shape: {
           type: 'HTML',
           content: newNodeContent,
@@ -493,14 +600,14 @@ const Dialogues = forwardRef((props, ref) => {
       }}
       click={handleSaveDiagram}
       doubleClick={handleNodeDoubleClick} // Add double click event handler
-      contextMenuSettings={{
-        show: true,
-        items: [
-          { text: 'Delete', id: 'delete' }, // Add the Delete option
-          { text: 'Set as Entity', id: 'entity' }, // Add a custom menu option
-        ],
-        showCustomMenuOnly: false,
-      }}
+      // contextMenuSettings={{
+      //   show: true,
+      //   items: [
+      //     { text: 'Delete', id: 'delete' }, // Add the Delete option
+      //     { text: 'Set as Entity', id: 'entity' }, // Add a custom menu option
+      //   ],
+      //   showCustomMenuOnly: false,
+      // }}
       contextMenuClick={handleContextMenuClick} // Handle context menu click
     >
       <Inject services={[BpmnDiagrams, ConnectorEditing, DiagramContextMenu]} />

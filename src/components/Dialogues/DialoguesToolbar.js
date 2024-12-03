@@ -207,7 +207,7 @@ function DialoguesToolbar({ diagramInstanceRef }) {
                   id: 'intentsForms',
                   expanded: true,
                   symbols: triggerShapes,
-                  title: 'Intents & Forms',
+                  title: 'Triggers',
                 },
                 {
                   id: 'connectors',

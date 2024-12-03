@@ -372,6 +372,11 @@
       "name": "external_1",
       "uri": "    bot/event/external_1",
       "id": 1
+    },
+    {
+      "name": "Hi",
+      "uri": "/gamiesai",
+      "id": 2
     }
   ],
   "entities": [
