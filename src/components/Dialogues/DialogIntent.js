@@ -47,15 +47,21 @@ const pretrainedEntities = [
   'CARDINAL',
 ];
 
-function DialogIntent({ showDialogIntent, setShowDialogIntent, handleIntent }) {
+function DialogIntent({
+  showDialogIntent,
+  setShowDialogIntent,
+  handleIntent,
+  initialIntentName = '',
+  initialIntentStrings = [],
+}) {
   const settings = { effect: 'Zoom', duration: 400, delay: 0 };
 
   const hideDialog = () => {
     setShowDialogIntent(false);
   };
 
-  const [intentName, setIntentName] = useState(''); // State for Intent name
-  const [stringsData, setStringsData] = useState([]);
+  const [intentName, setIntentName] = useState(initialIntentName); // State for Intent name
+  const [stringsData, setStringsData] = useState(initialIntentStrings);
   const [pretrainedEntitiesData, setPretrainedEntitiesData] = useState([]);
   const [trainableEntitiesData, setTrainableEntitiesData] = useState([]);
   const [entitiesData, setEntitiesData] = useState([]);
@@ -93,6 +99,11 @@ function DialogIntent({ showDialogIntent, setShowDialogIntent, handleIntent }) {
       setSynonymsData(formattedSynonyms);
     }
   }, [fetchedSynonyms]);
+
+  useEffect(() => {
+    setIntentName(initialIntentName);
+    setStringsData(initialIntentStrings);
+  }, [initialIntentName, initialIntentStrings]);
 
   const handleActionComplete = (args, gridType) => {
     if (args.requestType === 'save') {
@@ -189,7 +200,7 @@ function DialogIntent({ showDialogIntent, setShowDialogIntent, handleIntent }) {
       visible={showDialogIntent}
       close={hideDialog}
       width="1000px"
-      height="700px"
+      height="800px"
       animationSettings={settings}
       showCloseIcon={true}
       footerTemplate={footerTemplate}

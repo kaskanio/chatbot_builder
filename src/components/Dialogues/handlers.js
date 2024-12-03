@@ -5,6 +5,7 @@ export function handleSymbolDrag(
   setShowDialogFireEvent,
   setShowDialogRest,
   setShowDialogGSlot,
+  setShowDialogFSlot,
   setShowDialogForm,
   setShowDialogIntent,
   setDraggedNode
@@ -34,6 +35,10 @@ export function handleSymbolDrag(
     args.cancel = true;
   } else if (element.id.startsWith('Intent')) {
     setShowDialogIntent(true);
+    setDraggedNode(element);
+    args.cancel = true;
+  } else if (element.id.startsWith('SetFormSlot')) {
+    setShowDialogFSlot(true);
     setDraggedNode(element);
     args.cancel = true;
   }

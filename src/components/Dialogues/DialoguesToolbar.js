@@ -70,12 +70,18 @@ function DialoguesToolbar({
       id: 'Intent',
       text: 'Intent',
       shape: {
-        type: 'UmlClassifier',
-        enumerationShape: {
-          name: 'Intent Name',
-          members: [],
-        },
-        classifier: 'Enumeration',
+        type: 'HTML',
+        content: `
+          <div style="padding: 10px; border: 2px solid #ff5733; border-radius: 10px; background-color: #fff3e6;">
+            <h3 style="text-align: center; color: #ff5733; font-size: 10px; font-weight: bold;">Intent</h3>
+            <div style="margin-top: 5px;">
+              <div style="border: 1px solid #ccc; padding: 5px; margin: 2px; border-radius: 3px; font-size: 8px;">
+              </div>
+              <div style="border: 1px solid #ccc; padding: 5px; margin: 2px; border-radius: 3px; font-size: 8px;">
+              </div>
+            </div>
+          </div>
+        `,
       },
       offsetX: 405,
       offsetY: 105,
@@ -106,7 +112,7 @@ function DialoguesToolbar({
     {
       id: 'SpeakAction',
       text: 'Speak',
-      width: 250,
+      width: 350,
       height: 130,
       annotations: [
         {
@@ -220,7 +226,7 @@ function DialoguesToolbar({
     {
       id: 'SetGlobalSlot',
       text: 'Set Global Slot',
-      width: 170,
+      width: 250,
       height: 100,
       shape: {
         type: 'Bpmn',
@@ -236,6 +242,44 @@ function DialoguesToolbar({
         {
           // Non-editable annotation at the top
           content: 'Set Global Slot',
+          offset: { x: 0.5, y: 0.1 }, // Position at the top
+          style: {
+            color: '#000000', // Text color
+            fontSize: 15, // Font size
+            fontFamily: 'Arial', // Font family
+            bold: true, // Bold text
+            italic: false, // Italic text
+            textAlign: 'Center', // Text alignment
+          },
+          constraints: AnnotationConstraints.ReadOnly, // Make it non-editable
+        },
+      ],
+      style: {
+        fill: '#FFD700',
+        strokeWidth: 2,
+        strokeColor: '#FFD700',
+      },
+      borderWidth: 1, // Set the border width
+    },
+    {
+      id: 'SetFormSlot',
+      text: 'Set Form Slot',
+      width: 250,
+      height: 100,
+      shape: {
+        type: 'Bpmn',
+        shape: 'Activity',
+        activity: {
+          activity: 'Task',
+          task: {
+            type: 'Manual',
+          },
+        },
+      },
+      annotations: [
+        {
+          // Non-editable annotation at the top
+          content: 'Set Form Slot',
           offset: { x: 0.5, y: 0.1 }, // Position at the top
           style: {
             color: '#000000', // Text color
