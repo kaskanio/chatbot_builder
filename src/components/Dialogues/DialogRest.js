@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns';
 import Button from '../modules/Button';
 import { useFetchServiceQuery, useAddServiceMutation } from '../../store';
-import { Spinner } from '@syncfusion/ej2-react-popups';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { TextField, Box, Typography, Grid } from '@mui/material';
@@ -20,12 +19,7 @@ const validationSchema = Yup.object({
 function DialogRest({ showDialogRest, setShowDialogRest, onSelectService }) {
   const [selectedService, setSelectedService] = useState(null);
   const [showAddServiceForm, setShowAddServiceForm] = useState(false);
-  const {
-    data: services = [],
-    error,
-    isLoading,
-    refetch,
-  } = useFetchServiceQuery();
+  const { data: services = [], refetch } = useFetchServiceQuery();
   const [addService, addServiceResults] = useAddServiceMutation();
 
   const settings = { effect: 'Zoom', duration: 400, delay: 0 };
@@ -40,9 +34,14 @@ function DialogRest({ showDialogRest, setShowDialogRest, onSelectService }) {
       setSelectedService(null);
     } else {
       setSelectedService(e.itemData);
-      setShowAddServiceForm(false);
-      onSelectService(e.itemData); // Pass the selected service details to the parent component
     }
+  };
+
+  const handleInsertService = () => {
+    setShowAddServiceForm(false);
+    setSelectedService(selectedService);
+    onSelectService(selectedService); // Pass the service
+    hideDialog();
   };
 
   const handleAddService = async (values) => {
@@ -172,7 +171,7 @@ function DialogRest({ showDialogRest, setShowDialogRest, onSelectService }) {
               primary
               rounded
               className="mr-2"
-              onClick={hideDialog}
+              onClick={handleInsertService}
             >
               Insert
             </Button>
@@ -191,53 +190,6 @@ function DialogRest({ showDialogRest, setShowDialogRest, onSelectService }) {
     );
   };
 
-  if (isLoading) {
-    return (
-      <DialogComponent
-        id="dialogRest"
-        header="Select a Service"
-        visible={showDialogRest}
-        close={hideDialog}
-        width="600px"
-        animationSettings={settings}
-        enableResize={true}
-        showCloseIcon={true}
-        position={{ X: 'center', Y: '200' }}
-      >
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          height="100%"
-        >
-          <Spinner />
-        </Box>
-      </DialogComponent>
-    );
-  }
-
-  if (error) {
-    return (
-      <DialogComponent
-        id="dialogRest"
-        header="REST Call Service"
-        visible={showDialogRest}
-        close={hideDialog}
-        width="600px"
-        animationSettings={settings}
-        enableResize={true}
-        showCloseIcon={true}
-      >
-        <Box mt={4} textAlign="center">
-          <Typography color="error">Error fetching services</Typography>
-          <Button onClick={refetch} primary rounded>
-            Retry
-          </Button>
-        </Box>
-      </DialogComponent>
-    );
-  }
-
   const dropdownData = [...services, { name: 'Add New Service...' }];
 
   return (
@@ -251,7 +203,7 @@ function DialogRest({ showDialogRest, setShowDialogRest, onSelectService }) {
       footerTemplate={footerTemplate}
       enableResize={true}
       showCloseIcon={true}
-      cssClass="custom-dialog"
+      position={{ X: 'center', Y: '250' }}
     >
       <Box mt={1}>
         <Typography mb={4} color="textSecondary">

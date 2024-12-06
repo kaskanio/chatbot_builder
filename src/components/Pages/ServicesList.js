@@ -7,6 +7,7 @@ import {
   Toolbar,
   Page,
 } from '@syncfusion/ej2-react-grids';
+import { DataManager, Query } from '@syncfusion/ej2-data';
 
 import {
   useFetchServiceQuery,
@@ -63,6 +64,7 @@ function ServicesList() {
       } else if (args.action === 'edit') {
         // Edit existing service
         editService({
+          id: args.data.id,
           newName: args.data.name,
           verb: args.data.verb,
           host: args.data.host,
@@ -74,6 +76,19 @@ function ServicesList() {
       // Remove service
       removeService({ id: args.data[0].id });
     }
+  };
+
+  const verbs = ['GET', 'POST', 'PUT'];
+
+  const verbParams = {
+    params: {
+      actionComplete: () => false,
+      dataSource: new DataManager(verbs),
+      sortOrder: 'None',
+      fields: { text: 'verb', value: 'verb' },
+      placeholder: 'Select an Verb',
+      query: new Query(),
+    },
   };
 
   const content = (
@@ -95,9 +110,16 @@ function ServicesList() {
             isIdentity={true}
           />
           <ColumnDirective field="name" headerText="Service Name" width="160" />
-          <ColumnDirective field="verb" headerText="verb" />
+          <ColumnDirective
+            field="verb"
+            headerText="Verb"
+            width="200"
+            textAlign="Center"
+            editType="dropdownedit"
+            edit={verbParams}
+          />{' '}
           <ColumnDirective field="host" headerText="host" />
-          <ColumnDirective field="port" headerText="port" />
+          <ColumnDirective field="port" width="100" headerText="port" />
           <ColumnDirective field="path" headerText="path" />
         </ColumnsDirective>
         <Inject services={[Edit, Toolbar, Page]} />

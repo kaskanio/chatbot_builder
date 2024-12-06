@@ -61,7 +61,8 @@ const Dialogues = forwardRef((props, ref) => {
       const serializedData = diagramInstanceRef.current.saveDiagram({
         exclude: ['width', 'height', 'viewport'],
       });
-      const blob = new Blob([serializedData], {
+      const formattedData = JSON.stringify(JSON.parse(serializedData), null, 2); // Format the JSON
+      const blob = new Blob([formattedData], {
         type: 'application/json',
       });
       const url = URL.createObjectURL(blob);
@@ -99,11 +100,17 @@ const Dialogues = forwardRef((props, ref) => {
   };
 
   const handleSpeakAction = (actionString) => {
+    // Use a regular expression to find words separated by a dot and wrap them in <strong> tags
+    const formattedActionString = actionString.replace(
+      /(\b\w+\.\w+\b)/g,
+      '<strong>$1</strong>'
+    );
+
     const newNodeContent = `
       <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9; height:100%;">
         <h3 style="text-align: center; color: #0056b3; font-size: 24px; font-weight: bold;">Speak Action</h3>
-        <div style="margin-top: 10px; font-style: italic;">
-          "${actionString}"
+        <div style="margin-top: 10px;">
+          "${formattedActionString}"
         </div>
       </div>
     `;
@@ -319,71 +326,12 @@ const Dialogues = forwardRef((props, ref) => {
     setShowDialogFSlot(false);
   };
 
-  const handleForm = (formName, gridDataHRI, gridDataService) => {
-    console.log('Form Name:', formName);
-    console.log('HRI Grid Data:', gridDataHRI);
-    console.log('Service Grid Data:', gridDataService);
-
-    const formSlotsHRI = gridDataHRI
-      .map(
-        (slot) => `
-      <div style="border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px; height:100%;">
-        <strong>Slot Name:</strong> ${slot.name}<br>
-        <strong>Type:</strong> ${slot.type}<br>
-        <strong>HRI String:</strong> ${slot.hriString}<br>
-        <strong>Entity:</strong> ${slot.entity}
-      </div>
-    `
-      )
-      .join('');
-
-    const formSlotsService = gridDataService
-      .map(
-        (slot) => `
-      <div style="border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px; height:100%;">
-        <strong>Slot Name:</strong> ${slot.name}<br>
-        <strong>Type:</strong> ${slot.type}<br>
-        <strong>eService Name:</strong> ${slot.eServiceName}<br>
-        <strong>Service Info:</strong> ${slot.eServiceInfo}<br>
-        <strong>Entity:</strong> ${slot.entity}
-      </div>
-    `
-      )
-      .join('');
-
-    const formSlotsHRISection =
-      gridDataHRI.length > 0
-        ? `
-      <div style="margin-top: 10px;">
-        <h4 style="color: #0056b3;">Form Slots with HRI</h4>
-        ${formSlotsHRI}
-      </div>
-    `
-        : '';
-
-    const formSlotsServiceSection =
-      gridDataService.length > 0
-        ? `
-      <div style="margin-top: 10px;">
-        <h4 style="color: #0056b3;">Form Slots with eService</h4>
-        ${formSlotsService}
-      </div>
-    `
-        : '';
-
-    const newNodeContent = `
-      <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9; height:100%; ">
-        <h3 style="text-align: center; font-size: 18px; bold; color: #0056b3;">${formName}</h3>
-        ${formSlotsHRISection}
-        ${formSlotsServiceSection}
-      </div>
-    `;
-
+  const measureContentSize = (content) => {
     // Create a temporary element to measure the content size
     const tempElement = document.createElement('div');
     tempElement.style.position = 'absolute';
     tempElement.style.visibility = 'hidden';
-    tempElement.innerHTML = newNodeContent;
+    tempElement.innerHTML = content;
     document.body.appendChild(tempElement);
 
     // Measure the size of the content using getBoundingClientRect
@@ -394,6 +342,64 @@ const Dialogues = forwardRef((props, ref) => {
     // Remove the temporary element
     document.body.removeChild(tempElement);
 
+    return { contentWidth, contentHeight };
+  };
+
+  const handleForm = (formName, gridDataHRI, gridDataService) => {
+    console.log('Form Name:', formName);
+    console.log('HRI Grid Data:', gridDataHRI);
+    console.log('Service Grid Data:', gridDataService);
+
+    // Combine and sort the form slots by order
+    const combinedSlots = [...gridDataHRI, ...gridDataService].sort(
+      (a, b) => a.order - b.order
+    );
+
+    // Generate the HTML content based on the sorted array
+    const formSlotsContent = combinedSlots
+      .map((slot) => {
+        if (slot.hriString !== undefined) {
+          // HRI slot
+          return `
+            <div style="margin-top: 10px;">
+              <h4 style="color: #0056b3;">${slot.name}</h4>
+            </div>
+            <div style="border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;">
+              <strong>Type:</strong> ${slot.type}<br>
+              <strong>HRI String:</strong> ${slot.hriString}<br>
+              <strong>Entity:</strong> ${slot.entity}
+            </div>
+          `;
+        } else {
+          // Service slot
+          return `
+            <div style="margin-top: 10px;">
+              <h4 style="color: #0056b3;">${slot.name}</h4>
+            </div>
+            <div style="border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;">
+              <strong>Type:</strong> ${slot.type}<br>
+              <strong>Service:</strong> ${slot.eServiceName}<br>
+              <div style="margin-left: 10px;">
+                <strong>Query:</strong> ${slot.query}<br>
+                <strong>Header:</strong> ${slot.header}<br>
+                <strong>Path:</strong> ${slot.path}<br>
+                <strong>Body:</strong> ${slot.body}
+              </div>
+            </div>
+          `;
+        }
+      })
+      .join('');
+
+    const newNodeContent = `
+      <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9;">
+        <h3 style="text-align: center; font-size: 18px; bold; color: #0056b3;">${formName}</h3>
+        ${formSlotsContent}
+      </div>
+    `;
+
+    const { contentHeight } = measureContentSize(newNodeContent);
+
     if (currentNode) {
       // Update the existing node
       currentNode.properties.shape.content = newNodeContent;
@@ -402,15 +408,19 @@ const Dialogues = forwardRef((props, ref) => {
         gridDataHRI,
         gridDataService,
       };
+      currentNode.height =
+        contentHeight - 24 * gridDataHRI.length - 42 * gridDataService.length;
       diagramInstanceRef.current.dataBind(); // Refresh the diagram to reflect changes
     } else {
       // Create a new node
+      console.log(contentHeight);
       const newNode = {
         id: `formNode_${Date.now()}`,
         offsetX: draggedNode.offsetX,
         offsetY: draggedNode.offsetY,
-        width: contentWidth,
-        height: contentHeight,
+        width: 600,
+        height:
+          contentHeight - 24 * gridDataHRI.length - 42 * gridDataService.length, // 24 pixels for each HRI slot, 54 pixels for each service slot
         shape: {
           type: 'HTML',
           content: newNodeContent,
@@ -429,11 +439,11 @@ const Dialogues = forwardRef((props, ref) => {
     setCurrentNode(null); // Reset the current node
   };
 
-  const handleIntent = (intentName, intentStrings) => {
+  const handleIntent = (intentName, intentStrings, pretrainedEntitiesData) => {
     const intentContent = intentStrings
       .map((str) => {
         const formattedString = str.string.replace(
-          /(TE:\s*\w+|PE:\s*\w+)/g,
+          /(TE:\w+|PE:\w+|S:\w+)/g,
           '<strong>$1</strong>'
         );
         return `
@@ -444,8 +454,9 @@ const Dialogues = forwardRef((props, ref) => {
       })
       .join('');
 
+    const uniqueId = `intentNode_${Date.now()}`;
     const newNodeContent = `
-      <div style="padding: 10px; border: 2px solid #ff5733; border-radius: 10px; background-color: #fff3e6; height:100%;">
+      <div id="${uniqueId}" style="padding: 10px; border: 2px solid #ff5733; border-radius: 10px; background-color: #fff3e6;">
         <h3 style="text-align: center; color: #ff5733; font-size: 24px; font-weight: font-size: 18px; bold;;">${intentName}</h3>
         <div style="margin-top: 10px;">
           ${intentContent}
@@ -453,37 +464,28 @@ const Dialogues = forwardRef((props, ref) => {
       </div>
     `;
 
-    // Create a temporary element to measure the content size
-    const tempElement = document.createElement('div');
-    tempElement.style.position = 'absolute';
-    tempElement.style.visibility = 'hidden';
-    tempElement.innerHTML = newNodeContent;
-    document.body.appendChild(tempElement);
-
-    // Measure the size of the content using getBoundingClientRect
-    const rect = tempElement.getBoundingClientRect();
-    const contentWidth = rect.width;
-    const contentHeight = rect.height;
-
-    // Remove the temporary element
-    document.body.removeChild(tempElement);
+    const { contentWidth, contentHeight } = measureContentSize(newNodeContent);
 
     if (currentNode) {
       // Update the existing node
       currentNode.properties.shape.content = newNodeContent;
+      currentNode.width = contentWidth;
+      currentNode.height = contentHeight - 6 * intentStrings.length; // 6 pixels per string
       currentNode.properties.addInfo = {
         intentName,
         intentStrings,
+        pretrainedEntitiesData, // Include pretrainedEntitiesData
       };
       diagramInstanceRef.current.dataBind(); // Refresh the diagram to reflect changes
+      console.log('Add Info: ', currentNode.properties.addInfo);
     } else {
       // Create a new node
       const newNode = {
-        id: `intentNode_${Date.now()}`,
+        id: uniqueId,
         offsetX: draggedNode.offsetX,
         offsetY: draggedNode.offsetY,
         width: contentWidth,
-        height: contentHeight,
+        height: contentHeight - 6 * intentStrings.length, // 6 pixels per string
         shape: {
           type: 'HTML',
           content: newNodeContent,
@@ -492,8 +494,10 @@ const Dialogues = forwardRef((props, ref) => {
         addInfo: {
           intentName,
           intentStrings,
+          pretrainedEntitiesData, // Include pretrainedEntitiesData
         },
       };
+      console.log('Add Info: ', newNode.addInfo);
       addNewNode(newNode);
     }
 
@@ -523,10 +527,12 @@ const Dialogues = forwardRef((props, ref) => {
       setCurrentNode(args.source); // Set the current node being edited
       setIsDoubleClick(true); // Set the flag to indicate double-click
     } else if (args.source.id.startsWith('intent')) {
-      const { intentName, intentStrings } = args.source.properties.addInfo;
+      const { intentName, intentStrings, pretrainedEntitiesData } =
+        args.source.properties.addInfo;
       setShowDialogIntent(true);
       setInitialIntentName(intentName);
       setInitialIntentStrings(intentStrings);
+      setInitialPretrainedEntitiesData(pretrainedEntitiesData); // Pass pretrainedEntitiesData
       setCurrentNode(args.source); // Set the current node being edited
       setIsDoubleClick(true); // Set the flag to indicate double-click
     }
@@ -539,6 +545,8 @@ const Dialogues = forwardRef((props, ref) => {
   const [isDoubleClick, setIsDoubleClick] = useState(false); // State to track if the dialog is opened by double-click
   const [initialIntentName, setInitialIntentName] = useState('');
   const [initialIntentStrings, setInitialIntentStrings] = useState([]);
+  const [initialPretrainedEntitiesData, setInitialPretrainedEntitiesData] =
+    useState([]); // Add this state
 
   const menuItems = [
     {
@@ -600,14 +608,13 @@ const Dialogues = forwardRef((props, ref) => {
       }}
       click={handleSaveDiagram}
       doubleClick={handleNodeDoubleClick} // Add double click event handler
-      // contextMenuSettings={{
-      //   show: true,
-      //   items: [
-      //     { text: 'Delete', id: 'delete' }, // Add the Delete option
-      //     { text: 'Set as Entity', id: 'entity' }, // Add a custom menu option
-      //   ],
-      //   showCustomMenuOnly: false,
-      // }}
+      contextMenuSettings={{
+        show: true,
+        items: [
+          { text: 'Delete', id: 'delete' }, // Add the Delete option
+        ],
+        showCustomMenuOnly: false,
+      }}
       contextMenuClick={handleContextMenuClick} // Handle context menu click
     >
       <Inject services={[BpmnDiagrams, ConnectorEditing, DiagramContextMenu]} />
@@ -677,6 +684,10 @@ const Dialogues = forwardRef((props, ref) => {
               handleIntent={handleIntent} // Pass handleIntent as a prop
               initialIntentName={isDoubleClick ? initialIntentName : ''}
               initialIntentStrings={isDoubleClick ? initialIntentStrings : []}
+              initialPretrainedEntitiesData={
+                isDoubleClick ? initialPretrainedEntitiesData : []
+                // Pass initialPretrainedEntitiesData
+              }
             />
           )}
           {showDialogFSlot && (

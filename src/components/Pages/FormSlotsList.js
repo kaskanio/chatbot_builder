@@ -21,11 +21,7 @@ function FormSlotsList() {
   const [editFormSlot] = useEditFormSlotMutation();
   const [removeFormSlot] = useRemoveFormSlotMutation();
 
-  console.log('Data:', data);
-  console.log('Error:', error);
-  console.log('Is Loading:', isLoading);
-
-  const toolbar = ['Add', 'Edit', 'Delete', 'Update', 'Cancel'];
+  const toolbar = ['Delete'];
   const editSettings = {
     allowEditing: true,
     allowAdding: true,
@@ -49,7 +45,6 @@ function FormSlotsList() {
   }
 
   const handleActionComplete = (args) => {
-    console.log(args);
     if (args.requestType === 'save') {
       if (args.action === 'add') {
         // Add new form slot
@@ -69,7 +64,7 @@ function FormSlotsList() {
       }
     } else if (args.requestType === 'delete') {
       // Remove form slot
-      removeFormSlot({ id: args.data[0].id });
+      removeFormSlot({ name: args.data[0].name });
     }
   };
 
@@ -80,8 +75,8 @@ function FormSlotsList() {
         allowPaging={true}
         pageSettings={{ pageSize: 10 }}
         editSettings={editSettings}
-        toolbar={toolbar}
         actionComplete={handleActionComplete}
+        toolbar={toolbar}
       >
         <ColumnsDirective>
           <ColumnDirective
@@ -91,9 +86,24 @@ function FormSlotsList() {
             width="40"
             isIdentity={true}
           />
-          <ColumnDirective field="name" headerText="Slot Name" width="160" />
-          <ColumnDirective field="type" headerText="Type" width="100" />
-          <ColumnDirective field="value" headerText="Value" width="250" />
+          <ColumnDirective
+            field="name"
+            headerText="Slot Name"
+            width="160"
+            isPrimaryKey
+          />
+          <ColumnDirective
+            field="type"
+            headerText="Type"
+            width="100"
+            isPrimaryKey={true}
+          />
+          <ColumnDirective
+            field="value"
+            headerText="Value"
+            width="250"
+            isPrimaryKey={true}
+          />
         </ColumnsDirective>
         <Inject services={[Edit, Toolbar, Page]} />
       </GridComponent>

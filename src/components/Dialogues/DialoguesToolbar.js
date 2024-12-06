@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   SymbolPaletteComponent,
   Inject,
@@ -9,10 +9,24 @@ import { GoChevronRight, GoChevronLeft } from 'react-icons/go';
 
 function DialoguesToolbar({ diagramInstanceRef }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [buttonTop, setButtonTop] = useState('50%');
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+
+  useEffect(() => {
+    const updateButtonTop = () => {
+      setButtonTop(`${window.innerHeight / 2}px`);
+    };
+
+    updateButtonTop();
+    window.addEventListener('resize', updateButtonTop);
+
+    return () => {
+      window.removeEventListener('resize', updateButtonTop);
+    };
+  }, []);
 
   // Define the connector symbols
   let connectorSymbols = [
@@ -51,7 +65,6 @@ function DialoguesToolbar({ diagramInstanceRef }) {
   let triggerShapes = [
     {
       id: 'Intent',
-      text: 'Intent',
       shape: {
         type: 'HTML',
         content: `
@@ -71,7 +84,6 @@ function DialoguesToolbar({ diagramInstanceRef }) {
     },
     {
       id: 'EventTrigger',
-      text: 'Event',
       shape: {
         type: 'HTML',
         content: `
@@ -145,7 +157,7 @@ function DialoguesToolbar({ diagramInstanceRef }) {
         type: 'HTML',
         content: `
           <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9;">
-            <h3 style="text-align: center; color: #0056b3; font-size: 10px; font-weight: bold;">Service</h3>
+            <h3 style="text-align: center; color: #0056b3; font-size: 10px; font-weight: bold;">RESTCall</h3>
             <div style="margin-top: 5px;">
             </div>
           </div>
@@ -220,7 +232,7 @@ function DialoguesToolbar({ diagramInstanceRef }) {
                   id: 'actions',
                   expanded: true,
                   symbols: actionShape,
-                  title: 'Actions',
+                  title: 'Actions & Forms',
                 },
               ]}
               symbolHeight={100}
@@ -258,11 +270,11 @@ function DialoguesToolbar({ diagramInstanceRef }) {
         className="m-2 p-2 bg-gray-200 rounded-full shadow-lg absolute transform transition-transform"
         style={{
           zIndex: 1000,
-          top: '40%',
+          top: buttonTop,
           transform: 'translateY(-50%)',
           right: isSidebarOpen ? '300px' : '0',
-          transition:
-            'right 0.5s ease' /* Ensure the button has the same transition duration */,
+          transition: 'right 0.5s ease',
+          border: '1px solid red',
         }}
       >
         {isSidebarOpen ? <GoChevronRight /> : <GoChevronLeft />}

@@ -95,7 +95,7 @@ function IntentContent({ intent, header }) {
         rounded
         className="text-xs p-1"
       >
-        <GoTrash className="w-4 h-4" /> {/* Stop editing and reset input */}
+        <GoTrash className="w-3 h-3" /> {/* Stop editing and reset input */}
       </Button>
     );
   };

@@ -17,7 +17,12 @@ import {
   TabItemsDirective,
 } from '@syncfusion/ej2-react-navigations';
 import { TextBoxComponent } from '@syncfusion/ej2-react-inputs'; // Import TextBoxComponent
-import { useFetchEntitiesQuery, useFetchServiceQuery } from '../../store';
+import {
+  useFetchEntitiesQuery,
+  useFetchServiceQuery,
+  useAddFormSlotMutation,
+  useRemoveFormSlotMutation,
+} from '../../store';
 import Button from '../modules/Button'; // Import Button component
 
 const formSlotTypes = ['int', 'float', 'str', 'bool', 'list', 'dict'];
@@ -57,8 +62,11 @@ function DialogForm({
     initialGridDataService
   );
   const [formName, setFormName] = useState(initialFormName);
+  const [editingFormSlot, setEditingFormSlot] = useState(null);
   const gridRefHRI = useRef(null);
   const gridRefService = useRef(null);
+  const [addFormSlot] = useAddFormSlotMutation(); // Use the mutation hook
+  const [removeFormSlot] = useRemoveFormSlotMutation(); // Use the mutation hook
 
   useEffect(() => {
     // setFormName(initialFormName);
@@ -72,46 +80,52 @@ function DialogForm({
     setShowDialogForm(false);
   };
 
-  const handleActionComplete = (args, gridType) => {
-    if (gridType === 'HRI') {
-      if (args.requestType === 'save') {
+  const handleActionBegin = (args) => {
+    if (args.requestType === 'beginEdit') {
+      console.log(args.rowData);
+      setEditingFormSlot(args.rowData.name); // Save the string before editing
+    }
+  };
+  const handleActionComplete = async (args, gridType) => {
+    if (args.requestType === 'save') {
+      if (!args.data.order) {
+        args.data.order = totalLength + 1;
+      }
+      if (gridType === 'HRI') {
         const updatedData = [...gridDataHRI];
         if (args.action === 'add') {
-          const existingIndex = updatedData.findIndex(
-            (item) => item.id === args.data.id
-          );
-          if (existingIndex === -1) {
+          if (!updatedData.some((item) => item.name === args.data.name)) {
             updatedData.push(args.data);
           }
+          addFormSlot({ name: args.data.name, type: args.data.type });
         } else if (args.action === 'edit') {
           const index = updatedData.findIndex(
-            (item) => item.id === args.data.id
+            (item) => item.name === editingFormSlot // Use the saved form slot name to find the correct item
           );
           if (index !== -1) {
             updatedData[index] = args.data;
           }
         }
         setGridDataHRI(updatedData);
-      }
-    } else if (gridType === 'Service') {
-      if (args.requestType === 'save') {
+      } else if (gridType === 'Service') {
         const updatedData = [...gridDataService];
         if (args.action === 'add') {
-          const existingIndex = updatedData.findIndex(
-            (item) => item.id === args.data.id
-          );
-          if (existingIndex === -1) {
+          if (!updatedData.some((item) => item.name === args.data.name)) {
             updatedData.push(args.data);
           }
         } else if (args.action === 'edit') {
           const index = updatedData.findIndex(
-            (item) => item.id === args.data.id
+            (item) => item.name === editingFormSlot // Use the saved form slot name to find the correct item
           );
           if (index !== -1) {
             updatedData[index] = args.data;
           }
         }
         setGridDataService(updatedData);
+      }
+    } else if (args.requestType === 'delete') {
+      if (gridType === 'HRI') {
+        removeFormSlot({ name: args.data[0].name });
       }
     }
   };
@@ -126,6 +140,9 @@ function DialogForm({
       displayText: `${entity} (PE)`,
     })),
   ];
+
+  const totalLength = gridDataHRI.length + gridDataService.length;
+  const orderOptions = Array.from({ length: totalLength }, (_, i) => i + 1);
 
   const typeParams = {
     params: {
@@ -156,6 +173,16 @@ function DialogForm({
       fields: { text: 'displayText', value: 'displayText' },
       placeholder: 'Select an entity',
       query: new Query(),
+    },
+  };
+
+  const orderParams = {
+    params: {
+      actionComplete: () => false,
+      dataSource: new DataManager(orderOptions.map((order) => ({ order }))),
+      sortOrder: 'None',
+      fields: { text: 'order', value: 'order' },
+      placeholder: 'Select an order',
     },
   };
 
@@ -190,7 +217,7 @@ function DialogForm({
       header="Form Dialog"
       visible={showDialogForm}
       close={hideDialog}
-      width="1000px"
+      width="1500px"
       height="700px"
       animationSettings={settings}
       enableResize={true}
@@ -227,8 +254,17 @@ function DialogForm({
                     pageSettings={{ pageSize: 10 }}
                     toolbar={['Add', 'Edit', 'Delete', 'Update', 'Cancel']}
                     actionComplete={(args) => handleActionComplete(args, 'HRI')}
+                    actionBegin={handleActionBegin}
                   >
                     <ColumnsDirective>
+                      <ColumnDirective
+                        field="order"
+                        headerText="Set Order"
+                        width="35"
+                        textAlign="Center"
+                        editType="dropdownedit"
+                        edit={orderParams}
+                      />
                       <ColumnDirective
                         field="name"
                         headerText="Slot Name"
@@ -285,10 +321,19 @@ function DialogForm({
                   >
                     <ColumnsDirective>
                       <ColumnDirective
+                        field="order"
+                        headerText="Set Order"
+                        textAlign="Center"
+                        width="60"
+                        editType="dropdownedit"
+                        edit={orderParams}
+                      />
+                      <ColumnDirective
                         field="name"
                         headerText="Slot Name"
                         width="100"
                         textAlign="Center"
+                        allowEditing={false}
                         isPrimaryKey={true}
                       />
                       <ColumnDirective
@@ -308,18 +353,28 @@ function DialogForm({
                         edit={serviceParams}
                       />
                       <ColumnDirective
-                        field="eServiceInfo"
-                        headerText="Service Info"
-                        width="200"
+                        field="query"
+                        headerText="Query (seperated by comma)"
+                        width="150"
                         textAlign="Center"
                       />
                       <ColumnDirective
-                        field="entity"
-                        headerText="Extract from Entity"
-                        width="130"
+                        field="header"
+                        headerText="Header"
+                        width="150"
                         textAlign="Center"
-                        editType="dropdownedit"
-                        edit={entityParams}
+                      />
+                      <ColumnDirective
+                        field="path"
+                        headerText="Path"
+                        width="150"
+                        textAlign="Center"
+                      />
+                      <ColumnDirective
+                        field="body"
+                        headerText="Body"
+                        width="150"
+                        textAlign="Center"
                       />
                     </ColumnsDirective>
                     <Inject services={[Edit, Toolbar, Page]} />

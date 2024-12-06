@@ -1,0 +1,69 @@
+triggers
+  Intent ask_weather 
+    "Tell me the weather" PE:DATE[''] "for" PE:GPE[''],  
+    "Tell me the weather please for" PE:DATE[''],  
+    "I want to tell me the weather for" PE:GPE[''],  
+    "Tell me the weather please mr" TE:doctor "thanks",  
+    "I want to tell me the weather" S:doctoras
+  end
+
+  Intent greet 
+    "goodbye",  
+    "good afternoon",  
+    "goodmorning",  
+    "hey dude",  
+    "let's go",  
+    "hey there",  
+    "moin",  
+    "good evening",  
+    "good morning",  
+    "hello there",  
+    "hi",  
+    "hello",  
+    "hey"
+  end
+
+  Intent bot_challenge 
+    "am i talking to a human?",  
+    "am i talking to a bot?",  
+    "are you a human?",  
+    "are you a bot?"
+  end
+end
+
+eservices
+    EServiceHTTP weather_svc
+        verb: GET
+        host: 'https://services.issel.ee.auth.gr'
+        path: '/general_information/weather_openweather'
+    end
+end
+
+dialogues
+  Dialogue weather_dialogue
+      on: ask_weather
+      responses:
+        Form form1
+          city_slot: str = HRI('For which city?', [PE:GPE])
+          answer: weather_svc(query=[city=form1.city_slot, language="English"], header=[access_token="Q5eJZ8sSLEX6XNmOHyMlWagI"],)[description], 
+          answer2: weather_svc(query=[city=form1.city_slot, language="English"], header=[access_token="Q5eJZ8sSLEX6XNmOHyMlWagI"],)[temp]
+        end,ActionGroup answer_back
+          Speak('The weather for {{ form1.city_slot }} is {{ form1.answer }} with {{ form1.answer2 }} degrees')
+        end
+  end
+  Dialogue greet_dialogue
+      on: greet
+      responses:
+        ActionGroup greet_back
+          Speak('Hello there!!!')
+        end
+  end
+  Dialogue bot_challenge_dialogue
+      on: bot_challenge
+      responses:
+        ActionGroup respond_iambot
+          Speak('I am a bot, powered by dFlow and Rasa.')
+        end
+  end
+  
+end

@@ -56,9 +56,9 @@ function EntityContent({ entity, header }) {
         type="submit"
         danger
         rounded
-        className="text-xs px-2 py-1 w-6 h-6"
+        className="text-xs p-1"
       >
-        <GoTrash className="w-5 h-5" />
+        <GoTrash className="w-3 h-3" />
       </Button>
     );
   };

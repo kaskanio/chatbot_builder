@@ -15,12 +15,7 @@ import {
   TabItemsDirective,
 } from '@syncfusion/ej2-react-navigations';
 import { DataManager } from '@syncfusion/ej2-data';
-import {
-  useFetchEntitiesQuery,
-  useEditEntityMutation,
-  useFetchSynonymsQuery,
-  useEditSynonymMutation,
-} from '../../store';
+import { useFetchEntitiesQuery, useFetchSynonymsQuery } from '../../store';
 import { TextBoxComponent } from '@syncfusion/ej2-react-inputs'; // Import TextBoxComponent
 import { Box } from '@mui/material';
 
@@ -47,12 +42,18 @@ const pretrainedEntities = [
   'CARDINAL',
 ];
 
+const temp = pretrainedEntities.map((entity) => ({
+  entity,
+  values: '',
+}));
+
 function DialogIntent({
   showDialogIntent,
   setShowDialogIntent,
   handleIntent,
   initialIntentName = '',
   initialIntentStrings = [],
+  initialPretrainedEntitites = temp,
 }) {
   const settings = { effect: 'Zoom', duration: 400, delay: 0 };
 
@@ -66,19 +67,14 @@ function DialogIntent({
   const [trainableEntitiesData, setTrainableEntitiesData] = useState([]);
   const [entitiesData, setEntitiesData] = useState([]);
   const [synonymsData, setSynonymsData] = useState([]);
+  const [editingString, setEditingString] = useState(null); // State to save the string before editing
 
   const { data: fetchedEntities } = useFetchEntitiesQuery();
   const { data: fetchedSynonyms } = useFetchSynonymsQuery();
-  const [editEntity] = useEditEntityMutation();
-  const [editSynonym] = useEditSynonymMutation();
 
   useEffect(() => {
-    const initialPretrainedEntitiesData = pretrainedEntities.map((entity) => ({
-      entity,
-      values: '',
-    }));
-    setPretrainedEntitiesData(initialPretrainedEntitiesData);
-  }, []);
+    setPretrainedEntitiesData(initialPretrainedEntitites);
+  }, [initialPretrainedEntitites]);
 
   useEffect(() => {
     if (fetchedEntities) {
@@ -105,6 +101,12 @@ function DialogIntent({
     setStringsData(initialIntentStrings);
   }, [initialIntentName, initialIntentStrings]);
 
+  const handleActionBegin = (args) => {
+    if (args.requestType === 'beginEdit') {
+      setEditingString(args.rowData.string); // Save the string before editing
+    }
+  };
+
   const handleActionComplete = (args, gridType) => {
     if (args.requestType === 'save') {
       if (gridType === 'Strings') {
@@ -115,7 +117,7 @@ function DialogIntent({
           }
         } else if (args.action === 'edit') {
           const index = updatedData.findIndex(
-            (item) => item.id === args.data.id
+            (item) => item.string === editingString // Use the saved string to find the correct item
           );
           if (index !== -1) {
             updatedData[index] = args.data;
@@ -167,13 +169,14 @@ function DialogIntent({
   const boldEntities = (props) => {
     const text = props.entity || props.string || '';
     const boldText = text
-      .replace(/PE: (\w+)/g, '<b>PE: $1</b>')
-      .replace(/TE: (\w+)/g, '<b>TE: $1</b>');
+      .replace(/PE:(\w+)/g, '<b>PE:$1</b>')
+      .replace(/TE:(\w+)/g, '<b>TE:$1</b>')
+      .replace(/S:(\w+)/g, '<b>S:$1</b>');
     return <span dangerouslySetInnerHTML={{ __html: boldText }} />;
   };
 
   const handleInsert = () => {
-    handleIntent(intentName, stringsData);
+    handleIntent(intentName, stringsData, pretrainedEntitiesData);
     hideDialog();
   };
 
@@ -200,17 +203,18 @@ function DialogIntent({
       visible={showDialogIntent}
       close={hideDialog}
       width="1000px"
-      height="800px"
+      height="1000px"
       animationSettings={settings}
       showCloseIcon={true}
       footerTemplate={footerTemplate}
       position={{ X: 'center', Y: 'center' }}
+      enableResize={true}
     >
       <div style={{ marginBottom: '10px', color: 'gray' }}>
-        To insert a pretrained entity in your string, type "PE: entity_name". To
-        insert a trainable entity, type "TE: entity_name".
+        To insert a pretrained entity in your string, type "PE:entity_name". To
+        insert a trainable entity, type "TE:entity_name".
         <br />
-        <i>For example, "PE: PERSON" or "TE: color".</i>
+        <i>For example, "PE:PERSON" or "TE:color".</i>
       </div>
       <Box mt={2} mb={2} textAlign="center">
         <TextBoxComponent
@@ -237,6 +241,7 @@ function DialogIntent({
                 allowPaging={true}
                 pageSettings={{ pageSize: 10 }}
                 toolbar={['Add', 'Edit', 'Delete', 'Update', 'Cancel']}
+                actionBegin={handleActionBegin} // Add actionBegin event
                 actionComplete={(args) => handleActionComplete(args, 'Strings')}
               >
                 <ColumnsDirective>
@@ -245,7 +250,6 @@ function DialogIntent({
                     headerText="String"
                     width="200"
                     textAlign="Center"
-                    isPrimaryKey={true}
                     template={boldEntities}
                   />
                 </ColumnsDirective>
@@ -312,7 +316,7 @@ function DialogIntent({
                   />
                   <ColumnDirective
                     field="values"
-                    headerText="Values (separated by a comma)"
+                    headerText="Values (separated by comma)"
                     width="200"
                     textAlign="Center"
                   />
