@@ -1,11 +1,7 @@
 import { DialogComponent } from '@syncfusion/ej2-react-popups';
 import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns';
 import { TextBoxComponent } from '@syncfusion/ej2-react-inputs';
-import {
-  useFetchGlobalSlotsQuery,
-  useEditGlobalSlotMutation,
-  useFetchFormSlotsQuery,
-} from '../../store';
+import { useFetchGlobalSlotsQuery, useFetchFormSlotsQuery } from '../../store';
 import { useState, useRef } from 'react';
 import Skeleton from '../modules/Skeleton';
 import Button from '../modules/Button';
@@ -34,7 +30,6 @@ function DialogGSlot({
     isLoading: formSlotsLoading,
     refetch: refetchFormSlots,
   } = useFetchFormSlotsQuery();
-  const [editGlobalSlot, editGlobalSlotResults] = useEditGlobalSlotMutation();
 
   const hideDialog = () => {
     setShowDialogGSlot(false);
@@ -88,31 +83,15 @@ function DialogGSlot({
       (slot) => slot.name === selectedSlot
     );
 
-    // Validate the input value based on the slot type
-    if (selectedSlotObj.type === 'int' && isNaN(newSlotValue)) {
-      setErrorMessage('The value must be an integer.');
-      return;
-    } else if (selectedSlotObj.type === 'str' && !isNaN(newSlotValue)) {
-      setErrorMessage('The value must be a string.');
-      return;
-    }
-
     setErrorMessage(''); // Clear any previous error messages
 
-    editGlobalSlot({
-      id: selectedSlotObj.id,
-      newName: selectedSlotObj.name,
-      type: selectedSlotObj.type,
+    // Simulate the edit without saving to the database
+    const updatedSlot = {
+      ...selectedSlotObj,
       value: newSlotValue,
-    })
-      .unwrap()
-      .then((updatedSlot) => {
-        handleSelectGSlot(updatedSlot); // Use the function
-        setShowDialogGSlot(false);
-      })
-      .catch((error) => {
-        console.error('Error editing slot:', error);
-      });
+    };
+    handleSelectGSlot(updatedSlot);
+    setShowDialogGSlot(false);
   };
 
   const handleSlotChange = (e) => {
@@ -126,7 +105,8 @@ function DialogGSlot({
       (slot) => slot.name === e.itemData.value
     );
     if (selectedFormSlotObj) {
-      newSlotValueRef.current.value = selectedFormSlotObj.value;
+      const formName = selectedFormSlotObj.form; // Use slot.form from db.json
+      newSlotValueRef.current.value = `${formName}.${selectedFormSlotObj.name}`; // Set the value in the required format
     }
     setErrorMessage(''); // Clear any previous error messages
   };
@@ -137,7 +117,6 @@ function DialogGSlot({
         <Button
           type="submit"
           primary
-          loading={editGlobalSlotResults.isLoading}
           rounded
           className="mr-2"
           onClick={handleEditSlot}

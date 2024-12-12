@@ -99,7 +99,7 @@ const Dialogues = forwardRef((props, ref) => {
     diagramInstanceRef.current.addNode(node);
   };
 
-  const handleSpeakAction = (actionString) => {
+  const handleSpeakAction = (actionString, speakActionName) => {
     // Use a regular expression to find words separated by a dot and wrap them in <strong> tags
     const formattedActionString = actionString.replace(
       /(\b\w+\.\w+\b)/g,
@@ -108,7 +108,9 @@ const Dialogues = forwardRef((props, ref) => {
 
     const newNodeContent = `
       <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9; height:100%;">
-        <h3 style="text-align: center; color: #0056b3; font-size: 24px; font-weight: bold;">Speak Action</h3>
+        <h3 style="text-align: center; color: #0056b3; font-size: 24px; font-weight: bold;">
+          Speak Action: ${speakActionName}
+        </h3>
         <div style="margin-top: 10px;">
           "${formattedActionString}"
         </div>
@@ -140,6 +142,11 @@ const Dialogues = forwardRef((props, ref) => {
         type: 'HTML',
         content: newNodeContent,
       },
+      addInfo: {
+        actionType: 'SpeakAction',
+        actionString,
+        speakActionName,
+      },
       annotations: [],
     };
     addNewNode(newNode);
@@ -159,6 +166,11 @@ const Dialogues = forwardRef((props, ref) => {
         <div style="margin-top: 10px;">
           <strong>Name:</strong> ${event.name}<br>
           <strong>URI:</strong> <i>${event.uri}</i>
+          ${
+            isFireEvent && event.message
+              ? `<br><strong>Message:</strong> ${event.message}`
+              : ''
+          }
         </div>
       </div>
     `;
@@ -188,8 +200,16 @@ const Dialogues = forwardRef((props, ref) => {
         type: 'HTML',
         content: newNodeContent,
       },
+      addInfo: {
+        actionType: headerText,
+        eventName: event.name,
+        eventUri: event.uri,
+        ...(isFireEvent && { message: event.message }),
+      },
       annotations: [],
     };
+
+    console.log(newNode);
 
     addNewNode(newNode);
     setShowDialogEvent(false);
@@ -198,13 +218,16 @@ const Dialogues = forwardRef((props, ref) => {
   const handleSelectService = (service) => {
     const newNodeContent = `
       <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9; height:100%;">
-        <h3 style="text-align: center; color: #0056b3; font-size: 18px; font-weight: bold;">Service</h3>
+        <h3 style="text-align: center; color: #0056b3; font-size: 18px; font-weight: bold;">Call Service</h3>
         <div style="margin-top: 10px;">
           <strong>Name:</strong> ${service.name}<br>
           <strong>HTTP Verb:</strong> ${service.verb}<br>
           <strong>Host:</strong> ${service.host}<br>
           <strong>Port:</strong> ${service.port}<br>
-          <strong>Path:</strong> ${service.path}
+          <strong>Path:</strong> ${service.path}<br>
+          <strong>Query:</strong> ${service.query || ''}<br>
+          <strong>Header:</strong> ${service.header || ''}<br>
+          <strong>Body:</strong> ${service.body || ''}<br>
         </div>
       </div>
     `;
@@ -233,6 +256,17 @@ const Dialogues = forwardRef((props, ref) => {
       shape: {
         type: 'HTML',
         content: newNodeContent,
+      },
+      addInfo: {
+        actionType: 'RestAction',
+        serviceName: service.name,
+        serviceVerb: service.verb,
+        serviceHost: service.host,
+        servicePort: service.port,
+        servicePath: service.path,
+        serviceQuery: service.query,
+        serviceHeader: service.header,
+        serviceBody: service.body,
       },
       annotations: [],
     };
@@ -277,6 +311,12 @@ const Dialogues = forwardRef((props, ref) => {
         type: 'HTML',
         content: newNodeContent,
       },
+      addInfo: {
+        actionType: 'GlobalSlot',
+        slotName: slot.name,
+        slotType: slot.type,
+        slotValue: slot.value,
+      },
       annotations: [],
     };
     addNewNode(newNode);
@@ -319,6 +359,12 @@ const Dialogues = forwardRef((props, ref) => {
       shape: {
         type: 'HTML',
         content: newNodeContent,
+      },
+      addInfo: {
+        actionType: 'FormSlot',
+        slotName: slot.name,
+        slotType: slot.type,
+        slotValue: slot.value,
       },
       annotations: [],
     };

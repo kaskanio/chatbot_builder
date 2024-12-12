@@ -1,7 +1,7 @@
 import { DialogComponent } from '@syncfusion/ej2-react-popups';
 import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns';
 import { TextBoxComponent } from '@syncfusion/ej2-react-inputs';
-import { useFetchFormSlotsQuery, useEditFormSlotMutation } from '../../store';
+import { useFetchFormSlotsQuery } from '../../store';
 import { useState, useRef } from 'react';
 import Skeleton from '../modules/Skeleton';
 import Button from '../modules/Button';
@@ -23,7 +23,6 @@ function DialogFSlot({
     isLoading: formSlotsLoading,
     refetch: refetchFormSlots,
   } = useFetchFormSlotsQuery();
-  const [editFormSlot, editFormSlotResults] = useEditFormSlotMutation();
 
   const hideDialog = () => {
     setShowDialogFSlot(false);
@@ -77,20 +76,13 @@ function DialogFSlot({
 
     setErrorMessage(''); // Clear any previous error messages
 
-    editFormSlot({
-      id: selectedSlotObj.id,
-      newName: selectedSlotObj.name,
-      type: selectedSlotObj.type,
+    // Simulate the edit without saving to the database
+    const updatedSlot = {
+      ...selectedSlotObj,
       value: newSlotValue,
-    })
-      .unwrap()
-      .then((updatedSlot) => {
-        handleSelectFSlot(updatedSlot); // Use the function
-        setShowDialogFSlot(false);
-      })
-      .catch((error) => {
-        console.error('Error editing slot:', error);
-      });
+    };
+    handleSelectFSlot(updatedSlot);
+    setShowDialogFSlot(false);
   };
 
   const handleSlotChange = (e) => {
@@ -104,7 +96,6 @@ function DialogFSlot({
         <Button
           type="submit"
           primary
-          loading={editFormSlotResults.isLoading}
           rounded
           className="mr-2"
           onClick={handleEditSlot}

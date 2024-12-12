@@ -22,10 +22,10 @@ const formSlotsApi = createApi({
       }),
       addFormSlot: builder.mutation({
         invalidatesTags: ['FormSlot'],
-        query: ({ name, type, value }) => ({
+        query: ({ name, type, value, form }) => ({
           url: '/formSlots',
           method: 'POST',
-          body: { name, type, value },
+          body: { name, type, value, form },
         }),
       }),
       editFormSlot: builder.mutation({

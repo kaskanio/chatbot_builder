@@ -1,10 +1,11 @@
 import { DialogComponent } from '@syncfusion/ej2-react-popups';
-import { useRef, useEffect } from 'react';
+import { TextBoxComponent } from '@syncfusion/ej2-react-inputs';
+import { useEffect, useState } from 'react';
 import Button from '../modules/Button';
 
 function DialogSpeak({ showDialogSpeak, setShowDialogSpeak, onTypeString }) {
-  const actionStringRef = useRef(); // Create a ref for the input field
-  const inputRef = useRef(); // Create a ref for the input field
+  const [speakActionName, setSpeakActionName] = useState(''); // State for speak action name
+  const [actionString, setActionString] = useState(''); // State for action string
 
   const settings = { effect: 'Zoom', duration: 400, delay: 0 };
 
@@ -15,16 +16,15 @@ function DialogSpeak({ showDialogSpeak, setShowDialogSpeak, onTypeString }) {
 
   const handleAddNodeAction = (e) => {
     e.preventDefault();
-    console.log('Vale ayto: ', actionStringRef.current.value);
-    onTypeString(actionStringRef.current.value); // Pass the user input to the parent component
+    console.log('Action String: ', actionString);
+    console.log('Speak Action Name: ', speakActionName);
+    onTypeString(actionString, speakActionName); // Pass the user input to the parent component
     hideDialog(); // Hide the dialog after adding a new node
   };
 
   // UseEffect hook to set focus to the input field after each render
   useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus(); // Set focus to the input field after each render
-    }
+    document.getElementById('speakActionNameInput').focus(); // Set focus to the input field after each render
   }, []);
 
   // Define the footer template for the dialog, which includes buttons and inputs.
@@ -66,15 +66,21 @@ function DialogSpeak({ showDialogSpeak, setShowDialogSpeak, onTypeString }) {
       position={{ X: 'center', Y: 'center' }}
     >
       <div className="mt-4">
-        <p className="mb-4 text-gray-600">
-          Please type the action string below:
-        </p>
-        <input
-          type="text"
+        <TextBoxComponent
+          id="speakActionName"
+          value={speakActionName}
+          onChange={(e) => setSpeakActionName(e.value)}
+          placeholder="Please type the name for the speak action below:"
+          floatLabelType="Auto"
+          cssClass="e-bigger"
+        />
+        <TextBoxComponent
           id="speakActionNameInput"
-          ref={actionStringRef}
-          className="border border-gray-300 rounded-md p-2 w-full mr-2"
-          placeholder="Enter Action..."
+          value={actionString}
+          onChange={(e) => setActionString(e.value)}
+          placeholder="Please type the speak string below:"
+          floatLabelType="Auto"
+          cssClass="e-bigger"
         />
       </div>
     </DialogComponent>

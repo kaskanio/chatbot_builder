@@ -1,11 +1,11 @@
 import { DialogComponent } from '@syncfusion/ej2-react-popups';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns';
 import Button from '../modules/Button';
 import { useFetchServiceQuery, useAddServiceMutation } from '../../store';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import { TextField, Box, Typography, Grid } from '@mui/material';
+import { TextField, Box, Typography, Grid, Divider } from '@mui/material';
 import './dialog.css';
 
 const validationSchema = Yup.object({
@@ -14,6 +14,9 @@ const validationSchema = Yup.object({
   host: Yup.string().required('Host is required'),
   port: Yup.number().required('Port is required').positive().integer(),
   path: Yup.string().required('Path is required'),
+  query: Yup.string(),
+  header: Yup.string(),
+  body: Yup.string(),
 });
 
 function DialogRest({ showDialogRest, setShowDialogRest, onSelectService }) {
@@ -21,6 +24,10 @@ function DialogRest({ showDialogRest, setShowDialogRest, onSelectService }) {
   const [showAddServiceForm, setShowAddServiceForm] = useState(false);
   const { data: services = [], refetch } = useFetchServiceQuery();
   const [addService, addServiceResults] = useAddServiceMutation();
+
+  const queryRef = useRef('');
+  const headerRef = useRef('');
+  const bodyRef = useRef('');
 
   const settings = { effect: 'Zoom', duration: 400, delay: 0 };
 
@@ -33,14 +40,26 @@ function DialogRest({ showDialogRest, setShowDialogRest, onSelectService }) {
       setShowAddServiceForm(true);
       setSelectedService(null);
     } else {
+      setShowAddServiceForm(false);
       setSelectedService(e.itemData);
     }
   };
 
   const handleInsertService = () => {
+    const query = queryRef.current.value;
+    const header = headerRef.current.value;
+    const body = bodyRef.current.value;
+
+    const serviceDetails = {
+      ...selectedService,
+      query,
+      header,
+      body,
+    };
+
     setShowAddServiceForm(false);
-    setSelectedService(selectedService);
-    onSelectService(selectedService); // Pass the service
+    setSelectedService(serviceDetails);
+    onSelectService(serviceDetails); // Pass the service
     hideDialog();
   };
 
@@ -55,6 +74,7 @@ function DialogRest({ showDialogRest, setShowDialogRest, onSelectService }) {
   const footerTemplate = () => {
     return (
       <Box display="flex" flexDirection="column" width="100%">
+        <Divider sx={{ mb: 2 }} />
         {showAddServiceForm && (
           <Formik
             initialValues={{
@@ -195,7 +215,7 @@ function DialogRest({ showDialogRest, setShowDialogRest, onSelectService }) {
   return (
     <DialogComponent
       id="dialogRest"
-      header="Select a Service"
+      header="Select a Service to call"
       visible={showDialogRest}
       close={hideDialog}
       width="600px"
@@ -203,7 +223,7 @@ function DialogRest({ showDialogRest, setShowDialogRest, onSelectService }) {
       footerTemplate={footerTemplate}
       enableResize={true}
       showCloseIcon={true}
-      position={{ X: 'center', Y: '250' }}
+      position={{ X: 'center', Y: '150' }}
     >
       <Box mt={1}>
         <Typography mb={4} color="textSecondary">
@@ -241,6 +261,48 @@ function DialogRest({ showDialogRest, setShowDialogRest, onSelectService }) {
             <Typography variant="body2" sx={{ color: 'black' }}>
               <strong>Path:</strong> {selectedService.path}
             </Typography>
+          </Box>
+        )}
+        {(showAddServiceForm || selectedService) && (
+          <Box mt={2}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  id="queryInput"
+                  inputRef={queryRef}
+                  label="Query"
+                  fullWidth
+                  size="small"
+                  margin="dense"
+                  InputLabelProps={{ shrink: true, style: { fontSize: 12 } }}
+                  inputProps={{ style: { fontSize: 12 } }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  id="headerInput"
+                  inputRef={headerRef}
+                  label="Header"
+                  fullWidth
+                  size="small"
+                  margin="dense"
+                  InputLabelProps={{ shrink: true, style: { fontSize: 12 } }}
+                  inputProps={{ style: { fontSize: 12 } }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  id="bodyInput"
+                  inputRef={bodyRef}
+                  label="Body"
+                  fullWidth
+                  size="small"
+                  margin="dense"
+                  InputLabelProps={{ shrink: true, style: { fontSize: 12 } }}
+                  inputProps={{ style: { fontSize: 12 } }}
+                />
+              </Grid>
+            </Grid>
           </Box>
         )}
       </Box>

@@ -97,7 +97,12 @@ function DialogForm({
           if (!updatedData.some((item) => item.name === args.data.name)) {
             updatedData.push(args.data);
           }
-          addFormSlot({ name: args.data.name, type: args.data.type });
+          console.log('Edw exw: ', args.data);
+          addFormSlot({
+            name: args.data.name,
+            type: args.data.type,
+            form: formName,
+          });
         } else if (args.action === 'edit') {
           const index = updatedData.findIndex(
             (item) => item.name === editingFormSlot // Use the saved form slot name to find the correct item

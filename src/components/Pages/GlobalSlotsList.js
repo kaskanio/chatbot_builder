@@ -14,6 +14,7 @@ import {
   useEditGlobalSlotMutation,
   useRemoveGlobalSlotMutation,
 } from '../../store';
+import { DataManager } from '@syncfusion/ej2-data';
 
 function GlobalSlotsList() {
   const { data, error, isLoading } = useFetchGlobalSlotsQuery();
@@ -26,6 +27,8 @@ function GlobalSlotsList() {
   console.log('Is Loading:', isLoading);
 
   const toolbar = ['Add', 'Edit', 'Delete', 'Update', 'Cancel'];
+  const globalSlotTypes = ['int', 'float', 'str', 'bool', 'list', 'dict'];
+
   const editSettings = {
     allowEditing: true,
     allowAdding: true,
@@ -73,6 +76,16 @@ function GlobalSlotsList() {
     }
   };
 
+  const typeParams = {
+    params: {
+      actionComplete: () => false,
+      dataSource: new DataManager(globalSlotTypes.map((type) => ({ type }))),
+      sortOrder: 'None',
+      fields: { text: 'type', value: 'type' },
+      placeholder: 'Select a type',
+    },
+  };
+
   const content = (
     <div className="p-4">
       <GridComponent
@@ -92,7 +105,14 @@ function GlobalSlotsList() {
             isIdentity={true}
           />
           <ColumnDirective field="name" headerText="Slot Name" width="160" />
-          <ColumnDirective field="type" headerText="Type" width="100" />
+          <ColumnDirective
+            field="type"
+            headerText="Type"
+            width="100"
+            textAlign="Center"
+            editType="dropdownedit"
+            edit={typeParams}
+          />{' '}
           <ColumnDirective field="value" headerText="Value" width="250" />
         </ColumnsDirective>
         <Inject services={[Edit, Toolbar, Page]} />

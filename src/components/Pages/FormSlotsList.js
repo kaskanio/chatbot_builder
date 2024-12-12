@@ -34,6 +34,7 @@ function FormSlotsList() {
       name: slot.name,
       type: slot.type,
       value: slot.value,
+      form: slot.form,
     })) || [];
 
   if (isLoading) {
@@ -102,6 +103,12 @@ function FormSlotsList() {
             field="value"
             headerText="Value"
             width="250"
+            isPrimaryKey={true}
+          />
+          <ColumnDirective
+            field="form"
+            headerText="Form Name"
+            width="150"
             isPrimaryKey={true}
           />
         </ColumnsDirective>

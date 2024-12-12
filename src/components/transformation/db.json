@@ -10,28 +10,8 @@
     }
   ],
   "events": [],
-  "entities": [
-    {
-      "name": "teacher",
-      "values": [
-        "doc",
-        "math",
-        "filologos"
-      ],
-      "id": 1
-    }
-  ],
-  "synonyms": [
-    {
-      "name": "doctoras",
-      "values": [
-        "giatros",
-        "ktiniatros",
-        "odontiatros"
-      ],
-      "id": 1
-    }
-  ],
+  "entities": [],
+  "synonyms": [],
   "globalSlots": [],
   "formSlots": [
     {

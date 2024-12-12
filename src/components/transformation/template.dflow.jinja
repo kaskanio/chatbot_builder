@@ -1,14 +1,16 @@
 triggers
-  {%- for intent in intents %}
-  Intent {{ intent.name }}
-    {%- for string in intent.strings %} 
-    {{ string }}{% if not loop.last %}, {% endif %}{%- endfor %}
-  end
-{% endfor -%}
+    {%- if intents %}
+    {%- for intent in intents %}
+    Intent {{ intent.name }}
+        {%- for string in intent.strings %} 
+        {{ string }}{% if not loop.last %}, {% endif %}{%- endfor %}
+    end
+    {%- endfor %}
+    {%- endif %}
 end
-
+{% if services %}
 eservices
-    {% for service in services -%}
+    {%- for service in services %}
     EServiceHTTP {{ service.name }}
         verb: {{ service.verb }}
         host: '{{ service.host }}'
@@ -21,35 +23,85 @@ eservices
     end
     {%- endfor %}
 end
+{% endif -%}
 
+{%- if entities %}
 entities
-    {% for entity in entities -%}
+    {%- for entity in entities %}
     Entity {{ entity.name }}
-        {%- for value in entity.values %}
+        {%- for value in entity['values'] %}
         {{ value }}{% if not loop.last %}, {% endif %}
         {%- endfor %}
     end
-    {% endfor %}
+    {%- endfor %}
 end
+{% endif -%}
 
-dialogues
-  {% for dialogue in dialogues -%}
-  Dialogue {{ dialogue.name }}
-      on: {{ dialogue.trigger }}
-      responses:
-        {% if dialogue.form -%}
-        Form {{ dialogue.form.name }}
-          {%- for slot in dialogue.form.slots %}
-          {{ slot.name }}: {{ slot.type }} = HRI('{{ slot.prompt }}', [{{ slot.entities | join(', ') }}]){% if not loop.last %}, {% endif -%}
-          {% endfor -%}
-          {%- for response in dialogue.form.responses %}
-          {{ response.name }}: {{ response.service }}(query=[{{ response.query | join(', ') }}], header=[{{ response.header | join(', ') }}],)[{{ response.field }}]{% if not loop.last %}, {% endif %}
-          {%- endfor %}
-        end,
-        {%- endif -%}
-        ActionGroup {{ dialogue.action_group.name }}
-          Speak('{{ dialogue.action_group.speak }}')
-        end
-  end
-  {% endfor %}
+{%- if synonyms %}
+synonyms 
+    {%- for synonym in synonyms %}
+    Synonym {{ synonym.name }}
+        {%- for synonym in synonym['values'] %}
+        {{ synonym }}{% if not loop.last %}, {% endif %}
+        {%- endfor %}
+    end
+    {%- endfor %}
 end
+{% endif %}
+
+{%- if gslots %}
+gslots
+    {%- for gslot in gslots %}
+    {{ gslot.name }}: {{ gslot.type }} = {%- if gslot.type == 'str' %} "{{ gslot.value }}"{% else %} {{ gslot.value }}{% endif %}
+    {%- endfor %}
+end   
+{% endif %}
+
+{%- if dialogues %}
+dialogues
+    {%- for dialogue in dialogues %}
+    Dialogue {{ dialogue.name }}
+        on: {{ dialogue.trigger }}
+        responses:
+          {%- for response in dialogue.responses %}
+          {%- if response.type == 'Form' %}
+          Form {{ response.name }}
+              {%- for slot in response.slots %}
+              {%- if slot.source == 'gridDataHRI' %}
+              {{ slot.name }}: {{ slot.type }} = HRI('{{ slot.hriString }}', [{{ slot.entity }}]){% if not loop.last %} {% endif %}
+              {%- elif slot.source == 'gridDataService' %}
+              {{ slot.name }}: {{ slot.type }} = {{ slot.service }}(query=[{{ slot.query }}], header=[{{ slot.header }}],)[{{ slot.body }}]{% if not loop.last %} {% endif %}
+              {%- endif %}
+              {%- endfor %}
+          end,
+          {%- elif response.type == 'ActionGroup' %}
+          ActionGroup {{ response.name }}
+              {%- for action in response.actions %}
+              {%- if action.speak %}
+              Speak('{{ action.speak }}')
+              {%- elif action.uri %}
+              FireEvent('{{ action.uri }}', '{{ action.message }}')
+              {%- elif action.serviceName %}
+              {{ action.serviceName }}=({%- if action.serviceQuery %}
+                  query=[{{ action.serviceQuery }}], {% endif %}
+                  {%- if action.serviceHeader %}
+                  header=[{{ action.serviceHeader }}], {%- endif %}
+                  {%- if action.servicePath %}
+                  path=[{{ action.servicePath }}], {%- endif %}
+                  {%- if action.serviceBody %}
+                  body=[{{ action.serviceBody }}]{%- endif %})
+              {%- elif action.gslotName %}
+              SetGSlot({{ action.gslotName }}, {{ action.gslotValue }})
+              {%- elif action.formSlotName %}
+              SetFSlot({{ action.formSlotName }}, {{ action.formSlotValue }})
+              {%- elif action.fslotName %}
+              SetFSlot({{ action.fslotName }}, {{ action.fslotValue }})
+              {%- endif %}
+              {%- endfor %}
+          end
+          {%- endif %}
+          {%- endfor %}
+    end
+    {%- endfor %}
+end
+{% endif %}

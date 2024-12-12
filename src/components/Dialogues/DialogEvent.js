@@ -17,6 +17,7 @@ function DialogEvent({
   const [selectedEvent, setSelectedEvent] = useState(null);
   const newEventNameRef = useRef('');
   const newEventUriRef = useRef('');
+  const messageRef = useRef('');
   const {
     data: eventsData,
     error: eventsError,
@@ -60,8 +61,9 @@ function DialogEvent({
     e.preventDefault();
     const newEventName = newEventNameRef.current.value;
     const newEventUri = newEventUriRef.current.value;
+    const message = messageRef.current.value;
     if (selectedEvent === 'Add New Event...') {
-      addEvent({ name: newEventName, uri: newEventUri })
+      addEvent({ name: newEventName, uri: newEventUri, message })
         .unwrap()
         .then((newEvent) => {
           onSelectEvent(newEvent);
@@ -73,7 +75,7 @@ function DialogEvent({
       const selectedEventObj = eventsData.find(
         (event) => event.name === selectedEvent
       );
-      onSelectEvent(selectedEventObj);
+      onSelectEvent({ ...selectedEventObj, message });
     }
   };
 
@@ -111,6 +113,20 @@ function DialogEvent({
               />
             </Grid>
           </Grid>
+        )}
+        {eventType === 'Fire' && selectedEvent && (
+          <Box mt={2}>
+            <TextField
+              id="messageInput"
+              inputRef={messageRef}
+              label="Message"
+              fullWidth
+              size="small"
+              margin="dense"
+              inputProps={{ style: { fontSize: 12 } }}
+              InputLabelProps={{ style: { fontSize: 12 } }}
+            />
+          </Box>
         )}
         <Box display="flex" justifyContent="space-between" mt={2}>
           <Button

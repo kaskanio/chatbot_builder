@@ -8,12 +8,12 @@ with open('diagram_weather.json') as f:
     diagram_weather = json.load(f)
 
 # Function to format intent strings
-def format_intent_string(intent_string, pretrained_entities, trainable_entities, synonyms):
+def format_intent_string(intent_string, pretrained_entities, trainable_entities):
     parts = intent_string.split(' ')
     formatted_parts = []
     current_string = []
     for part in parts:
-        if part.startswith('PE:') or part.startswith('TE:') or part.startswith('S:'):
+        if part.startswith('PE:') or part.startswith('TE:'):
             if current_string:
                 formatted_parts.append('"{}"'.format(" ".join(current_string)))
                 current_string = []
@@ -37,94 +37,170 @@ def extract_pretrained_entities(pretrained_entities_data):
 def extract_trainable_entities(trainable_entities_data):
     return {entity['name']: entity['values'] for entity in trainable_entities_data}
 
-# Extract synonyms
-def extract_synonyms(synonyms_data):
-    return {synonym['name']: synonym['values'] for synonym in synonyms_data}
+# Function to transform entity string
+def transform_entity_string(entity_string):
+    if '(' in entity_string and ')' in entity_string:
+        entity, entity_type = entity_string.split(' (')
+        entity_type = entity_type.rstrip(')') 
+        return f"{entity_type}:{entity}"
+    return entity_string
 
 # Extract intents
 intents = [
     {
         'name': node['addInfo']['intentName'],
-        'strings': [format_intent_string(intent_string['string'], extract_pretrained_entities(node['addInfo'].get('pretrainedEntitiesData', [])), extract_trainable_entities(node['addInfo'].get('trainableEntitiesData', [])), extract_synonyms(node['addInfo'].get('synonymsData', []))) for intent_string in node['addInfo']['intentStrings']]
+        'strings': [format_intent_string(intent_string['string'], extract_pretrained_entities(node['addInfo'].get('pretrainedEntitiesData', [])), extract_trainable_entities(node['addInfo'].get('trainableEntitiesData', []))) for intent_string in node['addInfo']['intentStrings']]
     }
     for node in diagram_weather['nodes']
     if 'addInfo' in node and 'intentName' in node['addInfo']
 ]
 
 # Extract dialogues
-dialogues = [
-    {
-        'name': 'weather_dialogue',
-        'trigger': 'ask_weather',
-        'form': {
-            'name': 'form1',
-            'slots': [
-                {
-                    'name': 'city_slot',
-                    'type': 'str',
-                    'prompt': 'For which city?',
-                    'entities': ['PE:GPE']
-                }
-            ],
-            'responses': [
-                {
-                    'name': 'answer',
-                    'service': 'weather_svc',
-                    'query': ['city=form1.city_slot', 'language="English"'],
-                    'header': ['access_token="Q5eJZ8sSLEX6XNmOHyMlWagI"'],
-                    'field': 'description'
-                },
-                {
-                    'name': 'answer2',
-                    'service': 'weather_svc',
-                    'query': ['city=form1.city_slot', 'language="English"'],
-                    'header': ['access_token="Q5eJZ8sSLEX6XNmOHyMlWagI"'],
-                    'field': 'temp'
-                }
-            ]
-        },
-        'action_group': {
-            'name': 'answer_back',
-            'speak': 'The weather for {{ form1.city_slot }} is {{ form1.answer }} with {{ form1.answer2 }} degrees'
-        }
-    },
-    {
-        'name': 'greet_dialogue',
-        'trigger': 'greet',
-        'action_group': {
-            'name': 'greet_back',
-            'speak': 'Hello there!!!'
-        }
-    },
-    {
-        'name': 'bot_challenge_dialogue',
-        'trigger': 'bot_challenge',
-        'action_group': {
-            'name': 'respond_iambot',
-            'speak': 'I am a bot, powered by dFlow and Rasa.'
-        }
-    }
-]
+def extract_dialogues(diagram):
+    dialogues = []
+    node_map = {node['id']: node for node in diagram['nodes']}
+    dialogue_name_counter = {}  # Dictionary to keep track of dialogue name counts
+    action_group_name_counter = {}  # Dictionary to keep track of action group name counts
 
-# Extract entities
-entities = [
-    {
-        'name': entity['name'],
-        'values': entity['values']
-    }
-    for entity in db['entities']
-]
+    for connector in diagram['connectors']:
+        source_id = connector['sourceID']
+        target_id = connector['targetID']
+        source_node = node_map[source_id]
+        target_node = node_map[target_id]
 
-# Debugging: Print entities to check structure
-# EDW EXW ERROR KAI GAMIETAI. KSEKINA APO EDW. PROSPATHW NA FTIAKSW ENTITES
-print("Entities:", entities)
+        if 'intentName' in source_node['addInfo']:
+            # Set the dialogue name
+            base_dialogue_name = f"{source_node['addInfo']['intentName']}_dialogue"
+            dialogue_name = base_dialogue_name
+
+            # Ensure the dialogue name is unique
+            if dialogue_name in dialogue_name_counter:
+                dialogue_name_counter[dialogue_name] += 1
+                dialogue_name = f"{base_dialogue_name}{dialogue_name_counter[dialogue_name]}"
+            else:
+                dialogue_name_counter[dialogue_name] = 1
+
+            dialogue = {
+                'name': dialogue_name,
+                'trigger': source_node['addInfo']['intentName'],
+                'responses': []
+            }
+            dialogues.append(dialogue)
+
+            # Collect all actions in a single ActionGroup
+            action_names = []
+            actions = []
+
+            # Function to process a node and add responses/actions
+            def process_node(node):
+                if 'addInfo' in node:
+                    if 'formName' in node['addInfo']:
+                        slots = []
+                        form_name = node['addInfo']['formName']
+                        slots.extend([
+                            {
+                                'name': slot['name'],
+                                'type': slot['type'],
+                                'hriString': slot['hriString'],
+                                'entity': transform_entity_string(slot['entity']),
+                                'order': slot.get('order', 0),  # Default order to 0 if not specified
+                                'source': 'gridDataHRI'
+                            }
+                            for slot in node['addInfo'].get('gridDataHRI', [])
+                        ])
+                        slots.extend([
+                            {
+                                'name': slot['name'],
+                                'type': slot['type'],
+                                'service': slot['eServiceName'],
+                                'query': ''.join(slot['query']),
+                                'header': ''.join(slot['header']),
+                                'body': ''.join(slot['body']),
+                                'order': slot.get('order', 0),  # Default order to 0 if not specified
+                                'source': 'gridDataService'
+                            }
+                            for slot in node['addInfo'].get('gridDataService', [])
+                        ])
+                        slots.sort(key=lambda x: x['order'])  # Sort slots by order
+                        dialogue['responses'].append({
+                            'type': 'Form',
+                            'name': form_name,
+                            'slots': slots
+                        })
+
+                    if 'actionType' in node['addInfo']:
+                        if node['addInfo']['actionType'] == 'SpeakAction':
+                            action_names.append(node['addInfo']['speakActionName'])
+                            actions.append({
+                                'speak': node['addInfo']['actionString']
+                            })
+                        elif node['addInfo']['actionType'] == 'Fire Event':
+                            action_names.append(node['addInfo']['eventName'])
+                            actions.append({
+                                'uri': node['addInfo']['eventUri'],
+                                'message': node['addInfo']['message']
+                            })
+                        elif node['addInfo']['actionType'] == 'RestAction':
+                            action_names.append(node['addInfo']['serviceName'])
+                            actions.append({
+                                'serviceName': node['addInfo']['serviceName'],
+                                'serviceQuery': node['addInfo']['serviceQuery'],
+                                'serviceHeader': node['addInfo']['serviceHeader'],
+                                'servicePath': node['addInfo']['servicePath'],
+                                'serviceBody': node['addInfo']['serviceBody']
+                            })
+                        elif node['addInfo']['actionType'] == 'GlobalSlot':
+                            action_names.append('node['addInfo']['slotName']')
+                            actions.append({
+                                'gslotName': node['addInfo']['slotName'],
+                                'gslotValue': node['addInfo']['slotValue']
+                            })
+                        elif node['addInfo']['actionType'] == 'FormSlot':
+                            action_names.append(node['addInfo']['slotName'])
+                            actions.append({
+                                'formSlotName': node['addInfo']['slotName'],
+                                'formSlotValue': node['addInfo']['slotValue']
+                            })
+
+            # Process the first target node
+            process_node(target_node)
+
+            # Process subsequent responses
+            next_target_id = target_id
+            while True:
+                next_connector = next((c for c in diagram['connectors'] if c['sourceID'] == next_target_id), None)
+                if not next_connector:
+                    break
+                next_target_id = next_connector['targetID']
+                next_target_node = node_map[next_target_id]
+                process_node(next_target_node)
+
+            # Create the action group name
+            action_group_name = "_".join(action_names)
+            if action_group_name in action_group_name_counter:
+                action_group_name_counter[action_group_name] += 1
+                action_group_name = f"{action_group_name}_{action_group_name_counter[action_group_name]}"
+            else:
+                action_group_name_counter[action_group_name] = 1
+
+            # Add the action group to the dialogue
+            action_group = {
+                'type': 'ActionGroup',
+                'name': action_group_name,
+                'actions': actions
+            }
+            dialogue['responses'].append(action_group)
+
+    return dialogues
+
+dialogues = extract_dialogues(diagram_weather)
 
 # Setup Jinja2 environment
 env = Environment(loader=FileSystemLoader('.'))
 template = env.get_template('template.dflow.jinja')
 
 # Render template
-output = template.render(intents=intents, dialogues=dialogues, services=db['services'], form_slots=db['formSlots'], entities=entities)
+output = template.render(intents=intents, dialogues=dialogues, services=db['services'], synonyms=db['synonyms'], entities=db['entities'], gslots=db['globalSlots'])
 
 # Write to .dflow file
 with open('output.dflow', 'w') as f:

@@ -7,36 +7,50 @@
       "path": "/general_information/weather_openweather",
       "id": 1,
       "port": ""
+    },
+    {
+      "name": "asdfasdf",
+      "verb": "asdfasdf",
+      "host": "asdfasdf",
+      "port": "124124",
+      "path": "asdfasdf",
+      "id": 2
     }
   ],
-  "events": [],
-  "entities": [
+  "events": [
     {
-      "name": "teacher",
-      "values": [
-        "doc",
-        "math",
-        "filologos"
-      ],
+      "name": "Ela",
+      "uri": "asdfasdf",
       "id": 1
     }
   ],
-  "synonyms": [
+  "entities": [],
+  "synonyms": [],
+  "globalSlots": [
     {
-      "name": "doctoras",
-      "values": [
-        "giatros",
-        "ktiniatros",
-        "odontiatros"
-      ],
+      "name": "slotA",
+      "type": "int",
+      "value": "10",
       "id": 1
+    },
+    {
+      "name": "slotB",
+      "type": "str",
+      "value": "hey",
+      "id": 2
+    },
+    {
+      "name": "asdasd",
+      "type": "float",
+      "value": "asdasd",
+      "id": 3
     }
   ],
-  "globalSlots": [],
   "formSlots": [
     {
       "name": "city_slot",
       "type": "str",
+      "form": "form1",
       "id": 1
     }
   ]
