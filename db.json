@@ -38,12 +38,6 @@
       "type": "str",
       "value": "hey",
       "id": 2
-    },
-    {
-      "name": "asdasd",
-      "type": "float",
-      "value": "asdasd",
-      "id": 3
     }
   ],
   "formSlots": [
@@ -52,6 +46,36 @@
       "type": "str",
       "form": "form1",
       "id": 1
+    },
+    {
+      "name": "asdas",
+      "type": "float",
+      "form": "asdsa",
+      "id": 2
+    },
+    {
+      "name": "dfdf",
+      "type": "float",
+      "form": "greet",
+      "id": 3
+    },
+    {
+      "name": "asdas",
+      "type": "float",
+      "form": "aasd",
+      "id": 4
+    },
+    {
+      "name": "asdsa",
+      "type": "float",
+      "form": "asda",
+      "id": 5
+    },
+    {
+      "name": "asdas",
+      "type": "str",
+      "form": "asda",
+      "id": 6
     }
   ]
 }

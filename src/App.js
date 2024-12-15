@@ -1,5 +1,4 @@
 import Sidebar from './components/Sidebar';
-import IntentsList from './components/Pages/IntentsList';
 import Route from './components/Route';
 import Dialogues from './components/Dialogues/Dialogues';
 import './App.css';
@@ -26,9 +25,6 @@ function App() {
           </h1>
         </div> */}
         <div className="flex-1 p-4 sm:p-8 overflow-y-auto">
-          <Route path="/intents">
-            <IntentsList />
-          </Route>
           <Route path="/dialogues">
             <Dialogues />
           </Route>
