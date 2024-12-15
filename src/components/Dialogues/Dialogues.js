@@ -604,11 +604,8 @@ const Dialogues = forwardRef((props, ref) => {
       ],
     },
     {
-      text: 'Placeholder Options',
-      items: [
-        { text: 'Placeholder Option 1' },
-        { text: 'Placeholder Option 2' },
-      ],
+      text: 'Database',
+      items: [{ text: 'Reset Database', id: 'resetDB' }],
     },
   ];
 

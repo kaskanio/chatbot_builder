@@ -11,7 +11,19 @@ eservices
         host: 'https://services.issel.ee.auth.gr'
         path: '/general_information/weather_openweather'
     end
+    EServiceHTTP asdfasdf
+        verb: asdfasdf
+        host: 'asdfasdf'
+        port: 124124
+        path: 'asdfasdf'
+    end
 end
+
+gslots
+    slotA: int =  10
+    slotB: str =  "hey"
+    asdasd: float =  asdasd
+end   
 
 dialogues
     Dialogue greet_dialogue

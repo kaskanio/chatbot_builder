@@ -1,6 +1,6 @@
 triggers
-    Intent greet
-        "yo", 
+    Intent greet 
+        "yo",  
         "hey"
     end
 end
@@ -17,28 +17,28 @@ dialogues
     Dialogue greet_dialogue
         on: greet
         responses:
-            ActionGroup greet_back_Ela_weather_svc
+          ActionGroup greet_back_Ela_weather_svc
               Speak('yo nigga')
               FireEvent('asdfasdf', 'yo brother')
               weather_svc=(
                   query=[123123], 
-                  header=[fasdfgasdf], 
-                  path=[/general_information/weather_openweather], 
+                  header=[fasdfgasdf],
+                  path=[/general_information/weather_openweather],
                   body=[asdfasdfasdf])
-            end
-    end      
+          end
+    end
     Dialogue greet_dialogue2
         on: greet
         responses:
-            ActionGroup slotB
+          ActionGroup slotB
               SetGSlot(slotB, form1.city_slot)
-            end
-    end      
+          end
+    end
     Dialogue greet_dialogue3
         on: greet
         responses:
-            ActionGroup city_slot
+          ActionGroup city_slot
               SetFSlot(city_slot, Thessaloniki)
-            end
-    end      
+          end
+    end
 end

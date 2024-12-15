@@ -1,0 +1,108 @@
+triggers
+{{#if intents}}
+    {{#each intents}}
+    Intent {{name}}
+        {{#each strings}} 
+        {{{this}}}{{#unless @last}}, {{/unless}}
+        {{/each}}
+    end
+    {{/each}}
+{{/if}}
+end
+
+{{#if services}}
+eservices
+    {{#each services}}
+    EServiceHTTP {{name}}
+        verb: {{verb}}
+        host: '{{host}}'
+        {{#if port}}
+        port: {{port}}
+        {{/if}}
+        {{#if path}}
+        path: '{{path}}'
+        {{/if}}
+    end
+    {{/each}}
+end
+
+{{/if}}
+{{#if entities}}
+entities
+    {{#each entities}}
+    Entity {{name}}
+        {{#each values}}
+        {{{this}}}{{#unless @last}}, {{/unless}}
+        {{/each}}
+    end
+    {{/each}}
+end
+
+{{/if}}
+{{#if synonyms}}
+synonyms 
+    {{#each synonyms}}
+    Synonym {{name}}
+        {{#each values}}
+        {{{this}}}{{#unless @last}}, {{/unless}}
+        {{/each}}
+    end
+    {{/each}}
+end
+
+{{/if}}
+{{#if gslots}}
+gslots
+    {{#each gslots}}
+    {{name}}: {{type}} = {{#if (eq type 'str')}} "{{value}}"{{else}} {{value}}{{/if}}
+    {{/each}}
+end   
+
+{{/if}}
+{{#if dialogues}}
+dialogues
+    {{#each dialogues}}
+    Dialogue {{name}}
+        on: {{trigger}}
+        responses:
+          {{#each responses}}
+          {{#if (eq type 'Form')}}
+          Form {{name}}
+              {{#each slots}}
+              {{#if (eq source 'gridDataHRI')}}
+              {{name}}: {{type}} = HRI('{{hriString}}', [{{entity}}]){{#unless @last}} {{/unless}}
+              {{else if (eq source 'gridDataService')}}
+              {{name}}: {{type}} = {{service}}(query=[{{query}}], header=[{{header}}],)[{{body}}]{{#unless @last}} {{/unless}}
+              {{/if}}
+              {{/each}}
+          end,
+            {{else if (eq type 'ActionGroup')}}
+            ActionGroup {{name}}
+              {{#each actions}}
+              {{#if speak}}
+              Speak('{{speak}}')
+              {{else if uri}}
+              FireEvent('{{uri}}', '{{message}}')
+              {{else if serviceName}}
+              {{serviceName}}=({{#if serviceQuery}}
+                  query=[{{serviceQuery}}], {{/if}}
+                  {{#if serviceHeader}}
+                  header=[{{serviceHeader}}], {{/if}}
+                  {{#if servicePath}}
+                  path=[{{servicePath}}], {{/if}}
+                  {{#if serviceBody}}
+                  body=[{{serviceBody}}]{{/if}})
+              {{else if gslotName}}
+              SetGSlot({{gslotName}}, {{gslotValue}})
+              {{else if formSlotName}}
+              SetFSlot({{formSlotName}}, {{formSlotValue}})
+              {{else if fslotName}}
+              SetFSlot({{fslotName}}, {{fslotValue}})
+              {{/if}}
+              {{/each}}
+            end
+    end      {{/if}}
+          {{/each}}
+    {{/each}}
+end
+{{/if}}

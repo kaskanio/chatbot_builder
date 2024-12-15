@@ -150,7 +150,7 @@ def extract_dialogues(diagram):
                                 'serviceBody': node['addInfo']['serviceBody']
                             })
                         elif node['addInfo']['actionType'] == 'GlobalSlot':
-                            action_names.append('node['addInfo']['slotName']')
+                            action_names.append(node['addInfo']['slotName'])
                             actions.append({
                                 'gslotName': node['addInfo']['slotName'],
                                 'gslotValue': node['addInfo']['slotValue']
@@ -203,7 +203,7 @@ template = env.get_template('template.dflow.jinja')
 output = template.render(intents=intents, dialogues=dialogues, services=db['services'], synonyms=db['synonyms'], entities=db['entities'], gslots=db['globalSlots'])
 
 # Write to .dflow file
-with open('output.dflow', 'w') as f:
+with open('outputPY.dflow', 'w') as f:
     f.write(output)
 
 print('DFlow file created successfully.')
