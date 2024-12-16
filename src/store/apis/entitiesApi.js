@@ -32,8 +32,8 @@ const entitiesApi = createApi({
       }),
       removeEntity: builder.mutation({
         invalidatesTags: ['Entity'],
-        query: (entity) => ({
-          url: `/entities/${entity.id}`,
+        query: ({ id }) => ({
+          url: `/entities/${id}`,
           method: 'DELETE',
         }),
       }),

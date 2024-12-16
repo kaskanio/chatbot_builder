@@ -6,11 +6,17 @@ Handlebars.registerHelper('eq', function (a, b) {
   return a === b;
 });
 
+// Register the `formatSpeak` helper
+Handlebars.registerHelper('formatSpeak', function (speakString) {
+  return speakString
+    .replace(/(\w+\.\w+)/g, "' $1")
+    .replace(/^(.+?)\s*'/, "'$1'")
+    .replace(/' '/g, ' ');
+});
+
 // Load JSON files
 const db = JSON.parse(fs.readFileSync('db.json', 'utf8'));
-const diagramWeather = JSON.parse(
-  fs.readFileSync('diagram_weather.json', 'utf8')
-);
+const diagramWeather = JSON.parse(fs.readFileSync('diagram.json', 'utf8'));
 
 // Function to format intent strings
 function formatIntentString(
@@ -66,7 +72,11 @@ function extractTrainableEntities(trainableEntitiesData) {
 
 // Function to transform entity string
 function transformEntityString(entityString) {
-  if (entityString.includes('(') && entityString.includes(')')) {
+  if (
+    entityString &&
+    entityString.includes('(') &&
+    entityString.includes(')')
+  ) {
     const [entity, entityType] = entityString.split(' (');
     return `${entityType.slice(0, -1)}:${entity}`;
   }
@@ -141,16 +151,15 @@ function extractDialogues(diagram) {
               ...node.addInfo.gridDataService.map((slot) => ({
                 name: slot.name,
                 type: slot.type,
-                service: slot.eServiceName,
-                query: slot.query.join(''),
-                header: slot.header.join(''),
-                body: slot.body.join(''),
+                service: slot.service,
+                query: slot.query,
+                header: slot.header,
+                body: slot.body,
                 order: slot.order || 0,
                 source: 'gridDataService',
               }))
             );
-            slots.sort((a, b) => a.order - b.order);
-            dialogue.responses.push({
+            actions.push({
               type: 'Form',
               name: formName,
               slots,
@@ -208,7 +217,7 @@ function extractDialogues(diagram) {
       let actionGroupName = actionNames.join('_');
       if (actionGroupNameCounter[actionGroupName]) {
         actionGroupNameCounter[actionGroupName] += 1;
-        actionGroupName = `${actionGroupName}_${actionGroupNameCounter[actionGroupName]}`;
+        actionGroupName = `${actionGroupName}${actionGroupNameCounter[actionGroupName]}`;
       } else {
         actionGroupNameCounter[actionGroupName] = 1;
       }

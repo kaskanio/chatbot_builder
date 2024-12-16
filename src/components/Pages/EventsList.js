@@ -55,6 +55,7 @@ function EventsList() {
       } else if (args.action === 'edit') {
         // Edit existing event
         editEvent({
+          id: args.data.id,
           newName: args.data.name,
           uri: args.data.uri,
         });

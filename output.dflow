@@ -1,56 +1,62 @@
 triggers
     Intent greet
-        "yo", 
-        "hey"
+        "hey", 
+        "hello", 
+        "hi", 
+        "hello there", 
+        "good morning", 
+        "goodevening", 
+        "moin", 
+        "hey there", 
+        "let's go", 
+        "hey dude", 
+        "goodmorning", 
+        "good evening", 
+        "good afternoon"
+    end
+
+    Intent bot_challenge
+        "are you a bot?", 
+        "are you a human?", 
+        "am i talking to a bot?", 
+        "am i talking to a human?"
+    end
+
+    Intent fill_information
+        "I want to fill my profile", 
+        "Profile", 
+        "fill data", 
+        "fill my data", 
+        "lets get to know us", 
+        "Hello I am" PE:PERSON['John', 'Nick'], 
+        "Hi my name is" PE:PERSON['John', 'Nick'], 
+        "I am 30 years old", 
+        "I'm" PE:PERSON['John', 'Nick'] "and I am 20 years old"
     end
 end
 
-eservices
-    EServiceHTTP weather_svc
-        verb: GET
-        host: 'https://services.issel.ee.auth.gr'
-        path: '/general_information/weather_openweather'
-    end
-    EServiceHTTP asdfasdf
-        verb: asdfasdf
-        host: 'asdfasdf'
-        port: 124124
-        path: 'asdfasdf'
-    end
-end
-
-gslots
-    slotA: int =  10
-    slotB: str =  "hey"
-    asdasd: float =  asdasd
-end   
-
-dialogues
+dialogues    
     Dialogue greet_dialogue
         on: greet
         responses:
-            ActionGroup greet_back_Ela_weather_svc
-              Speak('yo nigga')
-              FireEvent('asdfasdf', 'yo brother')
-              weather_svc=(
-                  query=[123123], 
-                  header=[fasdfgasdf], 
-                  path=[/general_information/weather_openweather], 
-                  body=[asdfasdfasdf])
+            ActionGroup greet_back
+                Speak(Hello there!!!!)
             end
     end      
-    Dialogue greet_dialogue2
-        on: greet
+    
+    Dialogue bot_challenge_dialogue
+        on: bot_challenge
         responses:
-            ActionGroup slotB
-              SetGSlot(slotB, form1.city_slot)
+            ActionGroup respond_iambot
+                Speak(I am a bot, powered by dFlow and Rasa.)
             end
     end      
-    Dialogue greet_dialogue3
-        on: greet
+    
+    Dialogue fill_information_dialogue
+        on: fill_information
         responses:
-            ActionGroup city_slot
-              SetFSlot(city_slot, Thessaloniki)
+            ActionGroup answer_back
+                Speak('Glad to meet you' form1.name)
             end
     end      
 end

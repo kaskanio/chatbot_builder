@@ -222,7 +222,7 @@ function DialogForm({
       header="Form Dialog"
       visible={showDialogForm}
       close={hideDialog}
-      width="1500px"
+      width="1600px"
       height="700px"
       animationSettings={settings}
       enableResize={true}
@@ -230,6 +230,13 @@ function DialogForm({
       footerTemplate={footerTemplate}
       position={{ X: 'center', Y: 'center' }}
     >
+      <div style={{ marginBottom: '10px', color: 'gray' }}>
+        The value of the form slot is optional. If you want to provide it, use
+        the syntax: trigger_name:value. If you want to provide more values,
+        seperate them by comma.
+        <br />
+        <i>For example, "trigger1:value1".</i>
+      </div>
       <Box mt={2} mb={2} textAlign="center">
         <TextBoxComponent
           value={formName}
@@ -265,7 +272,7 @@ function DialogForm({
                       <ColumnDirective
                         field="order"
                         headerText="Set Order"
-                        width="35"
+                        width="50"
                         textAlign="Center"
                         editType="dropdownedit"
                         edit={orderParams}
@@ -289,6 +296,12 @@ function DialogForm({
                         field="hriString"
                         headerText="HRI String"
                         width="200"
+                        textAlign="Center"
+                      />
+                      <ColumnDirective
+                        field="value"
+                        headerText="Value"
+                        width="100"
                         textAlign="Center"
                       />
                       <ColumnDirective

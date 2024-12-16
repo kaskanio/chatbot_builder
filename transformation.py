@@ -4,7 +4,7 @@ from jinja2 import Environment, FileSystemLoader
 # Load JSON files
 with open('db.json') as f:
     db = json.load(f)
-with open('diagram_weather.json') as f:
+with open('diagram.json') as f:
     diagram_weather = json.load(f)
 
 # Function to format intent strings
@@ -68,9 +68,10 @@ def extract_dialogues(diagram):
         source_node = node_map[source_id]
         target_node = node_map[target_id]
 
-        if 'intentName' in source_node['addInfo']:
+        if 'intentName' in source_node['addInfo'] or 'eventName' in source_node['addInfo'] and 'eventType'!= 'FireEvent' in source_node['addInfo']:
             # Set the dialogue name
-            base_dialogue_name = f"{source_node['addInfo']['intentName']}_dialogue"
+            trigger_name = source_node['addInfo'].get('intentName') or source_node['addInfo'].get('eventName')
+            base_dialogue_name = f"{trigger_name}_dialogue"
             dialogue_name = base_dialogue_name
 
             # Ensure the dialogue name is unique
@@ -82,7 +83,7 @@ def extract_dialogues(diagram):
 
             dialogue = {
                 'name': dialogue_name,
-                'trigger': source_node['addInfo']['intentName'],
+                'trigger': trigger_name,
                 'responses': []
             }
             dialogues.append(dialogue)
@@ -101,8 +102,9 @@ def extract_dialogues(diagram):
                             {
                                 'name': slot['name'],
                                 'type': slot['type'],
-                                'hriString': slot['hriString'],
-                                'entity': transform_entity_string(slot['entity']),
+                                'hriString': process_hri_string(slot['hriString']),
+                                'entity': transform_entity_string(slot['entity']) if slot['entity'] else None,
+                                'value': slot.get('value'),  # Use get method to avoid KeyError
                                 'order': slot.get('order', 0),  # Default order to 0 if not specified
                                 'source': 'gridDataHRI'
                             }
@@ -114,8 +116,9 @@ def extract_dialogues(diagram):
                                 'type': slot['type'],
                                 'service': slot['eServiceName'],
                                 'query': ''.join(slot['query']),
-                                'header': ''.join(slot['header']),
-                                'body': ''.join(slot['body']),
+                                'header': ''.join(slot.get('header', '')),
+                                'path': ''.join(slot.get('path', '')),
+                                'body': ''.join(slot.get('body', '')),
                                 'order': slot.get('order', 0),  # Default order to 0 if not specified
                                 'source': 'gridDataService'
                             }
@@ -131,8 +134,23 @@ def extract_dialogues(diagram):
                     if 'actionType' in node['addInfo']:
                         if node['addInfo']['actionType'] == 'SpeakAction':
                             action_names.append(node['addInfo']['speakActionName'])
+                            action_string = node['addInfo']['actionString']
+                            parts = action_string.split()
+                            formatted_parts = []
+                            current_string = []
+                            for part in parts:
+                                if '.' in part:
+                                    if current_string:
+                                        formatted_parts.append("'{} '".format(" ".join(current_string)))
+                                        current_string = []
+                                    formatted_parts.append(part)
+                                else:
+                                    current_string.append(part)
+                            if current_string:
+                                formatted_parts.append("'{} '".format(" ".join(current_string)))
+                            formatted_action_string = ' '.join(formatted_parts)
                             actions.append({
-                                'speak': node['addInfo']['actionString']
+                                'speak': formatted_action_string
                             })
                         elif node['addInfo']['actionType'] == 'Fire Event':
                             action_names.append(node['addInfo']['eventName'])
@@ -193,6 +211,23 @@ def extract_dialogues(diagram):
 
     return dialogues
 
+# Function to process HRI string
+def process_hri_string(hri_string):
+    parts = hri_string.split()
+    formatted_parts = []
+    current_string = []
+    for part in parts:
+        if '.' in part:
+            if current_string:
+                formatted_parts.append("'{} '".format(" ".join(current_string)))
+                current_string = []
+            formatted_parts.append(part)
+        else:
+            current_string.append(part)
+    if current_string:
+        formatted_parts.append("'{} '".format(" ".join(current_string)))
+    return ' '.join(formatted_parts)
+
 dialogues = extract_dialogues(diagram_weather)
 
 # Setup Jinja2 environment
@@ -200,7 +235,7 @@ env = Environment(loader=FileSystemLoader('.'))
 template = env.get_template('template.dflow.jinja')
 
 # Render template
-output = template.render(intents=intents, dialogues=dialogues, services=db['services'], synonyms=db['synonyms'], entities=db['entities'], gslots=db['globalSlots'])
+output = template.render(intents=intents, dialogues=dialogues, services=db['services'], synonyms=db['synonyms'], entities=db['entities'], gslots=db['globalSlots'], events=db['events'])
 
 # Write to .dflow file
 with open('outputPY.dflow', 'w') as f:

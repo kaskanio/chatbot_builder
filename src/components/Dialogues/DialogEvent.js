@@ -18,6 +18,7 @@ function DialogEvent({
   const newEventNameRef = useRef('');
   const newEventUriRef = useRef('');
   const messageRef = useRef('');
+  const changedUriRef = useRef('');
   const {
     data: eventsData,
     error: eventsError,
@@ -62,11 +63,13 @@ function DialogEvent({
     const newEventName = newEventNameRef.current.value;
     const newEventUri = newEventUriRef.current.value;
     const message = messageRef.current.value;
+    const changedUri = changedUriRef.current.value;
+
     if (selectedEvent === 'Add New Event...') {
-      addEvent({ name: newEventName, uri: newEventUri, message })
+      addEvent({ name: newEventName, uri: newEventUri })
         .unwrap()
         .then((newEvent) => {
-          onSelectEvent(newEvent);
+          onSelectEvent({ ...newEvent, message });
         })
         .catch((error) => {
           console.error('Error adding event:', error);
@@ -75,7 +78,7 @@ function DialogEvent({
       const selectedEventObj = eventsData.find(
         (event) => event.name === selectedEvent
       );
-      onSelectEvent({ ...selectedEventObj, message });
+      onSelectEvent({ ...selectedEventObj, changedUri, message });
     }
   };
 
@@ -116,6 +119,18 @@ function DialogEvent({
         )}
         {eventType === 'Fire' && selectedEvent && (
           <Box mt={2}>
+            {selectedEvent !== 'Add New Event...' && (
+              <TextField
+                id="changedUri"
+                inputRef={changedUriRef}
+                label="Specific URI"
+                fullWidth
+                size="small"
+                margin="dense"
+                inputProps={{ style: { fontSize: 12 } }}
+                InputLabelProps={{ style: { fontSize: 12 } }}
+              />
+            )}
             <TextField
               id="messageInput"
               inputRef={messageRef}
