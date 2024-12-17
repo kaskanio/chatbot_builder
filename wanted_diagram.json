@@ -1,0 +1,886 @@
+{
+  "width": "100%",
+  "height": "1200px",
+  "drop": {},
+  "click": {},
+  "doubleClick": {},
+  "contextMenuSettings": {
+    "show": true,
+    "items": [
+      {
+        "text": "Delete",
+        "id": "delete"
+      }
+    ],
+    "showCustomMenuOnly": false
+  },
+  "contextMenuClick": {},
+  "enableRtl": false,
+  "locale": "en-US",
+  "enablePersistence": false,
+  "scrollSettings": {
+    "viewPortWidth": 1893.59375,
+    "viewPortHeight": 1200,
+    "currentZoom": 1,
+    "horizontalOffset": 0,
+    "verticalOffset": 0,
+    "padding": {
+      "left": 0,
+      "right": 0,
+      "top": 0,
+      "bottom": 0
+    },
+    "scrollLimit": "Diagram",
+    "canAutoScroll": false
+  },
+  "rulerSettings": {
+    "showRulers": false,
+    "horizontalRuler": {
+      "orientation": "Horizontal",
+      "arrangeTick": null
+    },
+    "verticalRuler": {
+      "orientation": "Vertical",
+      "arrangeTick": null
+    }
+  },
+  "backgroundColor": "transparent",
+  "constraints": 500,
+  "layout": {
+    "type": "None",
+    "enableAnimation": true,
+    "arrangement": "Nonlinear",
+    "enableRouting": false
+  },
+  "snapSettings": {
+    "constraints": 31,
+    "gridType": "Lines",
+    "verticalGridlines": {
+      "lineIntervals": [
+        1.25,
+        18.75,
+        0.25,
+        19.75,
+        0.25,
+        19.75,
+        0.25,
+        19.75,
+        0.25,
+        19.75
+      ],
+      "snapIntervals": [
+        20
+      ],
+      "lineDashArray": "",
+      "lineColor": "lightgray"
+    },
+    "horizontalGridlines": {
+      "lineIntervals": [
+        1.25,
+        18.75,
+        0.25,
+        19.75,
+        0.25,
+        19.75,
+        0.25,
+        19.75,
+        0.25,
+        19.75
+      ],
+      "snapIntervals": [
+        20
+      ],
+      "lineDashArray": "",
+      "lineColor": "lightgray"
+    }
+  },
+  "dataSourceSettings": {
+    "dataManager": null,
+    "dataSource": null,
+    "crudAction": {
+      "read": ""
+    },
+    "connectionDataSource": {
+      "crudAction": {
+        "read": ""
+      }
+    }
+  },
+  "mode": "SVG",
+  "layers": [
+    {
+      "objects": [
+        "intentNode_1734290042319",
+        "intentNode_1734290081669",
+        "Link1ah3Fx",
+        "speakNode_1734290207636",
+        "speakNode_1734290255493",
+        "Link1xs9v3"
+      ],
+      "id": "default_layer",
+      "visible": true,
+      "lock": false,
+      "zIndex": 0,
+      "objectZIndex": 13
+    }
+  ],
+  "nodes": [
+    {
+      "shape": {
+        "type": "HTML",
+        "content": "\n      <div id=\"intentNode_1734290042319\" style=\"padding: 10px; border: 2px solid #ff5733; border-radius: 10px; background-color: #fff3e6;\">\n        <h3 style=\"text-align: center; color: #ff5733; font-size: 24px; font-weight: font-size: 18px; bold;;\">greet</h3>\n        <div style=\"margin-top: 10px;\">\n          \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           hey\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           hello\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           hi\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           hello there\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           good morning\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           goodevening\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           moin\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           hey there\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           let's go\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           hey dude\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           goodmorning\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           good evening\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           good afternoon\n          </div>\n        \n        </div>\n      </div>\n    "
+      },
+      "ports": [],
+      "id": "intentNode_1734290042319",
+      "offsetX": 381.09375,
+      "offsetY": 417,
+      "width": 172.890625,
+      "height": 655,
+      "annotations": [],
+      "addInfo": {
+        "intentName": "greet",
+        "intentStrings": [
+          {
+            "string": "hey"
+          },
+          {
+            "string": "hello"
+          },
+          {
+            "string": "hi"
+          },
+          {
+            "string": "hello there"
+          },
+          {
+            "string": "good morning"
+          },
+          {
+            "string": "goodevening"
+          },
+          {
+            "string": "moin"
+          },
+          {
+            "string": "hey there"
+          },
+          {
+            "string": "let's go"
+          },
+          {
+            "string": "hey dude"
+          },
+          {
+            "string": "goodmorning"
+          },
+          {
+            "string": "good evening"
+          },
+          {
+            "string": "good afternoon"
+          }
+        ],
+        "pretrainedEntitiesData": [
+          {
+            "entity": "PERSON",
+            "values": ""
+          },
+          {
+            "entity": "NORP",
+            "values": ""
+          },
+          {
+            "entity": "FAC",
+            "values": ""
+          },
+          {
+            "entity": "ORG",
+            "values": ""
+          },
+          {
+            "entity": "GPE",
+            "values": ""
+          },
+          {
+            "entity": "LOC",
+            "values": ""
+          },
+          {
+            "entity": "PRODUCT",
+            "values": ""
+          },
+          {
+            "entity": "EVENT",
+            "values": ""
+          },
+          {
+            "entity": "WORK_OF_ART",
+            "values": ""
+          },
+          {
+            "entity": "LAW",
+            "values": ""
+          },
+          {
+            "entity": "LANGUAGE",
+            "values": ""
+          },
+          {
+            "entity": "DATE",
+            "values": ""
+          },
+          {
+            "entity": "TIME",
+            "values": ""
+          },
+          {
+            "entity": "PERCENT",
+            "values": ""
+          },
+          {
+            "entity": "MONEY",
+            "values": ""
+          },
+          {
+            "entity": "QUANTITY",
+            "values": ""
+          },
+          {
+            "entity": "ORDINAL",
+            "values": ""
+          },
+          {
+            "entity": "CARDINAL",
+            "values": ""
+          }
+        ]
+      },
+      "zIndex": 1,
+      "container": null,
+      "visible": true,
+      "horizontalAlignment": "Left",
+      "verticalAlignment": "Top",
+      "backgroundColor": "transparent",
+      "borderColor": "none",
+      "borderWidth": 0,
+      "rotateAngle": 0,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "margin": {},
+      "flip": "None",
+      "flipMode": "All",
+      "wrapper": {
+        "actualSize": {
+          "width": 172.890625,
+          "height": 655
+        },
+        "offsetX": 381.09375,
+        "offsetY": 417
+      },
+      "constraints": 5240814,
+      "style": {
+        "fill": "white",
+        "gradient": {
+          "type": "None"
+        },
+        "strokeColor": "black",
+        "strokeWidth": 1,
+        "strokeDashArray": "",
+        "opacity": 1,
+        "textOverflow": "Wrap"
+      },
+      "isExpanded": true,
+      "expandIcon": {
+        "shape": "None"
+      },
+      "fixedUserHandles": [],
+      "tooltip": {
+        "openOn": "Auto",
+        "content": "",
+        "isSticky": false
+      },
+      "inEdges": [],
+      "outEdges": [
+        "Link1ah3Fx"
+      ],
+      "parentId": "",
+      "processId": "",
+      "umlIndex": -1,
+      "isPhase": false,
+      "isLane": false
+    },
+    {
+      "shape": {
+        "type": "HTML",
+        "content": "\n      <div id=\"intentNode_1734290081669\" style=\"padding: 10px; border: 2px solid #ff5733; border-radius: 10px; background-color: #fff3e6;\">\n        <h3 style=\"text-align: center; color: #ff5733; font-size: 24px; font-weight: font-size: 18px; bold;;\">bot_challenge</h3>\n        <div style=\"margin-top: 10px;\">\n          \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           are you a bot?\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           are you a human?\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           am i talking to a bot?\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           am i talking to a human?\n          </div>\n        \n        </div>\n      </div>\n    "
+      },
+      "ports": [],
+      "id": "intentNode_1734290081669",
+      "offsetX": 863.09375,
+      "offsetY": 293,
+      "width": 238.9375,
+      "height": 250,
+      "annotations": [],
+      "addInfo": {
+        "intentName": "bot_challenge",
+        "intentStrings": [
+          {
+            "string": "are you a bot?"
+          },
+          {
+            "string": "are you a human?"
+          },
+          {
+            "string": "am i talking to a bot?"
+          },
+          {
+            "string": "am i talking to a human?"
+          }
+        ],
+        "pretrainedEntitiesData": [
+          {
+            "entity": "PERSON",
+            "values": ""
+          },
+          {
+            "entity": "NORP",
+            "values": ""
+          },
+          {
+            "entity": "FAC",
+            "values": ""
+          },
+          {
+            "entity": "ORG",
+            "values": ""
+          },
+          {
+            "entity": "GPE",
+            "values": ""
+          },
+          {
+            "entity": "LOC",
+            "values": ""
+          },
+          {
+            "entity": "PRODUCT",
+            "values": ""
+          },
+          {
+            "entity": "EVENT",
+            "values": ""
+          },
+          {
+            "entity": "WORK_OF_ART",
+            "values": ""
+          },
+          {
+            "entity": "LAW",
+            "values": ""
+          },
+          {
+            "entity": "LANGUAGE",
+            "values": ""
+          },
+          {
+            "entity": "DATE",
+            "values": ""
+          },
+          {
+            "entity": "TIME",
+            "values": ""
+          },
+          {
+            "entity": "PERCENT",
+            "values": ""
+          },
+          {
+            "entity": "MONEY",
+            "values": ""
+          },
+          {
+            "entity": "QUANTITY",
+            "values": ""
+          },
+          {
+            "entity": "ORDINAL",
+            "values": ""
+          },
+          {
+            "entity": "CARDINAL",
+            "values": ""
+          }
+        ]
+      },
+      "zIndex": 3,
+      "container": null,
+      "visible": true,
+      "horizontalAlignment": "Left",
+      "verticalAlignment": "Top",
+      "backgroundColor": "transparent",
+      "borderColor": "none",
+      "borderWidth": 0,
+      "rotateAngle": 0,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "margin": {},
+      "flip": "None",
+      "flipMode": "All",
+      "wrapper": {
+        "actualSize": {
+          "width": 238.9375,
+          "height": 250
+        },
+        "offsetX": 863.09375,
+        "offsetY": 293
+      },
+      "constraints": 5240814,
+      "style": {
+        "fill": "white",
+        "gradient": {
+          "type": "None"
+        },
+        "strokeColor": "black",
+        "strokeWidth": 1,
+        "strokeDashArray": "",
+        "opacity": 1,
+        "textOverflow": "Wrap"
+      },
+      "isExpanded": true,
+      "expandIcon": {
+        "shape": "None"
+      },
+      "fixedUserHandles": [],
+      "tooltip": {
+        "openOn": "Auto",
+        "content": "",
+        "isSticky": false
+      },
+      "inEdges": [],
+      "outEdges": [
+        "Link1xs9v3"
+      ],
+      "parentId": "",
+      "processId": "",
+      "umlIndex": -1,
+      "isPhase": false,
+      "isLane": false
+    },
+    {
+      "id": "speakNode_1734290207636",
+      "offsetX": 362.09375,
+      "offsetY": 935,
+      "width": 323.40625,
+      "height": 94,
+      "shape": {
+        "type": "HTML",
+        "content": "\n      <div style=\"padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9; height:100%;\">\n        <h3 style=\"text-align: center; color: #0056b3; font-size: 24px; font-weight: bold;\">\n          Speak Action: greet_back\n        </h3>\n        <div style=\"margin-top: 10px;\">\n          Hello there!!!!\n        </div>\n      </div>\n    "
+      },
+      "addInfo": {
+        "actionType": "SpeakAction",
+        "actionString": "Hello there!!!!",
+        "speakActionName": "greet_back"
+      },
+      "annotations": [],
+      "ports": [],
+      "zIndex": 10,
+      "container": null,
+      "visible": true,
+      "horizontalAlignment": "Left",
+      "verticalAlignment": "Top",
+      "backgroundColor": "transparent",
+      "borderColor": "none",
+      "borderWidth": 0,
+      "rotateAngle": 0,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "margin": {},
+      "flip": "None",
+      "flipMode": "All",
+      "wrapper": {
+        "actualSize": {
+          "width": 323.40625,
+          "height": 94
+        },
+        "offsetX": 362.09375,
+        "offsetY": 935
+      },
+      "constraints": 5240814,
+      "style": {
+        "fill": "white",
+        "gradient": {
+          "type": "None"
+        },
+        "strokeColor": "black",
+        "strokeWidth": 1,
+        "strokeDashArray": "",
+        "opacity": 1,
+        "textOverflow": "Wrap"
+      },
+      "isExpanded": true,
+      "expandIcon": {
+        "shape": "None"
+      },
+      "fixedUserHandles": [],
+      "tooltip": {
+        "openOn": "Auto",
+        "content": "",
+        "isSticky": false
+      },
+      "inEdges": [
+        "Link1ah3Fx"
+      ],
+      "outEdges": [],
+      "parentId": "",
+      "processId": "",
+      "isPhase": false,
+      "isLane": false
+    },
+    {
+      "id": "speakNode_1734290255493",
+      "offsetX": 950.09375,
+      "offsetY": 762,
+      "width": 384.15625,
+      "height": 94,
+      "shape": {
+        "type": "HTML",
+        "content": "\n      <div style=\"padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9; height:100%;\">\n        <h3 style=\"text-align: center; color: #0056b3; font-size: 24px; font-weight: bold;\">\n          Speak Action: respond_iambot\n        </h3>\n        <div style=\"margin-top: 10px;\">\n          I am a bot, powered by dFlow and Rasa.\n        </div>\n      </div>\n    "
+      },
+      "addInfo": {
+        "actionType": "SpeakAction",
+        "actionString": "I am a bot, powered by dFlow and Rasa.",
+        "speakActionName": "respond_iambot"
+      },
+      "annotations": [],
+      "ports": [],
+      "zIndex": 12,
+      "container": null,
+      "visible": true,
+      "horizontalAlignment": "Left",
+      "verticalAlignment": "Top",
+      "backgroundColor": "transparent",
+      "borderColor": "none",
+      "borderWidth": 0,
+      "rotateAngle": 0,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "margin": {},
+      "flip": "None",
+      "flipMode": "All",
+      "wrapper": {
+        "actualSize": {
+          "width": 384.15625,
+          "height": 94
+        },
+        "offsetX": 950.09375,
+        "offsetY": 762
+      },
+      "constraints": 5240814,
+      "style": {
+        "fill": "white",
+        "gradient": {
+          "type": "None"
+        },
+        "strokeColor": "black",
+        "strokeWidth": 1,
+        "strokeDashArray": "",
+        "opacity": 1,
+        "textOverflow": "Wrap"
+      },
+      "isExpanded": true,
+      "expandIcon": {
+        "shape": "None"
+      },
+      "fixedUserHandles": [],
+      "tooltip": {
+        "openOn": "Auto",
+        "content": "",
+        "isSticky": false
+      },
+      "inEdges": [
+        "Link1xs9v3"
+      ],
+      "outEdges": [],
+      "parentId": "",
+      "processId": "",
+      "isPhase": false,
+      "isLane": false
+    }
+  ],
+  "connectors": [
+    {
+      "shape": {
+        "type": "None"
+      },
+      "id": "Link1ah3Fx",
+      "type": "Orthogonal",
+      "sourcePoint": {
+        "x": 381.09,
+        "y": 744.5
+      },
+      "targetPoint": {
+        "x": 362.09,
+        "y": 888
+      },
+      "targetDecorator": {
+        "shape": "Arrow",
+        "width": 10,
+        "height": 10,
+        "pivot": {
+          "x": 0,
+          "y": 0.5
+        },
+        "style": {
+          "fill": "black",
+          "strokeColor": "black",
+          "strokeWidth": 1,
+          "strokeDashArray": "",
+          "opacity": 1,
+          "gradient": {
+            "type": "None"
+          }
+        }
+      },
+      "sourcePortID": "",
+      "targetPortID": "",
+      "sourceID": "intentNode_1734290042319",
+      "targetID": "speakNode_1734290207636",
+      "flip": "None",
+      "connectorSpacing": 13,
+      "segments": [
+        {
+          "type": "Orthogonal",
+          "length": null,
+          "direction": null
+        }
+      ],
+      "sourceDecorator": {
+        "shape": "None",
+        "width": 10,
+        "height": 10,
+        "pivot": {
+          "x": 0,
+          "y": 0.5
+        },
+        "style": {
+          "fill": "black",
+          "strokeColor": "black",
+          "strokeWidth": 1,
+          "strokeDashArray": "",
+          "opacity": 1,
+          "gradient": {
+            "type": "None"
+          }
+        }
+      },
+      "cornerRadius": 0,
+      "wrapper": {
+        "actualSize": {
+          "width": 19,
+          "height": 143.5
+        },
+        "offsetX": 371.59,
+        "offsetY": 816.25
+      },
+      "style": {
+        "strokeWidth": 1,
+        "strokeColor": "black",
+        "fill": "transparent",
+        "strokeDashArray": "",
+        "opacity": 1,
+        "gradient": {
+          "type": "None"
+        }
+      },
+      "annotations": [],
+      "fixedUserHandles": [],
+      "ports": [],
+      "tooltip": {
+        "content": "Link1",
+        "showTipPointer": true,
+        "width": "auto",
+        "height": "auto",
+        "isSticky": false,
+        "relativeMode": "Object",
+        "openOn": "Auto"
+      },
+      "constraints": 2043454,
+      "previewSize": {},
+      "zIndex": 6,
+      "visible": true,
+      "connectionPadding": 0,
+      "flipMode": "All",
+      "hitPadding": 10,
+      "sourcePadding": 0,
+      "targetPadding": 0,
+      "parentId": ""
+    },
+    {
+      "shape": {
+        "type": "None"
+      },
+      "id": "Link1xs9v3",
+      "type": "Orthogonal",
+      "sourcePoint": {
+        "x": 863.09,
+        "y": 418
+      },
+      "targetPoint": {
+        "x": 950.09,
+        "y": 715
+      },
+      "targetDecorator": {
+        "shape": "Arrow",
+        "width": 10,
+        "height": 10,
+        "pivot": {
+          "x": 0,
+          "y": 0.5
+        },
+        "style": {
+          "fill": "black",
+          "strokeColor": "black",
+          "strokeWidth": 1,
+          "strokeDashArray": "",
+          "opacity": 1,
+          "gradient": {
+            "type": "None"
+          }
+        }
+      },
+      "sourcePortID": "",
+      "targetPortID": "",
+      "sourceID": "intentNode_1734290081669",
+      "targetID": "speakNode_1734290255493",
+      "flip": "None",
+      "connectorSpacing": 13,
+      "segments": [
+        {
+          "type": "Orthogonal",
+          "length": null,
+          "direction": null
+        }
+      ],
+      "sourceDecorator": {
+        "shape": "None",
+        "width": 10,
+        "height": 10,
+        "pivot": {
+          "x": 0,
+          "y": 0.5
+        },
+        "style": {
+          "fill": "black",
+          "strokeColor": "black",
+          "strokeWidth": 1,
+          "strokeDashArray": "",
+          "opacity": 1,
+          "gradient": {
+            "type": "None"
+          }
+        }
+      },
+      "cornerRadius": 0,
+      "wrapper": {
+        "actualSize": {
+          "width": 87,
+          "height": 297
+        },
+        "offsetX": 906.59,
+        "offsetY": 566.5
+      },
+      "style": {
+        "strokeWidth": 1,
+        "strokeColor": "black",
+        "fill": "transparent",
+        "strokeDashArray": "",
+        "opacity": 1,
+        "gradient": {
+          "type": "None"
+        }
+      },
+      "annotations": [],
+      "fixedUserHandles": [],
+      "ports": [],
+      "tooltip": {
+        "content": "Link1",
+        "showTipPointer": true,
+        "width": "auto",
+        "height": "auto",
+        "isSticky": false,
+        "relativeMode": "Object",
+        "openOn": "Auto"
+      },
+      "constraints": 2043454,
+      "previewSize": {},
+      "zIndex": 13,
+      "visible": true,
+      "connectionPadding": 0,
+      "flipMode": "All",
+      "hitPadding": 10,
+      "sourcePadding": 0,
+      "targetPadding": 0,
+      "parentId": ""
+    }
+  ],
+  "pageSettings": {
+    "orientation": "Landscape",
+    "height": null,
+    "width": null,
+    "background": {
+      "source": "",
+      "color": "transparent"
+    },
+    "showPageBreaks": false,
+    "fitOptions": {
+      "canFit": false
+    },
+    "boundaryConstraints": "Infinity"
+  },
+  "selectedItems": {
+    "nodes": [],
+    "connectors": [],
+    "constraints": 16382,
+    "selectedObjects": [],
+    "userHandles": [],
+    "rotateAngle": 0,
+    "canToggleSelection": false,
+    "pivot": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "width": 0,
+    "height": 0,
+    "offsetX": 0,
+    "offsetY": 0,
+    "handleSize": 14,
+    "rubberBandSelectionMode": "CompleteIntersect",
+    "wrapper": null
+  },
+  "basicElements": [],
+  "tooltip": {
+    "content": ""
+  },
+  "commandManager": {
+    "commands": []
+  },
+  "tool": 3,
+  "bridgeDirection": "Top",
+  "customCursor": [],
+  "diagramSettings": {
+    "inversedAlignment": true
+  },
+  "serializationSettings": {
+    "preventDefaults": false
+  },
+  "enableConnectorSplit": false,
+  "version": 17.1
+}

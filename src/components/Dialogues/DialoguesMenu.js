@@ -1,6 +1,6 @@
 import React from 'react';
 import { MenuComponent } from '@syncfusion/ej2-react-navigations';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux'; // Corrected import
 import { saveDiagramState } from '../../store/diagramSlice';
 import {
   useFetchFormSlotsQuery,
@@ -16,6 +16,7 @@ import {
   useFetchEntitiesQuery,
   useRemoveEntityMutation,
 } from '../../store/index';
+import axios from 'axios';
 
 const DialoguesMenu = ({ diagramInstanceRef }) => {
   const dispatch = useDispatch();
@@ -34,7 +35,7 @@ const DialoguesMenu = ({ diagramInstanceRef }) => {
   const [removeSynonym] = useRemoveSynonymMutation();
   const [removeEntity] = useRemoveEntityMutation();
 
-  const handleSaveToFile = () => {
+  const handleSaveToFile = (filename = 'diagram.json', directory = '') => {
     if (diagramInstanceRef.current) {
       const serializedData = diagramInstanceRef.current.saveDiagram({
         exclude: ['width', 'height', 'viewport'],
@@ -46,9 +47,32 @@ const DialoguesMenu = ({ diagramInstanceRef }) => {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'diagram.json';
+      a.download = directory ? `${directory}/${filename}` : filename;
       a.click();
       URL.revokeObjectURL(url);
+    }
+  };
+
+  const handleSaveDiagram = async () => {
+    if (diagramInstanceRef.current) {
+      const serializedData = diagramInstanceRef.current.saveDiagram({
+        exclude: ['width', 'height', 'viewport'],
+      });
+      const formattedData = JSON.stringify(JSON.parse(serializedData), null, 2);
+      try {
+        const response = await axios.post(
+          'http://127.0.0.1:8000/save-diagram',
+          {
+            filename: 'diagram.json',
+            directory:
+              'C:/Users/don_k/Documents/Courses/Diplomatiki/first_attempt',
+            data: formattedData,
+          }
+        );
+        alert(response.data.message);
+      } catch (error) {
+        alert('An error occurred while saving the diagram: ' + error.message);
+      }
     }
   };
 
@@ -106,11 +130,21 @@ const DialoguesMenu = ({ diagramInstanceRef }) => {
     }
   };
 
+  const handleExportDflow = async () => {
+    try {
+      const response = await axios.post('http://127.0.0.1:8000/export-dflow');
+      alert(response.data.message);
+    } catch (error) {
+      alert('An error occurred while exporting: ' + error.message);
+    }
+  };
+
   const menuItems = [
     {
       text: 'Diagram',
       items: [
         { text: 'Save Diagram', id: 'saveDiagram' },
+        { text: 'Save Diagram As... ', id: 'saveDiagramAs' },
         { text: 'Load Diagram', id: 'loadDiagram' },
         { text: 'Reset Diagram', id: 'resetDiagram' },
       ],
@@ -119,11 +153,18 @@ const DialoguesMenu = ({ diagramInstanceRef }) => {
       text: 'Database',
       items: [{ text: 'Reset Database', id: 'resetDB' }],
     },
+    {
+      text: 'Export',
+      items: [{ text: 'Export to dflow', id: 'exportDflow' }],
+    },
   ];
 
   const handleMenuClick = (args) => {
     switch (args.item.id) {
       case 'saveDiagram':
+        handleSaveDiagram();
+        break;
+      case 'saveDiagramAs':
         handleSaveToFile();
         break;
       case 'loadDiagram':
@@ -134,6 +175,9 @@ const DialoguesMenu = ({ diagramInstanceRef }) => {
         break;
       case 'resetDB':
         handleResetDatabase();
+        break;
+      case 'exportDflow':
+        handleExportDflow();
         break;
       default:
         break;

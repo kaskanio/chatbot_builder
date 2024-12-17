@@ -1,0 +1,55 @@
+{
+  "services": [
+    {%- for service in services %}
+    {
+      "name": "{{ service.name }}",
+      "verb": "{{ service.verb }}",
+      "host": "{{ service.host }}",
+      "port": {{ service.port if service.port else 'null' }},
+      "path": "{{ service.path if service.path else '' }}"
+    }{% if not loop.last %}, {% endif %}
+    {%- endfor %}
+  ],
+  "events": [
+    {%- for event in events %}
+    {
+      "name": "{{ event.name }}",
+      "uri": "{{ event.uri }}"
+    }{% if not loop.last %}, {% endif %}
+    {%- endfor %}
+  ],
+  "entities": [
+    {%- for entity in entities %}
+    {
+      "name": "{{ entity.name }}",
+      "values": [
+        {%- for value in entity.values %}
+        "{{ value }}"{% if not loop.last %}, {% endif %}
+        {%- endfor %}
+      ]
+    }{% if not loop.last %}, {% endif %}
+    {%- endfor %}
+  ],
+  "synonyms": [
+    {%- for synonym in synonyms %}
+    {
+      "name": "{{ synonym.name }}",
+      "values": [
+        {%- for value in synonym.values %}
+        "{{ value }}"{% if not loop.last %}, {% endif %}
+        {%- endfor %}
+      ]
+    }{% if not loop.last %}, {% endif %}
+    {%- endfor %}
+  ],
+  "globalSlots": [
+    {%- for gslot in gslots %}
+    {
+      "name": "{{ gslot.name }}",
+      "type": "{{ gslot.type }}",
+      "value": "{{ gslot.value }}"
+    }{% if not loop.last %}, {% endif %}
+    {%- endfor %}
+  ],
+  "formSlots": []
+}

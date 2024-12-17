@@ -68,7 +68,7 @@ def extract_dialogues(diagram):
         source_node = node_map[source_id]
         target_node = node_map[target_id]
 
-        if 'intentName' in source_node['addInfo'] or 'eventName' in source_node['addInfo'] and 'eventType'!= 'FireEvent' in source_node['addInfo']:
+        if 'intentName' in source_node['addInfo'] or 'eventName' in source_node['addInfo'] and 'eventType' != 'FireEvent' in source_node['addInfo']:
             # Set the dialogue name
             trigger_name = source_node['addInfo'].get('intentName') or source_node['addInfo'].get('eventName')
             base_dialogue_name = f"{trigger_name}_dialogue"
@@ -87,10 +87,6 @@ def extract_dialogues(diagram):
                 'responses': []
             }
             dialogues.append(dialogue)
-
-            # Collect all actions in a single ActionGroup
-            action_names = []
-            actions = []
 
             # Function to process a node and add responses/actions
             def process_node(node):
@@ -133,7 +129,6 @@ def extract_dialogues(diagram):
 
                     if 'actionType' in node['addInfo']:
                         if node['addInfo']['actionType'] == 'SpeakAction':
-                            action_names.append(node['addInfo']['speakActionName'])
                             action_string = node['addInfo']['actionString']
                             parts = action_string.split()
                             formatted_parts = []
@@ -149,35 +144,49 @@ def extract_dialogues(diagram):
                             if current_string:
                                 formatted_parts.append("'{} '".format(" ".join(current_string)))
                             formatted_action_string = ' '.join(formatted_parts)
-                            actions.append({
-                                'speak': formatted_action_string
+                            dialogue['responses'].append({
+                                'type': 'ActionGroup',
+                                'name': node['addInfo']['speakActionName'],
+                                'actions': [{'speak': formatted_action_string}]
                             })
                         elif node['addInfo']['actionType'] == 'Fire Event':
-                            action_names.append(node['addInfo']['eventName'])
-                            actions.append({
-                                'uri': node['addInfo']['eventUri'],
-                                'message': node['addInfo']['message']
+                            dialogue['responses'].append({
+                                'type': 'ActionGroup',
+                                'name': node['addInfo']['eventName'],
+                                'actions': [{
+                                    'uri': node['addInfo']['eventUri'],
+                                    'message': node['addInfo']['message']
+                                }]
                             })
                         elif node['addInfo']['actionType'] == 'RestAction':
-                            action_names.append(node['addInfo']['serviceName'])
-                            actions.append({
-                                'serviceName': node['addInfo']['serviceName'],
-                                'serviceQuery': node['addInfo']['serviceQuery'],
-                                'serviceHeader': node['addInfo']['serviceHeader'],
-                                'servicePath': node['addInfo']['servicePath'],
-                                'serviceBody': node['addInfo']['serviceBody']
+                            dialogue['responses'].append({
+                                'type': 'ActionGroup',
+                                'name': node['addInfo']['serviceName'],
+                                'actions': [{
+                                    'serviceName': node['addInfo']['serviceName'],
+                                    'serviceQuery': node['addInfo']['serviceQuery'],
+                                    'serviceHeader': node['addInfo']['serviceHeader'],
+                                    'servicePath': node['addInfo']['servicePath'],
+                                    'serviceBody': node['addInfo']['serviceBody']
+                                }]
                             })
                         elif node['addInfo']['actionType'] == 'GlobalSlot':
-                            action_names.append(node['addInfo']['slotName'])
-                            actions.append({
-                                'gslotName': node['addInfo']['slotName'],
-                                'gslotValue': node['addInfo']['slotValue']
+                            dialogue['responses'].append({
+                                'type': 'ActionGroup',
+                                'name': node['addInfo']['slotName'],
+                                'actions': [{
+                                    'gslotName': node['addInfo']['slotName'],
+                                    'gslotValue': node['addInfo']['slotValue']
+                                }]
                             })
                         elif node['addInfo']['actionType'] == 'FormSlot':
-                            action_names.append(node['addInfo']['slotName'])
-                            actions.append({
-                                'formSlotName': node['addInfo']['slotName'],
-                                'formSlotValue': node['addInfo']['slotValue']
+                            dialogue['responses'].append({
+                                'type': 'ActionGroup',
+                                'name': node['addInfo']['slotName'],
+                                'actions': [{
+                                    'formSlotName': node['addInfo']['slotName'],
+                                    'formSlotValue': node['addInfo']['slotValue']
+                                }]
                             })
 
             # Process the first target node
@@ -192,22 +201,6 @@ def extract_dialogues(diagram):
                 next_target_id = next_connector['targetID']
                 next_target_node = node_map[next_target_id]
                 process_node(next_target_node)
-
-            # Create the action group name
-            action_group_name = "_".join(action_names)
-            if action_group_name in action_group_name_counter:
-                action_group_name_counter[action_group_name] += 1
-                action_group_name = f"{action_group_name}_{action_group_name_counter[action_group_name]}"
-            else:
-                action_group_name_counter[action_group_name] = 1
-
-            # Add the action group to the dialogue
-            action_group = {
-                'type': 'ActionGroup',
-                'name': action_group_name,
-                'actions': actions
-            }
-            dialogue['responses'].append(action_group)
 
     return dialogues
 

@@ -1,79 +1,45 @@
 triggers
     
-    Intent ask_weather 
-        "Tell me the weather please",  
-        "I want to tell me the weather"
+    Intent greet 
+        "hey",  
+        "hello",  
+        "hi",  
+        "hello there",  
+        "good morning",  
+        "goodevening",  
+        "moin",  
+        "hey there",  
+        "let's go",  
+        "hey dude",  
+        "goodmorning",  
+        "good evening",  
+        "good afternoon"
     end
     
-    Intent ask_weather2 
-        "Tell me the weather" PE:DATE['tomorrow', 'today'] "for" PE:GPE['Thessaloniki', 'Athens'],  
-        "Tell me the weather please for" PE:DATE['tomorrow', 'today'],  
-        "I want to tell me the weather for" PE:GPE['Thessaloniki', 'Athens']
+    Intent bot_challenge 
+        "are you a bot?",  
+        "are you a human?",  
+        "am i talking to a bot?",  
+        "am i talking to a human?"
     end
     
-    Event test
-        "/test"
-    end
     
 end
 
-
-eservices
-    EServiceHTTP weather_svc
-        verb: GET
-        host: 'r4a.issel.ee.auth.gr'
-        port: 8080
-        path: '/weather'
-    end
-end
-
-entities
-    Entity Doctor
-        "cardiologist", 
-        "dentist", 
-        "doc"
-    end
-end
-
-gslots
-    slotA: int = 10
-    slotB: str = "asdas"
-    slotC: str = ""
-end   
 
 dialogues
-    Dialogue ask_weather_dialogue
-        on: ask_weather
+    Dialogue greet_dialogue
+        on: greet
         responses:
-          Form form1
-              city_slot: str = HRI('For which city ', [PE:GPE]) 
-              time_slot: str = HRI('For when? ', [TE:Doctor]) 
-              answer: str = weather_svc(query=[city=[form1.city_slot[city]], time=form1.time_slot, user=USER:NAME], header=[city=form1.city_slot[city], time=form1.time_slot],)[weather.forecast]
-          end,
-          ActionGroup answer_back_test_test_test_city_slot_slotA
-              Speak('the weather is ' form1.answer)
-              FireEvent('/test', a: 1, b: '2')
-              FireEvent('/test', /llalll)
-              FireEvent('/test', ['a', 1, 'b','2'])
-              SetFSlot(city_slot, Thessaloniki)
-              SetGSlot(slotA, 10)
+          ActionGroup greet_back
+              Speak('Hello there!!!! ')
           end
     end
-    Dialogue ask_weather2_dialogue
-        on: ask_weather2
+    Dialogue bot_challenge_dialogue
+        on: bot_challenge
         responses:
-          Form form1
-              city_slot: str = HRI('For which city ', [PE:GPE]) 
-              time_slot: str = HRI('For when? ', [TE:Doctor]) 
-              answer: str = weather_svc(query=[city=[form1.city_slot[city]], time=form1.time_slot, user=USER:NAME], header=[city=form1.city_slot[city], time=form1.time_slot],)[weather.forecast]
-          end,
-          ActionGroup answer_back_test_test_test_city_slot_slotA_2
-              Speak('the weather is ' form1.answer)
-              FireEvent('/test', a: 1, b: '2')
-              FireEvent('/test', /llalll)
-              FireEvent('/test', ['a', 1, 'b','2'])
-              SetFSlot(city_slot, Thessaloniki)
-              SetGSlot(slotA, 10)
+          ActionGroup respond_iambot
+              Speak('I am a bot, powered by dFlow and ' Rasa.)
           end
     end
 end
