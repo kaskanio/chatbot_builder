@@ -1,8 +1,8 @@
 {
-  "services": [],
-  "events": [],
-  "entities": [],
-  "synonyms": [],
-  "globalSlots": [],
-  "formSlots": []
+    "services": [],
+    "events": [],
+    "entities": [],
+    "synonyms": [],
+    "globalSlots": [],
+    "formSlots": []
 }
