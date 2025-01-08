@@ -16,8 +16,8 @@
   },
   "contextMenuClick": {},
   "scrollSettings": {
-    "scrollLimit": "Infinity",
-    "viewPortWidth": 1609.59375,
+    "scrollLimit": "Diagram",
+    "viewPortWidth": 1624.28125,
     "viewPortHeight": 1200,
     "currentZoom": 1,
     "horizontalOffset": 0,
@@ -28,13 +28,23 @@
       "top": 0,
       "bottom": 0
     },
-    "canAutoScroll": false
+    "canAutoScroll": false,
+    "maxZoom": 30,
+    "minZoom": 0.2
   },
   "enableRtl": false,
   "locale": "en-US",
   "enablePersistence": false,
   "rulerSettings": {
-    "showRulers": false
+    "showRulers": false,
+    "horizontalRuler": {
+      "orientation": "Horizontal",
+      "arrangeTick": null
+    },
+    "verticalRuler": {
+      "orientation": "Vertical",
+      "arrangeTick": null
+    }
   },
   "backgroundColor": "transparent",
   "constraints": 500,
@@ -101,16 +111,1724 @@
   "mode": "SVG",
   "layers": [
     {
+      "objects": [
+        "intentNode_1734357824698",
+        "intentNode_1734357861138",
+        "intentNode_1734357892812",
+        "intentNode_1734357918231",
+        "speakNode_1734358057516",
+        "speakNode_1734358857025",
+        "eventNode_1734360361089",
+        "formNode_1734361953364",
+        "speakNode_1734362649933",
+        "eventNode_1734362935582",
+        "Link1msTLQ",
+        "Link1eNcIG",
+        "Link1oTbiJ",
+        "Link1fpxHB",
+        "Link1tRPbf"
+      ],
       "id": "default_layer",
       "visible": true,
       "lock": false,
-      "objects": [],
       "zIndex": 0,
-      "objectZIndex": -1
+      "objectZIndex": 62
     }
   ],
-  "nodes": [],
-  "connectors": [],
+  "nodes": [
+    {
+      "shape": {
+        "type": "HTML",
+        "content": "\n      <div id=\"intentNode_1734357824698\" style=\"padding: 10px; border: 2px solid #ff5733; border-radius: 10px; background-color: #fff3e6;\">\n        <h3 style=\"text-align: center; color: #ff5733; font-size: 24px; font-weight: font-size: 18px; bold;;\">find_doctor</h3>\n        <div style=\"margin-top: 10px;\">\n          \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           I want to call <strong>PE:Person</strong> test\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           I want to call <strong>PE:Person</strong> test\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           I want to call <strong>TE:Doctor</strong> test test\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           I want to call <strong>TE:Doctor</strong>\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           <strong>TE:Doctor</strong> please!\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           I want <strong>TE:Doctor</strong> please\n          </div>\n        \n        </div>\n      </div>\n    "
+      },
+      "ports": [],
+      "id": "intentNode_1734357824698",
+      "offsetX": 486.09375,
+      "offsetY": 307,
+      "width": 302.3125,
+      "height": 340,
+      "annotations": [],
+      "addInfo": {
+        "intentName": "find_doctor",
+        "intentStrings": [
+          {
+            "string": "I want to call PE:Person test"
+          },
+          {
+            "string": "I want to call PE:Person test"
+          },
+          {
+            "string": "I want to call TE:Doctor test test"
+          },
+          {
+            "string": "I want to call TE:Doctor"
+          },
+          {
+            "string": "TE:Doctor please!"
+          },
+          {
+            "string": "I want TE:Doctor please"
+          }
+        ],
+        "pretrainedEntitiesData": [
+          {
+            "entity": "PERSON",
+            "values": "test"
+          },
+          {
+            "entity": "NORP",
+            "values": ""
+          },
+          {
+            "entity": "FAC",
+            "values": ""
+          },
+          {
+            "entity": "ORG",
+            "values": ""
+          },
+          {
+            "entity": "GPE",
+            "values": ""
+          },
+          {
+            "entity": "LOC",
+            "values": ""
+          },
+          {
+            "entity": "PRODUCT",
+            "values": ""
+          },
+          {
+            "entity": "EVENT",
+            "values": ""
+          },
+          {
+            "entity": "WORK_OF_ART",
+            "values": ""
+          },
+          {
+            "entity": "LAW",
+            "values": ""
+          },
+          {
+            "entity": "LANGUAGE",
+            "values": ""
+          },
+          {
+            "entity": "DATE",
+            "values": ""
+          },
+          {
+            "entity": "TIME",
+            "values": ""
+          },
+          {
+            "entity": "PERCENT",
+            "values": ""
+          },
+          {
+            "entity": "MONEY",
+            "values": ""
+          },
+          {
+            "entity": "QUANTITY",
+            "values": ""
+          },
+          {
+            "entity": "ORDINAL",
+            "values": ""
+          },
+          {
+            "entity": "CARDINAL",
+            "values": ""
+          }
+        ]
+      },
+      "zIndex": 1,
+      "container": null,
+      "visible": true,
+      "horizontalAlignment": "Left",
+      "verticalAlignment": "Top",
+      "backgroundColor": "transparent",
+      "borderColor": "none",
+      "borderWidth": 0,
+      "rotateAngle": 0,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "margin": {},
+      "flip": "None",
+      "flipMode": "All",
+      "wrapper": {
+        "actualSize": {
+          "width": 302.3125,
+          "height": 340
+        },
+        "offsetX": 486.09375,
+        "offsetY": 307
+      },
+      "constraints": 5240814,
+      "style": {
+        "fill": "white",
+        "gradient": {
+          "type": "None"
+        },
+        "strokeColor": "black",
+        "strokeWidth": 1,
+        "strokeDashArray": "",
+        "opacity": 1,
+        "textOverflow": "Wrap"
+      },
+      "isExpanded": true,
+      "expandIcon": {
+        "shape": "None"
+      },
+      "fixedUserHandles": [],
+      "tooltip": {
+        "openOn": "Auto",
+        "content": "",
+        "isSticky": false
+      },
+      "inEdges": [],
+      "outEdges": [
+        "Link1oTbiJ"
+      ],
+      "parentId": "",
+      "processId": "",
+      "umlIndex": -1,
+      "isPhase": false,
+      "isLane": false
+    },
+    {
+      "shape": {
+        "type": "HTML",
+        "content": "\n      <div id=\"intentNode_1734357861138\" style=\"padding: 10px; border: 2px solid #ff5733; border-radius: 10px; background-color: #fff3e6;\">\n        <h3 style=\"text-align: center; color: #ff5733; font-size: 24px; font-weight: font-size: 18px; bold;;\">time</h3>\n        <div style=\"margin-top: 10px;\">\n          \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           is it late already\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           tell me the time\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           what's the time\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           what time is it\n          </div>\n        \n        </div>\n      </div>\n    "
+      },
+      "ports": [],
+      "id": "intentNode_1734357861138",
+      "offsetX": 867.09375,
+      "offsetY": 298,
+      "width": 174.828125,
+      "height": 250,
+      "annotations": [],
+      "addInfo": {
+        "intentName": "time",
+        "intentStrings": [
+          {
+            "string": "is it late already"
+          },
+          {
+            "string": "tell me the time"
+          },
+          {
+            "string": "what's the time"
+          },
+          {
+            "string": "what time is it"
+          }
+        ],
+        "pretrainedEntitiesData": [
+          {
+            "entity": "PERSON",
+            "values": "test"
+          },
+          {
+            "entity": "NORP",
+            "values": ""
+          },
+          {
+            "entity": "FAC",
+            "values": ""
+          },
+          {
+            "entity": "ORG",
+            "values": ""
+          },
+          {
+            "entity": "GPE",
+            "values": ""
+          },
+          {
+            "entity": "LOC",
+            "values": ""
+          },
+          {
+            "entity": "PRODUCT",
+            "values": ""
+          },
+          {
+            "entity": "EVENT",
+            "values": ""
+          },
+          {
+            "entity": "WORK_OF_ART",
+            "values": ""
+          },
+          {
+            "entity": "LAW",
+            "values": ""
+          },
+          {
+            "entity": "LANGUAGE",
+            "values": ""
+          },
+          {
+            "entity": "DATE",
+            "values": ""
+          },
+          {
+            "entity": "TIME",
+            "values": ""
+          },
+          {
+            "entity": "PERCENT",
+            "values": ""
+          },
+          {
+            "entity": "MONEY",
+            "values": ""
+          },
+          {
+            "entity": "QUANTITY",
+            "values": ""
+          },
+          {
+            "entity": "ORDINAL",
+            "values": ""
+          },
+          {
+            "entity": "CARDINAL",
+            "values": ""
+          }
+        ]
+      },
+      "zIndex": 3,
+      "container": null,
+      "visible": true,
+      "horizontalAlignment": "Left",
+      "verticalAlignment": "Top",
+      "backgroundColor": "transparent",
+      "borderColor": "none",
+      "borderWidth": 0,
+      "rotateAngle": 0,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "margin": {},
+      "flip": "None",
+      "flipMode": "All",
+      "wrapper": {
+        "actualSize": {
+          "width": 174.828125,
+          "height": 250
+        },
+        "offsetX": 867.09375,
+        "offsetY": 298
+      },
+      "constraints": 5240814,
+      "style": {
+        "fill": "white",
+        "gradient": {
+          "type": "None"
+        },
+        "strokeColor": "black",
+        "strokeWidth": 1,
+        "strokeDashArray": "",
+        "opacity": 1,
+        "textOverflow": "Wrap"
+      },
+      "isExpanded": true,
+      "expandIcon": {
+        "shape": "None"
+      },
+      "fixedUserHandles": [],
+      "tooltip": {
+        "openOn": "Auto",
+        "content": "",
+        "isSticky": false
+      },
+      "inEdges": [],
+      "outEdges": [
+        "Link1msTLQ"
+      ],
+      "parentId": "",
+      "processId": "",
+      "umlIndex": -1,
+      "isPhase": false,
+      "isLane": false
+    },
+    {
+      "shape": {
+        "type": "HTML",
+        "content": "\n      <div id=\"intentNode_1734357892812\" style=\"padding: 10px; border: 2px solid #ff5733; border-radius: 10px; background-color: #fff3e6;\">\n        <h3 style=\"text-align: center; color: #ff5733; font-size: 24px; font-weight: font-size: 18px; bold;;\">affirm</h3>\n        <div style=\"margin-top: 10px;\">\n          \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           y\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           yeap\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           absolutely\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           yeahh\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           yes\n          </div>\n        \n        </div>\n      </div>\n    "
+      },
+      "ports": [],
+      "id": "intentNode_1734357892812",
+      "offsetX": 1241.09375,
+      "offsetY": 213,
+      "width": 133.71875,
+      "height": 295,
+      "annotations": [],
+      "addInfo": {
+        "intentName": "affirm",
+        "intentStrings": [
+          {
+            "string": "y"
+          },
+          {
+            "string": "yeap"
+          },
+          {
+            "string": "absolutely"
+          },
+          {
+            "string": "yeahh"
+          },
+          {
+            "string": "yes"
+          }
+        ],
+        "pretrainedEntitiesData": [
+          {
+            "entity": "PERSON",
+            "values": "test"
+          },
+          {
+            "entity": "NORP",
+            "values": ""
+          },
+          {
+            "entity": "FAC",
+            "values": ""
+          },
+          {
+            "entity": "ORG",
+            "values": ""
+          },
+          {
+            "entity": "GPE",
+            "values": ""
+          },
+          {
+            "entity": "LOC",
+            "values": ""
+          },
+          {
+            "entity": "PRODUCT",
+            "values": ""
+          },
+          {
+            "entity": "EVENT",
+            "values": ""
+          },
+          {
+            "entity": "WORK_OF_ART",
+            "values": ""
+          },
+          {
+            "entity": "LAW",
+            "values": ""
+          },
+          {
+            "entity": "LANGUAGE",
+            "values": ""
+          },
+          {
+            "entity": "DATE",
+            "values": ""
+          },
+          {
+            "entity": "TIME",
+            "values": ""
+          },
+          {
+            "entity": "PERCENT",
+            "values": ""
+          },
+          {
+            "entity": "MONEY",
+            "values": ""
+          },
+          {
+            "entity": "QUANTITY",
+            "values": ""
+          },
+          {
+            "entity": "ORDINAL",
+            "values": ""
+          },
+          {
+            "entity": "CARDINAL",
+            "values": ""
+          }
+        ]
+      },
+      "zIndex": 5,
+      "container": null,
+      "visible": true,
+      "horizontalAlignment": "Left",
+      "verticalAlignment": "Top",
+      "backgroundColor": "transparent",
+      "borderColor": "none",
+      "borderWidth": 0,
+      "rotateAngle": 0,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "margin": {},
+      "flip": "None",
+      "flipMode": "All",
+      "wrapper": {
+        "actualSize": {
+          "width": 133.71875,
+          "height": 295
+        },
+        "offsetX": 1241.09375,
+        "offsetY": 213
+      },
+      "constraints": 5240814,
+      "style": {
+        "fill": "white",
+        "gradient": {
+          "type": "None"
+        },
+        "strokeColor": "black",
+        "strokeWidth": 1,
+        "strokeDashArray": "",
+        "opacity": 1,
+        "textOverflow": "Wrap"
+      },
+      "isExpanded": true,
+      "expandIcon": {
+        "shape": "None"
+      },
+      "fixedUserHandles": [],
+      "tooltip": {
+        "openOn": "Auto",
+        "content": "",
+        "isSticky": false
+      },
+      "inEdges": [],
+      "outEdges": [],
+      "parentId": "",
+      "processId": "",
+      "umlIndex": -1,
+      "isPhase": false,
+      "isLane": false
+    },
+    {
+      "shape": {
+        "type": "HTML",
+        "content": "\n      <div id=\"intentNode_1734357918231\" style=\"padding: 10px; border: 2px solid #ff5733; border-radius: 10px; background-color: #fff3e6;\">\n        <h3 style=\"text-align: center; color: #ff5733; font-size: 24px; font-weight: font-size: 18px; bold;;\">deny</h3>\n        <div style=\"margin-top: 10px;\">\n          \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           n\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           nope\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           no way\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           nohh\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           no\n          </div>\n        \n        </div>\n      </div>\n    "
+      },
+      "ports": [],
+      "id": "intentNode_1734357918231",
+      "offsetX": 1484.09375,
+      "offsetY": 211,
+      "width": 110.03125,
+      "height": 295,
+      "annotations": [],
+      "addInfo": {
+        "intentName": "deny",
+        "intentStrings": [
+          {
+            "string": "n"
+          },
+          {
+            "string": "nope"
+          },
+          {
+            "string": "no way"
+          },
+          {
+            "string": "nohh"
+          },
+          {
+            "string": "no"
+          }
+        ],
+        "pretrainedEntitiesData": [
+          {
+            "entity": "PERSON",
+            "values": "test"
+          },
+          {
+            "entity": "NORP",
+            "values": ""
+          },
+          {
+            "entity": "FAC",
+            "values": ""
+          },
+          {
+            "entity": "ORG",
+            "values": ""
+          },
+          {
+            "entity": "GPE",
+            "values": ""
+          },
+          {
+            "entity": "LOC",
+            "values": ""
+          },
+          {
+            "entity": "PRODUCT",
+            "values": ""
+          },
+          {
+            "entity": "EVENT",
+            "values": ""
+          },
+          {
+            "entity": "WORK_OF_ART",
+            "values": ""
+          },
+          {
+            "entity": "LAW",
+            "values": ""
+          },
+          {
+            "entity": "LANGUAGE",
+            "values": ""
+          },
+          {
+            "entity": "DATE",
+            "values": ""
+          },
+          {
+            "entity": "TIME",
+            "values": ""
+          },
+          {
+            "entity": "PERCENT",
+            "values": ""
+          },
+          {
+            "entity": "MONEY",
+            "values": ""
+          },
+          {
+            "entity": "QUANTITY",
+            "values": ""
+          },
+          {
+            "entity": "ORDINAL",
+            "values": ""
+          },
+          {
+            "entity": "CARDINAL",
+            "values": ""
+          }
+        ]
+      },
+      "zIndex": 7,
+      "container": null,
+      "visible": true,
+      "horizontalAlignment": "Left",
+      "verticalAlignment": "Top",
+      "backgroundColor": "transparent",
+      "borderColor": "none",
+      "borderWidth": 0,
+      "rotateAngle": 0,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "margin": {},
+      "flip": "None",
+      "flipMode": "All",
+      "wrapper": {
+        "actualSize": {
+          "width": 110.03125,
+          "height": 295
+        },
+        "offsetX": 1484.09375,
+        "offsetY": 211
+      },
+      "constraints": 5240814,
+      "style": {
+        "fill": "white",
+        "gradient": {
+          "type": "None"
+        },
+        "strokeColor": "black",
+        "strokeWidth": 1,
+        "strokeDashArray": "",
+        "opacity": 1,
+        "textOverflow": "Wrap"
+      },
+      "isExpanded": true,
+      "expandIcon": {
+        "shape": "None"
+      },
+      "fixedUserHandles": [],
+      "tooltip": {
+        "openOn": "Auto",
+        "content": "",
+        "isSticky": false
+      },
+      "inEdges": [],
+      "outEdges": [],
+      "parentId": "",
+      "processId": "",
+      "umlIndex": -1,
+      "isPhase": false,
+      "isLane": false
+    },
+    {
+      "shape": {
+        "type": "HTML",
+        "content": "\n      <div style=\"padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9; height:100%;\">\n        <h3 style=\"text-align: center; color: #0056b3; font-size: 24px; font-weight: bold;\">\n          Speak Action: answer_2\n        </h3>\n        <div style=\"margin-top: 10px;\">\n          perfect thanks!\n        </div>\n      </div>\n    "
+      },
+      "ports": [],
+      "id": "speakNode_1734358057516",
+      "offsetX": 1356.09375,
+      "offsetY": 768,
+      "width": 305.46875,
+      "height": 94,
+      "addInfo": {
+        "actionType": "SpeakAction",
+        "actionString": "perfect thanks!",
+        "speakActionName": "answer_2"
+      },
+      "annotations": [],
+      "zIndex": 11,
+      "container": null,
+      "visible": true,
+      "horizontalAlignment": "Left",
+      "verticalAlignment": "Top",
+      "backgroundColor": "transparent",
+      "borderColor": "none",
+      "borderWidth": 0,
+      "rotateAngle": 0,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "margin": {},
+      "flip": "None",
+      "flipMode": "All",
+      "wrapper": {
+        "actualSize": {
+          "width": 305.46875,
+          "height": 94
+        },
+        "offsetX": 1356.09375,
+        "offsetY": 768
+      },
+      "constraints": 5240814,
+      "style": {
+        "fill": "white",
+        "gradient": {
+          "type": "None"
+        },
+        "strokeColor": "black",
+        "strokeWidth": 1,
+        "strokeDashArray": "",
+        "opacity": 1,
+        "textOverflow": "Wrap"
+      },
+      "isExpanded": true,
+      "expandIcon": {
+        "shape": "None"
+      },
+      "fixedUserHandles": [],
+      "tooltip": {
+        "openOn": "Auto",
+        "content": "",
+        "isSticky": false
+      },
+      "inEdges": [
+        "Link1fpxHB"
+      ],
+      "outEdges": [
+        "Link1eNcIG"
+      ],
+      "parentId": "",
+      "processId": "",
+      "umlIndex": -1,
+      "isPhase": false,
+      "isLane": false
+    },
+    {
+      "shape": {
+        "type": "HTML",
+        "content": "\n      <div style=\"padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9; height:100%;\">\n        <h3 style=\"text-align: center; color: #0056b3; font-size: 24px; font-weight: bold;\">\n          Speak Action: say_time\n        </h3>\n        <div style=\"margin-top: 10px;\">\n          The time is SYSTEM: time\n        </div>\n      </div>\n    "
+      },
+      "ports": [],
+      "id": "speakNode_1734358857025",
+      "offsetX": 1662.09375,
+      "offsetY": 614,
+      "width": 294.9375,
+      "height": 94,
+      "addInfo": {
+        "actionType": "SpeakAction",
+        "actionString": "The time is SYSTEM: time",
+        "speakActionName": "say_time"
+      },
+      "annotations": [],
+      "zIndex": 22,
+      "container": null,
+      "visible": true,
+      "horizontalAlignment": "Left",
+      "verticalAlignment": "Top",
+      "backgroundColor": "transparent",
+      "borderColor": "none",
+      "borderWidth": 0,
+      "rotateAngle": 0,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "margin": {},
+      "flip": "None",
+      "flipMode": "All",
+      "wrapper": {
+        "actualSize": {
+          "width": 294.9375,
+          "height": 94
+        },
+        "offsetX": 1662.09375,
+        "offsetY": 614
+      },
+      "constraints": 5240814,
+      "style": {
+        "fill": "white",
+        "gradient": {
+          "type": "None"
+        },
+        "strokeColor": "black",
+        "strokeWidth": 1,
+        "strokeDashArray": "",
+        "opacity": 1,
+        "textOverflow": "Wrap"
+      },
+      "isExpanded": true,
+      "expandIcon": {
+        "shape": "None"
+      },
+      "fixedUserHandles": [],
+      "tooltip": {
+        "openOn": "Auto",
+        "content": "",
+        "isSticky": false
+      },
+      "inEdges": [
+        "Link1msTLQ"
+      ],
+      "outEdges": [],
+      "parentId": "",
+      "processId": "",
+      "umlIndex": -1,
+      "isPhase": false,
+      "isLane": false
+    },
+    {
+      "shape": {
+        "type": "HTML",
+        "content": "\n      <div style=\"padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9; height:100%;\">\n        <h3 style=\"text-align: center; color: #0056b3; font-size: 18px; font-weight: bold;\">Fire Event</h3>\n        <div style=\"margin-top: 10px;\">\n          <strong>Name:</strong> extrenal_1<br>\n          <strong>URI:</strong> <i>external/complete</i>\n          <br><strong>Message:</strong> AF1.Param2, ['bye bye', AF1.Param1]\n        </div>\n      </div>\n    "
+      },
+      "ports": [],
+      "id": "eventNode_1734360361089",
+      "offsetX": 1255.09375,
+      "offsetY": 1024,
+      "width": 374.640625,
+      "height": 133,
+      "addInfo": {
+        "actionType": "Fire Event",
+        "eventName": "extrenal_1",
+        "eventUri": "external/complete",
+        "message": "AF1.Param2, ['bye bye', AF1.Param1]"
+      },
+      "annotations": [],
+      "zIndex": 43,
+      "container": null,
+      "visible": true,
+      "horizontalAlignment": "Left",
+      "verticalAlignment": "Top",
+      "backgroundColor": "transparent",
+      "borderColor": "none",
+      "borderWidth": 0,
+      "rotateAngle": 0,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "margin": {},
+      "flip": "None",
+      "flipMode": "All",
+      "wrapper": {
+        "actualSize": {
+          "width": 374.640625,
+          "height": 133
+        },
+        "offsetX": 1255.09375,
+        "offsetY": 1024
+      },
+      "constraints": 5240814,
+      "style": {
+        "fill": "white",
+        "gradient": {
+          "type": "None"
+        },
+        "strokeColor": "black",
+        "strokeWidth": 1,
+        "strokeDashArray": "",
+        "opacity": 1,
+        "textOverflow": "Wrap"
+      },
+      "isExpanded": true,
+      "expandIcon": {
+        "shape": "None"
+      },
+      "fixedUserHandles": [],
+      "tooltip": {
+        "openOn": "Auto",
+        "content": "",
+        "isSticky": false
+      },
+      "inEdges": [
+        "Link1eNcIG"
+      ],
+      "outEdges": [],
+      "parentId": "",
+      "processId": "",
+      "umlIndex": -1,
+      "isPhase": false,
+      "isLane": false
+    },
+    {
+      "shape": {
+        "type": "HTML",
+        "content": "\n      <div style=\"padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9;\">\n        <h3 style=\"text-align: center; font-size: 18px; bold; color: #0056b3;\">AF1</h3>\n        \n            <div style=\"margin-top: 10px;\">\n              <h4 style=\"color: #0056b3;\">Param1</h4>\n            </div>\n            <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n              <strong>Type:</strong> int<br>\n              <strong>HRI String:</strong> Give me a number<br>\n              <strong>Value:</strong> undefined<br>\n              <strong>Entity:</strong> null\n            </div>\n          \n            <div style=\"margin-top: 10px;\">\n              <h4 style=\"color: #0056b3;\">Param2</h4>\n            </div>\n            <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n              <strong>Type:</strong> bool<br>\n              <strong>HRI String:</strong> yes/no<br>\n              <strong>Value:</strong> affirm:True, deny:False<br>\n              <strong>Entity:</strong> null\n            </div>\n          \n            <div style=\"margin-top: 10px;\">\n              <h4 style=\"color: #0056b3;\">Param3</h4>\n            </div>\n            <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n              <strong>Type:</strong> str<br>\n              <strong>HRI String:</strong> Give me a name<br>\n              <strong>Value:</strong> undefined<br>\n              <strong>Entity:</strong> null\n            </div>\n          \n      </div>\n    "
+      },
+      "ports": [],
+      "id": "formNode_1734361953364",
+      "offsetX": 604.09375,
+      "offsetY": 785,
+      "width": 600,
+      "height": 437,
+      "annotations": [
+        {
+          "id": "TEZuC",
+          "content": "",
+          "annotationType": "String",
+          "style": {
+            "strokeWidth": 0,
+            "strokeColor": "transparent",
+            "fill": "transparent",
+            "bold": false,
+            "textWrapping": "WrapWithOverflow",
+            "color": "black",
+            "whiteSpace": "CollapseSpace",
+            "fontFamily": "Arial",
+            "fontSize": 12,
+            "italic": false,
+            "opacity": 1,
+            "strokeDashArray": "",
+            "textAlign": "Center",
+            "textOverflow": "Wrap",
+            "textDecoration": "None"
+          },
+          "hyperlink": {
+            "link": "",
+            "hyperlinkOpenState": "NewTab",
+            "content": "",
+            "textDecoration": "None"
+          },
+          "constraints": 4,
+          "visibility": true,
+          "rotateAngle": 0,
+          "rotationReference": "Parent",
+          "margin": {
+            "right": 0,
+            "bottom": 0,
+            "left": 0,
+            "top": 0
+          },
+          "horizontalAlignment": "Center",
+          "verticalAlignment": "Center",
+          "offset": {
+            "x": 0.5,
+            "y": 0.5
+          }
+        }
+      ],
+      "addInfo": {
+        "formName": "AF1",
+        "gridDataHRI": [
+          {
+            "order": 3,
+            "name": "Param3",
+            "type": "str",
+            "hriString": "Give me a name",
+            "entity": null
+          },
+          {
+            "order": 2,
+            "name": "Param2",
+            "type": "bool",
+            "hriString": "yes/no",
+            "value": "affirm:True, deny:False",
+            "entity": null
+          },
+          {
+            "order": 1,
+            "name": "Param1",
+            "type": "int",
+            "hriString": "Give me a number",
+            "entity": null
+          }
+        ],
+        "gridDataService": []
+      },
+      "zIndex": 48,
+      "container": null,
+      "visible": true,
+      "horizontalAlignment": "Left",
+      "verticalAlignment": "Top",
+      "backgroundColor": "transparent",
+      "borderColor": "none",
+      "borderWidth": 0,
+      "rotateAngle": 0,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "margin": {},
+      "flip": "None",
+      "flipMode": "All",
+      "wrapper": {
+        "actualSize": {
+          "width": 600,
+          "height": 437
+        },
+        "offsetX": 604.09375,
+        "offsetY": 785
+      },
+      "constraints": 5240814,
+      "style": {
+        "fill": "white",
+        "gradient": {
+          "type": "None"
+        },
+        "strokeColor": "black",
+        "strokeWidth": 1,
+        "strokeDashArray": "",
+        "opacity": 1,
+        "textOverflow": "Wrap"
+      },
+      "isExpanded": true,
+      "expandIcon": {
+        "shape": "None"
+      },
+      "fixedUserHandles": [],
+      "tooltip": {
+        "openOn": "Auto",
+        "content": "",
+        "isSticky": false
+      },
+      "inEdges": [
+        "Link1oTbiJ"
+      ],
+      "outEdges": [
+        "Link1fpxHB"
+      ],
+      "parentId": "",
+      "processId": "",
+      "umlIndex": -1,
+      "isPhase": false,
+      "isLane": false
+    },
+    {
+      "shape": {
+        "type": "HTML",
+        "content": "\n      <div style=\"padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9; height:100%;\">\n        <h3 style=\"text-align: center; color: #0056b3; font-size: 24px; font-weight: bold;\">\n          Speak Action: answers\n        </h3>\n        <div style=\"margin-top: 10px;\">\n          Hello\n        </div>\n      </div>\n    "
+      },
+      "ports": [],
+      "id": "speakNode_1734362649933",
+      "offsetX": 151.09375,
+      "offsetY": 664,
+      "width": 292.390625,
+      "height": 94,
+      "addInfo": {
+        "actionType": "SpeakAction",
+        "actionString": "Hello",
+        "speakActionName": "answers"
+      },
+      "annotations": [],
+      "zIndex": 58,
+      "container": null,
+      "visible": true,
+      "horizontalAlignment": "Left",
+      "verticalAlignment": "Top",
+      "backgroundColor": "transparent",
+      "borderColor": "none",
+      "borderWidth": 0,
+      "rotateAngle": 0,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "margin": {},
+      "flip": "None",
+      "flipMode": "All",
+      "wrapper": {
+        "actualSize": {
+          "width": 292.390625,
+          "height": 94
+        },
+        "offsetX": 151.09375,
+        "offsetY": 664
+      },
+      "constraints": 5240814,
+      "style": {
+        "fill": "white",
+        "gradient": {
+          "type": "None"
+        },
+        "strokeColor": "black",
+        "strokeWidth": 1,
+        "strokeDashArray": "",
+        "opacity": 1,
+        "textOverflow": "Wrap"
+      },
+      "isExpanded": true,
+      "expandIcon": {
+        "shape": "None"
+      },
+      "fixedUserHandles": [],
+      "tooltip": {
+        "openOn": "Auto",
+        "content": "",
+        "isSticky": false
+      },
+      "inEdges": [
+        "Link1tRPbf"
+      ],
+      "outEdges": [],
+      "parentId": "",
+      "processId": "",
+      "umlIndex": -1,
+      "isPhase": false,
+      "isLane": false
+    },
+    {
+      "shape": {
+        "type": "HTML",
+        "content": "\n      <div style=\"padding: 10px; border: 2px solid #ff5733; border-radius: 10px; background-color: #fff3e6; height:100%;\">\n        <h3 style=\"text-align: center; color: #ff5733; font-size: 18px; font-weight: bold;\">Event Trigger</h3>\n        <div style=\"margin-top: 10px;\">\n          <strong>Name:</strong> external_1<br>\n          <strong>URI:</strong> <i>bot/event/external_1</i>\n          \n        </div>\n      </div>\n    "
+      },
+      "ports": [],
+      "id": "eventNode_1734362935582",
+      "offsetX": 164.09375,
+      "offsetY": 320,
+      "width": 213.15625,
+      "height": 109,
+      "addInfo": {
+        "actionType": "Event Trigger",
+        "eventName": "external_1",
+        "eventUri": "bot/event/external_1"
+      },
+      "annotations": [],
+      "zIndex": 61,
+      "container": null,
+      "visible": true,
+      "horizontalAlignment": "Left",
+      "verticalAlignment": "Top",
+      "backgroundColor": "transparent",
+      "borderColor": "none",
+      "borderWidth": 0,
+      "rotateAngle": 0,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "margin": {},
+      "flip": "None",
+      "flipMode": "All",
+      "wrapper": {
+        "actualSize": {
+          "width": 213.15625,
+          "height": 109
+        },
+        "offsetX": 164.09375,
+        "offsetY": 320
+      },
+      "constraints": 5240814,
+      "style": {
+        "fill": "white",
+        "gradient": {
+          "type": "None"
+        },
+        "strokeColor": "black",
+        "strokeWidth": 1,
+        "strokeDashArray": "",
+        "opacity": 1,
+        "textOverflow": "Wrap"
+      },
+      "isExpanded": true,
+      "expandIcon": {
+        "shape": "None"
+      },
+      "fixedUserHandles": [],
+      "tooltip": {
+        "openOn": "Auto",
+        "content": "",
+        "isSticky": false
+      },
+      "inEdges": [],
+      "outEdges": [
+        "Link1tRPbf"
+      ],
+      "parentId": "",
+      "processId": "",
+      "umlIndex": -1,
+      "isPhase": false,
+      "isLane": false
+    }
+  ],
+  "connectors": [
+    {
+      "shape": {
+        "type": "None"
+      },
+      "id": "Link1msTLQ",
+      "type": "Orthogonal",
+      "sourcePoint": {
+        "x": 867.09,
+        "y": 423
+      },
+      "targetPoint": {
+        "x": 1662.09,
+        "y": 567
+      },
+      "targetDecorator": {
+        "shape": "Arrow",
+        "width": 10,
+        "height": 10,
+        "pivot": {
+          "x": 0,
+          "y": 0.5
+        },
+        "style": {
+          "fill": "black",
+          "strokeColor": "black",
+          "strokeWidth": 1,
+          "strokeDashArray": "",
+          "opacity": 1,
+          "gradient": {
+            "type": "None"
+          }
+        }
+      },
+      "sourcePortID": "",
+      "targetPortID": "",
+      "sourceID": "intentNode_1734357861138",
+      "targetID": "speakNode_1734358857025",
+      "flip": "None",
+      "connectorSpacing": 13,
+      "segments": [
+        {
+          "type": "Orthogonal",
+          "length": null,
+          "direction": null
+        }
+      ],
+      "sourceDecorator": {
+        "shape": "None",
+        "width": 10,
+        "height": 10,
+        "pivot": {
+          "x": 0,
+          "y": 0.5
+        },
+        "style": {
+          "fill": "black",
+          "strokeColor": "black",
+          "strokeWidth": 1,
+          "strokeDashArray": "",
+          "opacity": 1,
+          "gradient": {
+            "type": "None"
+          }
+        }
+      },
+      "cornerRadius": 0,
+      "wrapper": {
+        "actualSize": {
+          "width": 794.9999999999999,
+          "height": 144
+        },
+        "offsetX": 1264.59,
+        "offsetY": 495
+      },
+      "style": {
+        "strokeWidth": 1,
+        "strokeColor": "black",
+        "fill": "transparent",
+        "strokeDashArray": "",
+        "opacity": 1,
+        "gradient": {
+          "type": "None"
+        }
+      },
+      "annotations": [],
+      "fixedUserHandles": [],
+      "ports": [],
+      "tooltip": {
+        "content": "Link1",
+        "showTipPointer": true,
+        "width": "auto",
+        "height": "auto",
+        "isSticky": false,
+        "relativeMode": "Object",
+        "openOn": "Auto"
+      },
+      "constraints": 2043454,
+      "previewSize": {},
+      "zIndex": 23,
+      "visible": true,
+      "connectionPadding": 0,
+      "flipMode": "All",
+      "hitPadding": 10,
+      "sourcePadding": 0,
+      "targetPadding": 0,
+      "parentId": ""
+    },
+    {
+      "shape": {
+        "type": "None"
+      },
+      "id": "Link1eNcIG",
+      "type": "Orthogonal",
+      "sourcePoint": {
+        "x": 1356.09,
+        "y": 815
+      },
+      "targetPoint": {
+        "x": 1255.09,
+        "y": 957.5
+      },
+      "targetDecorator": {
+        "shape": "Arrow",
+        "width": 10,
+        "height": 10,
+        "pivot": {
+          "x": 0,
+          "y": 0.5
+        },
+        "style": {
+          "fill": "black",
+          "strokeColor": "black",
+          "strokeWidth": 1,
+          "strokeDashArray": "",
+          "opacity": 1,
+          "gradient": {
+            "type": "None"
+          }
+        }
+      },
+      "sourcePortID": "",
+      "targetPortID": "",
+      "sourceID": "speakNode_1734358057516",
+      "targetID": "eventNode_1734360361089",
+      "flip": "None",
+      "connectorSpacing": 13,
+      "segments": [
+        {
+          "type": "Orthogonal",
+          "length": null,
+          "direction": null
+        }
+      ],
+      "sourceDecorator": {
+        "shape": "None",
+        "width": 10,
+        "height": 10,
+        "pivot": {
+          "x": 0,
+          "y": 0.5
+        },
+        "style": {
+          "fill": "black",
+          "strokeColor": "black",
+          "strokeWidth": 1,
+          "strokeDashArray": "",
+          "opacity": 1,
+          "gradient": {
+            "type": "None"
+          }
+        }
+      },
+      "cornerRadius": 0,
+      "wrapper": {
+        "actualSize": {
+          "width": 101,
+          "height": 142.5
+        },
+        "offsetX": 1305.59,
+        "offsetY": 886.25
+      },
+      "style": {
+        "strokeWidth": 1,
+        "strokeColor": "black",
+        "fill": "transparent",
+        "strokeDashArray": "",
+        "opacity": 1,
+        "gradient": {
+          "type": "None"
+        }
+      },
+      "annotations": [],
+      "fixedUserHandles": [],
+      "ports": [],
+      "tooltip": {
+        "content": "Link1",
+        "showTipPointer": true,
+        "width": "auto",
+        "height": "auto",
+        "isSticky": false,
+        "relativeMode": "Object",
+        "openOn": "Auto"
+      },
+      "constraints": 2043454,
+      "previewSize": {},
+      "zIndex": 44,
+      "visible": true,
+      "connectionPadding": 0,
+      "flipMode": "All",
+      "hitPadding": 10,
+      "sourcePadding": 0,
+      "targetPadding": 0,
+      "parentId": ""
+    },
+    {
+      "shape": {
+        "type": "None"
+      },
+      "id": "Link1oTbiJ",
+      "type": "Orthogonal",
+      "sourcePoint": {
+        "x": 486.09,
+        "y": 477
+      },
+      "targetPoint": {
+        "x": 604.09,
+        "y": 566.5
+      },
+      "targetDecorator": {
+        "shape": "Arrow",
+        "width": 10,
+        "height": 10,
+        "pivot": {
+          "x": 0,
+          "y": 0.5
+        },
+        "style": {
+          "fill": "black",
+          "strokeColor": "black",
+          "strokeWidth": 1,
+          "strokeDashArray": "",
+          "opacity": 1,
+          "gradient": {
+            "type": "None"
+          }
+        }
+      },
+      "sourcePortID": "",
+      "targetPortID": "",
+      "sourceID": "intentNode_1734357824698",
+      "targetID": "formNode_1734361953364",
+      "flip": "None",
+      "connectorSpacing": 13,
+      "segments": [
+        {
+          "type": "Orthogonal",
+          "length": null,
+          "direction": null
+        }
+      ],
+      "sourceDecorator": {
+        "shape": "None",
+        "width": 10,
+        "height": 10,
+        "pivot": {
+          "x": 0,
+          "y": 0.5
+        },
+        "style": {
+          "fill": "black",
+          "strokeColor": "black",
+          "strokeWidth": 1,
+          "strokeDashArray": "",
+          "opacity": 1,
+          "gradient": {
+            "type": "None"
+          }
+        }
+      },
+      "cornerRadius": 0,
+      "wrapper": {
+        "actualSize": {
+          "width": 118.00000000000006,
+          "height": 89.5
+        },
+        "offsetX": 545.09,
+        "offsetY": 521.75
+      },
+      "style": {
+        "strokeWidth": 1,
+        "strokeColor": "black",
+        "fill": "transparent",
+        "strokeDashArray": "",
+        "opacity": 1,
+        "gradient": {
+          "type": "None"
+        }
+      },
+      "annotations": [],
+      "fixedUserHandles": [],
+      "ports": [],
+      "tooltip": {
+        "content": "Link1",
+        "showTipPointer": true,
+        "width": "auto",
+        "height": "auto",
+        "isSticky": false,
+        "relativeMode": "Object",
+        "openOn": "Auto"
+      },
+      "constraints": 2043454,
+      "previewSize": {},
+      "zIndex": 51,
+      "visible": true,
+      "connectionPadding": 0,
+      "flipMode": "All",
+      "hitPadding": 10,
+      "sourcePadding": 0,
+      "targetPadding": 0,
+      "parentId": ""
+    },
+    {
+      "shape": {
+        "type": "None"
+      },
+      "id": "Link1fpxHB",
+      "type": "Orthogonal",
+      "sourcePoint": {
+        "x": 904.09,
+        "y": 785
+      },
+      "targetPoint": {
+        "x": 1203.36,
+        "y": 768
+      },
+      "targetDecorator": {
+        "shape": "Arrow",
+        "width": 10,
+        "height": 10,
+        "pivot": {
+          "x": 0,
+          "y": 0.5
+        },
+        "style": {
+          "fill": "black",
+          "strokeColor": "black",
+          "strokeWidth": 1,
+          "strokeDashArray": "",
+          "opacity": 1,
+          "gradient": {
+            "type": "None"
+          }
+        }
+      },
+      "sourcePortID": "",
+      "targetPortID": "",
+      "sourceID": "formNode_1734361953364",
+      "targetID": "speakNode_1734358057516",
+      "flip": "None",
+      "connectorSpacing": 13,
+      "segments": [
+        {
+          "type": "Orthogonal",
+          "length": null,
+          "direction": null
+        }
+      ],
+      "sourceDecorator": {
+        "shape": "None",
+        "width": 10,
+        "height": 10,
+        "pivot": {
+          "x": 0,
+          "y": 0.5
+        },
+        "style": {
+          "fill": "black",
+          "strokeColor": "black",
+          "strokeWidth": 1,
+          "strokeDashArray": "",
+          "opacity": 1,
+          "gradient": {
+            "type": "None"
+          }
+        }
+      },
+      "cornerRadius": 0,
+      "wrapper": {
+        "actualSize": {
+          "width": 299.26999999999987,
+          "height": 17
+        },
+        "offsetX": 1053.725,
+        "offsetY": 776.5
+      },
+      "style": {
+        "strokeWidth": 1,
+        "strokeColor": "black",
+        "fill": "transparent",
+        "strokeDashArray": "",
+        "opacity": 1,
+        "gradient": {
+          "type": "None"
+        }
+      },
+      "annotations": [],
+      "fixedUserHandles": [],
+      "ports": [],
+      "tooltip": {
+        "content": "Link1",
+        "showTipPointer": true,
+        "width": "auto",
+        "height": "auto",
+        "isSticky": false,
+        "relativeMode": "Object",
+        "openOn": "Auto"
+      },
+      "constraints": 2043454,
+      "previewSize": {},
+      "zIndex": 52,
+      "visible": true,
+      "connectionPadding": 0,
+      "flipMode": "All",
+      "hitPadding": 10,
+      "sourcePadding": 0,
+      "targetPadding": 0,
+      "parentId": ""
+    },
+    {
+      "shape": {
+        "type": "None"
+      },
+      "id": "Link1tRPbf",
+      "type": "Orthogonal",
+      "sourcePoint": {
+        "x": 164.09,
+        "y": 374.5
+      },
+      "targetPoint": {
+        "x": 151.09,
+        "y": 617
+      },
+      "targetDecorator": {
+        "shape": "Arrow",
+        "width": 10,
+        "height": 10,
+        "pivot": {
+          "x": 0,
+          "y": 0.5
+        },
+        "style": {
+          "fill": "black",
+          "strokeColor": "black",
+          "strokeWidth": 1,
+          "strokeDashArray": "",
+          "opacity": 1,
+          "gradient": {
+            "type": "None"
+          }
+        }
+      },
+      "sourcePortID": "",
+      "targetPortID": "",
+      "sourceID": "eventNode_1734362935582",
+      "targetID": "speakNode_1734362649933",
+      "flip": "None",
+      "connectorSpacing": 13,
+      "segments": [
+        {
+          "type": "Orthogonal",
+          "length": null,
+          "direction": null
+        }
+      ],
+      "sourceDecorator": {
+        "shape": "None",
+        "width": 10,
+        "height": 10,
+        "pivot": {
+          "x": 0,
+          "y": 0.5
+        },
+        "style": {
+          "fill": "black",
+          "strokeColor": "black",
+          "strokeWidth": 1,
+          "strokeDashArray": "",
+          "opacity": 1,
+          "gradient": {
+            "type": "None"
+          }
+        }
+      },
+      "cornerRadius": 0,
+      "wrapper": {
+        "actualSize": {
+          "width": 13,
+          "height": 242.5
+        },
+        "offsetX": 157.59,
+        "offsetY": 495.75
+      },
+      "style": {
+        "strokeWidth": 1,
+        "strokeColor": "black",
+        "fill": "transparent",
+        "strokeDashArray": "",
+        "opacity": 1,
+        "gradient": {
+          "type": "None"
+        }
+      },
+      "annotations": [],
+      "fixedUserHandles": [],
+      "ports": [],
+      "tooltip": {
+        "content": "Link1",
+        "showTipPointer": true,
+        "width": "auto",
+        "height": "auto",
+        "isSticky": false,
+        "relativeMode": "Object",
+        "openOn": "Auto"
+      },
+      "constraints": 2043454,
+      "previewSize": {},
+      "zIndex": 62,
+      "visible": true,
+      "connectionPadding": 0,
+      "flipMode": "All",
+      "hitPadding": 10,
+      "sourcePadding": 0,
+      "targetPadding": 0,
+      "parentId": ""
+    }
+  ],
   "pageSettings": {
     "orientation": "Landscape",
     "height": null,
@@ -154,13 +1872,10 @@
     "commands": []
   },
   "tool": 3,
-  "customCursor": [],
-  "serializationSettings": {
-    "preventDefaults": false
-  },
+  "bridgeDirection": "Top",
   "diagramSettings": {
     "inversedAlignment": true
   },
-  "enableConnectorSplit": false,
+  "customCursor": [],
   "version": 17.1
 }

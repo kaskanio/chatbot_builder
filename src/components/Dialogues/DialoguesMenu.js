@@ -53,28 +53,49 @@ const DialoguesMenu = ({ diagramInstanceRef }) => {
     }
   };
 
-  const handleSaveDiagram = async () => {
-    if (diagramInstanceRef.current) {
-      const serializedData = diagramInstanceRef.current.saveDiagram({
-        exclude: ['width', 'height', 'viewport'],
+  const handleSaveDatabaseToFile = async (
+    filename = 'db.json',
+    directory = ''
+  ) => {
+    try {
+      const response = await axios.get('http://localhost:3001/db');
+      const formattedData = JSON.stringify(response.data, null, 2);
+      const blob = new Blob([formattedData], {
+        type: 'application/json',
       });
-      const formattedData = JSON.stringify(JSON.parse(serializedData), null, 2);
-      try {
-        const response = await axios.post(
-          'http://127.0.0.1:8000/save-diagram',
-          {
-            filename: 'diagram.json',
-            directory:
-              'C:/Users/don_k/Documents/Courses/Diplomatiki/first_attempt',
-            data: formattedData,
-          }
-        );
-        alert(response.data.message);
-      } catch (error) {
-        alert('An error occurred while saving the diagram: ' + error.message);
-      }
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = directory ? `${directory}/${filename}` : filename;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      alert('An error occurred while saving the database: ' + error.message);
     }
   };
+
+  // const handleSaveDiagram = async () => {
+  //   if (diagramInstanceRef.current) {
+  //     const serializedData = diagramInstanceRef.current.saveDiagram({
+  //       exclude: ['width', 'height', 'viewport'],
+  //     });
+  //     const formattedData = JSON.stringify(JSON.parse(serializedData), null, 2);
+  //     try {
+  //       const response = await axios.post(
+  //         'http://localhost:8000/save-diagram',
+  //         {
+  //           filename: 'diagram.json',
+  //           directory:
+  //             'C:/Users/don_k/Documents/Courses/Diplomatiki/first_attempt',
+  //           data: formattedData,
+  //         }
+  //       );
+  //       alert(response.data.message);
+  //     } catch (error) {
+  //       alert('An error occurred while saving the diagram: ' + error.message);
+  //     }
+  //   }
+  // };
 
   const handleLoadFromFile = (event) => {
     const file = event.target.files[0];
@@ -87,6 +108,32 @@ const DialoguesMenu = ({ diagramInstanceRef }) => {
         }
       };
       reader.readAsText(file);
+    }
+  };
+
+  const handleLoadDatabaseFromFile = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      try {
+        const response = await axios.put(
+          'http://localhost:8000/upload-db',
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          }
+        );
+        alert(response.data.message);
+        setTimeout(() => {
+          window.location.reload(); // Trigger page reload after 1 second
+        }, 1000);
+      } catch (error) {
+        alert('An error occurred while loading the database: ' + error.message);
+      }
     }
   };
 
@@ -132,7 +179,7 @@ const DialoguesMenu = ({ diagramInstanceRef }) => {
 
   const handleExportDflow = async () => {
     try {
-      const response = await axios.post('http://127.0.0.1:8000/export-dflow');
+      const response = await axios.post('http://localhost:8000/export-dflow');
       alert(response.data.message);
     } catch (error) {
       alert('An error occurred while exporting: ' + error.message);
@@ -143,7 +190,7 @@ const DialoguesMenu = ({ diagramInstanceRef }) => {
     {
       text: 'Diagram',
       items: [
-        { text: 'Save Diagram', id: 'saveDiagram' },
+        // { text: 'Save Diagram', id: 'saveDiagram' },
         { text: 'Save Diagram As... ', id: 'saveDiagramAs' },
         { text: 'Load Diagram', id: 'loadDiagram' },
         { text: 'Reset Diagram', id: 'resetDiagram' },
@@ -151,7 +198,11 @@ const DialoguesMenu = ({ diagramInstanceRef }) => {
     },
     {
       text: 'Database',
-      items: [{ text: 'Reset Database', id: 'resetDB' }],
+      items: [
+        { text: 'Save Database As...', id: 'saveDBAs' },
+        { text: 'Load Database', id: 'loadDB' },
+        { text: 'Reset Database', id: 'resetDB' },
+      ],
     },
     {
       text: 'Export',
@@ -161,9 +212,9 @@ const DialoguesMenu = ({ diagramInstanceRef }) => {
 
   const handleMenuClick = (args) => {
     switch (args.item.id) {
-      case 'saveDiagram':
-        handleSaveDiagram();
-        break;
+      // case 'saveDiagram':
+      //   handleSaveDiagram();
+      //   break;
       case 'saveDiagramAs':
         handleSaveToFile();
         break;
@@ -172,6 +223,12 @@ const DialoguesMenu = ({ diagramInstanceRef }) => {
         break;
       case 'resetDiagram':
         handleResetDiagram();
+        break;
+      case 'saveDBAs':
+        handleSaveDatabaseToFile();
+        break;
+      case 'loadDB':
+        document.getElementById('loadDatabaseInput').click();
         break;
       case 'resetDB':
         handleResetDatabase();
@@ -193,6 +250,13 @@ const DialoguesMenu = ({ diagramInstanceRef }) => {
         className="hidden"
         id="loadDiagramInput"
         onChange={handleLoadFromFile}
+      />
+      <input
+        type="file"
+        accept=".json"
+        className="hidden"
+        id="loadDatabaseInput"
+        onChange={handleLoadDatabaseFromFile}
       />
     </>
   );

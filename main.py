@@ -1,9 +1,10 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import os
 import logging
 import subprocess
+import shutil
 
 app = FastAPI()
 
@@ -42,5 +43,25 @@ def export_dflow():
             return {"message": "Transformation failed", "error": result.stderr}
     except Exception as e:
         return {"message": "An error occurred", "error": str(e)}
-    
-    
+
+@app.put("/upload-db")
+async def upload_db(file: UploadFile = File(...)):
+    try:
+        upload_path = os.path.join(os.getcwd(), 'db.json')
+        with open(upload_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+        return {"message": "Database successfully loaded from file."}
+    except Exception as e:
+        logging.error(f"Error uploading database: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/load-diagram")
+def load_diagram():
+    try:
+        file_path = os.path.join('', 'diagram.json')  # Adjust the directory if needed
+        with open(file_path, 'r') as file:
+            data = file.read()
+        return data
+    except Exception as e:
+        logging.error(f"Error loading diagram: {e}")
+        raise HTTPException(status_code=500, detail=str(e))

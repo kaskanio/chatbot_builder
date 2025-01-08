@@ -18,6 +18,7 @@ import DialogFSlot from './DialogFSlot'; // Add this import
 import DialoguesMenu from './DialoguesMenu';
 import { handleSymbolDrag } from './handlers';
 import { saveDiagramState, loadDiagramState } from '../../store/diagramSlice';
+import axios from 'axios';
 
 const Dialogues = forwardRef((props, ref) => {
   const [showDialogSpeak, setShowDialogSpeak] = useState(false);
@@ -48,10 +49,43 @@ const Dialogues = forwardRef((props, ref) => {
     }
   }, []);
 
-  const handleSaveDiagram = () => {
+  useEffect(() => {
+    const loadDiagramFromServer = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/load-diagram');
+        const diagramData = response.data;
+        if (diagramInstanceRef.current && diagramData) {
+          diagramInstanceRef.current.loadDiagram(diagramData);
+          dispatch(loadDiagramState(diagramData));
+        }
+      } catch (error) {
+        console.error(
+          'An error occurred while loading the diagram:',
+          error.message
+        );
+      }
+    };
+
+    loadDiagramFromServer();
+  }, [dispatch]);
+
+  const handleSaveDiagram = async () => {
     if (diagramInstanceRef.current) {
       const serializedData = diagramInstanceRef.current.saveDiagram();
       dispatch(saveDiagramState(serializedData));
+      const formattedData = JSON.stringify(JSON.parse(serializedData), null, 2);
+      try {
+        await axios.post('http://localhost:8000/save-diagram', {
+          filename: 'diagram.json',
+          directory: '', // You can specify a directory if needed
+          data: formattedData,
+        });
+      } catch (error) {
+        console.error(
+          'An error occurred while saving the diagram:',
+          error.message
+        );
+      }
     }
   };
 

@@ -1,45 +1,74 @@
 triggers
-    
-    Intent greet 
-        "hey",  
-        "hello",  
-        "hi",  
-        "hello there",  
-        "good morning",  
-        "goodevening",  
-        "moin",  
-        "hey there",  
-        "let's go",  
-        "hey dude",  
-        "goodmorning",  
-        "good evening",  
-        "good afternoon"
+    Intent find_doctor 
+        "I want to call" PE:Person[] "test",  
+        "I want to call" PE:Person[] "test",  
+        "I want to call" TE:Doctor "test test",  
+        "I want to call" TE:Doctor,  
+        TE:Doctor "please!",  
+        "I want" TE:Doctor "please"
     end
-    
-    Intent bot_challenge 
-        "are you a bot?",  
-        "are you a human?",  
-        "am i talking to a bot?",  
-        "am i talking to a human?"
+    Intent time 
+        "is it late already",  
+        "tell me the time",  
+        "what's the time",  
+        "what time is it"
     end
-    
-    
+    Intent affirm 
+        "y",  
+        "yeap",  
+        "absolutely",  
+        "yeahh",  
+        "yes"
+    end
+    Intent deny 
+        "n",  
+        "nope",  
+        "no way",  
+        "nohh",  
+        "no"
+    end
+    Event external_1
+        "bot/event/external_1"
+    end
 end
 
 
+entities
+    Entity Doctor
+        "cardiologist", 
+        "dentist", 
+        "doc"
+    end
+end
+
 dialogues
-    Dialogue greet_dialogue
-        on: greet
+    Dialogue time_dialogue
+        on: time
         responses:
-          ActionGroup greet_back
-              Speak('Hello there!!!! ')
+          ActionGroup say_time
+              Speak('The time is SYSTEM: time ')
           end
     end
-    Dialogue bot_challenge_dialogue
-        on: bot_challenge
+    Dialogue find_doctor_dialogue
+        on: find_doctor
         responses:
-          ActionGroup respond_iambot
-              Speak('I am a bot, powered by dFlow and ' Rasa.)
+          Form AF1
+              Param1: int = HRI('Give me a number ') 
+              Param2: bool = HRI('yes/no ', [affirm:True, deny:False]) 
+              Param3: str = HRI('Give me a name ')
+          end,
+          ActionGroup answer_2
+              Speak('perfect thanks! ')
+          end
+          ActionGroup extrenal_1
+              FireEvent('external/complete', AF1.Param2, ['bye bye', AF1.Param1])
+          end
+    end
+    Dialogue external_1_dialogue
+        on: external_1
+        responses:
+          ActionGroup answers
+              Speak('Hello ')
           end
     end
 end

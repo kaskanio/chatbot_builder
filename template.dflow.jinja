@@ -1,18 +1,18 @@
 triggers
-    {% if intents %}
+    {%- if intents %}
     {%- for intent in intents %}
     Intent {{ intent.name }}
         {%- for string in intent.strings %} 
         {{ string }}{% if not loop.last %}, {% endif %}{%- endfor %}
     end
-    {% endfor -%}
+    {%- endfor %}
     {%- endif %}
-    {% if events %}
-    {%- for event in events -%}
+    {%- if events %}
+    {%- for event in events %}
     Event {{ event.name }}
         "{{ event.uri }}"
     end
-    {% endfor -%}
+    {%- endfor %}
     {%- endif %}
 end
 

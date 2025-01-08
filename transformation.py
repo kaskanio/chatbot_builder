@@ -68,7 +68,7 @@ def extract_dialogues(diagram):
         source_node = node_map[source_id]
         target_node = node_map[target_id]
 
-        if 'intentName' in source_node['addInfo'] or 'eventName' in source_node['addInfo'] and 'eventType' != 'FireEvent' in source_node['addInfo']:
+        if 'intentName' in source_node['addInfo'] or ('eventName' in source_node['addInfo'] and source_node['addInfo'].get('eventType') != 'FireEvent'):
             # Set the dialogue name
             trigger_name = source_node['addInfo'].get('intentName') or source_node['addInfo'].get('eventName')
             base_dialogue_name = f"{trigger_name}_dialogue"
