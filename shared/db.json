@@ -3,76 +3,21 @@
     {
       "name": "weather_svc",
       "verb": "GET",
-      "host": "r4a.issel.ee.auth.gr",
-      "port": "8080",
-      "path": "/weather",
-      "id": 1
-    },
-    {
-      "name": "storage_svc",
-      "verb": "POST",
-      "host": "r4a.issel.ee.auth.gr",
-      "port": "00",
-      "path": "/{username}",
-      "id": 2
-    }
-  ],
-  "events": [
-    {
-      "name": "external_1",
-      "uri": "bot/event/external_1",
+      "host": "https://services.issel.ee.auth.gr",
+      "path": "/general_information/weather_openweather",
       "id": 1
     }
   ],
-  "entities": [
-    {
-      "name": "Doctor",
-      "values": [
-        "Kardiologos",
-        "Odontiatros",
-        "good doc"
-      ],
-      "id": 1
-    }
-  ],
-  "synonyms": [
-    {
-      "name": "date_period",
-      "values": [
-        "mera",
-        "evdomada",
-        "mina",
-        "aurio",
-        "some day"
-      ],
-      "id": 1
-    }
-  ],
+  "events": [],
+  "entities": [],
+  "synonyms": [],
   "globalSlots": [],
   "formSlots": [
     {
-      "name": "slot1",
+      "name": "city_slot",
       "type": "str",
-      "form": "",
+      "form": "form1",
       "id": 1
-    },
-    {
-      "name": "slot2",
-      "type": "str",
-      "form": "",
-      "id": 2
-    },
-    {
-      "name": "slot3",
-      "type": null,
-      "form": "AF1",
-      "id": 3
-    },
-    {
-      "name": "slot1",
-      "type": "str",
-      "form": "SF1",
-      "id": 4
     }
   ]
 }

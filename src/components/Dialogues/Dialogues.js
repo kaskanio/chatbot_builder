@@ -210,13 +210,12 @@ const Dialogues = forwardRef((props, ref) => {
           <strong>HTTP Verb:</strong> ${service.verb}<br>
           <strong>Host:</strong> ${service.host}<br>
           <strong>Port:</strong> ${service.port}<br>
-          <strong>Path:</strong> ${service.path}<br>
+          <strong>Path:</strong> ${
+            service.pathValue || service.path
+          }<br> <!-- Update this line -->
           <strong>Query:</strong> ${service.query || ''}<br>
           <strong>Header:</strong> ${service.header || ''}<br>
           <strong>Body:</strong> ${service.body || ''}<br>
-          <strong>Path:</strong> ${
-            service.pathValue || ''
-          }<br> <!-- Add this line -->
         </div>
       </div>
     `;
@@ -252,11 +251,10 @@ const Dialogues = forwardRef((props, ref) => {
         serviceVerb: service.verb,
         serviceHost: service.host,
         servicePort: service.port,
-        servicePath: service.path,
+        servicePath: service.pathValue || service.path, // Update this line
         serviceQuery: service.query,
         serviceHeader: service.header,
         serviceBody: service.body,
-        servicePathValue: service.pathValue, // Add this line
       },
       annotations: [],
     };

@@ -188,7 +188,7 @@ function DialogRest({ showDialogRest, setShowDialogRest, onSelectService }) {
         <TextField
           id="pathValueInput"
           inputRef={pathValueRef}
-          label="Path"
+          label="Specify path"
           fullWidth
           size="small"
           margin="dense"

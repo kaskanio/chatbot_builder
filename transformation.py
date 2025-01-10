@@ -71,7 +71,6 @@ def extract_dialogues(diagram):
     dialogues = []
     node_map = {node['id']: node for node in diagram['nodes']}
     dialogue_name_counter = {}  # Dictionary to keep track of dialogue name counts
-    action_group_name_counter = {}  # Dictionary to keep track of action group name counts
 
     for connector in diagram['connectors']:
         source_id = connector['sourceID']
@@ -103,6 +102,7 @@ def extract_dialogues(diagram):
             def process_node(node):
                 if 'addInfo' in node:
                     if 'formName' in node['addInfo']:
+
                         slots = []
                         form_name = node['addInfo']['formName']
                         slots.extend([
@@ -139,67 +139,43 @@ def extract_dialogues(diagram):
                         })
 
                     if 'actionType' in node['addInfo']:
+                        action_group = None
+                        if dialogue['responses'] and dialogue['responses'][-1]['type'] == 'ActionGroup':
+                            action_group = dialogue['responses'][-1]
+                        else:
+                            action_group = {
+                                'type': 'ActionGroup',
+                                'name': node['addInfo'].get('speakActionName') or node['addInfo'].get('eventName') or node['addInfo'].get('serviceName') or node['addInfo'].get('slotName'),
+                                'actions': []
+                            }
+                            dialogue['responses'].append(action_group)
+
                         if node['addInfo']['actionType'] == 'SpeakAction':
                             action_string = node['addInfo']['actionString']
-                            parts = action_string.split()
-                            formatted_parts = []
-                            current_string = []
-                            for part in parts:
-                                if '.' in part:
-                                    if current_string:
-                                        formatted_string = " ".join(current_string)
-                                        formatted_string = formatted_string.replace("'", "\\'")
-                                        formatted_parts.append("'{}'".format(formatted_string))
-                                        current_string = []
-                                    formatted_parts.append(part)
-                                else:
-                                    current_string.append(part)
-                            if current_string:
-                                formatted_string = " ".join(current_string)
-                                formatted_string = formatted_string.replace("'", "\\'")
-                                formatted_parts.append("'{}'".format(formatted_string))
-                            formatted_action_string = ' '.join(formatted_parts)
-                            dialogue['responses'].append({
-                                'type': 'ActionGroup',
-                                'name': node['addInfo']['speakActionName'],
-                                'actions': [{'speak': formatted_action_string}]
-                            })
+                            formatted_action_string = "'{}'".format(action_string.replace("'", "\\'"))
+                            action_group['actions'].append({'speak': formatted_action_string})
                         elif node['addInfo']['actionType'] == 'Fire Event':
-                            dialogue['responses'].append({
-                                'type': 'ActionGroup',
-                                'name': node['addInfo']['eventName'],
-                                'actions': [{
-                                    'uri': node['addInfo']['eventUri'],
-                                    'message': node['addInfo']['message']
-                                }]
+                            action_group['actions'].append({
+                                'uri': node['addInfo']['eventUri'],
+                                'message': node['addInfo']['message']
                             })
                         elif node['addInfo']['actionType'] == 'RestAction':
-                            dialogue['responses'].append({
-                                'type': 'ActionGroup',
-                                'name': node['addInfo']['serviceName'],
-                                'actions': [{
-                                    'uri': node['addInfo'].get('serviceUri', ''),
-                                    'method': node['addInfo'].get('serviceMethod', ''),
-                                    'body': node['addInfo'].get('serviceBody', '')
-                                }]
+                            action_group['actions'].append({
+                                'serviceName': node['addInfo']['serviceName'],
+                                'serviceQuery': node['addInfo']['serviceQuery'],
+                                'serviceHeader': node['addInfo']['serviceHeader'],
+                                'servicePath': node['addInfo']['servicePath'],
+                                'serviceBody': node['addInfo']['serviceBody']
                             })
                         elif node['addInfo']['actionType'] == 'GlobalSlot':
-                            dialogue['responses'].append({
-                                'type': 'ActionGroup',
-                                'name': node['addInfo']['slotName'],
-                                'actions': [{
-                                    'gslotName': node['addInfo']['slotName'],
-                                    'gslotValue': node['addInfo']['slotValue']
-                                }]
+                            action_group['actions'].append({
+                                'gslotName': node['addInfo']['slotName'],
+                                'gslotValue': node['addInfo']['slotValue']
                             })
                         elif node['addInfo']['actionType'] == 'FormSlot':
-                            dialogue['responses'].append({
-                                'type': 'ActionGroup',
-                                'name': node['addInfo']['slotName'],
-                                'actions': [{
-                                    'formSlotName': node['addInfo']['slotName'],
-                                    'formSlotValue': node['addInfo']['slotValue']
-                                }]
+                            action_group['actions'].append({
+                                'formSlotName': node['addInfo']['slotName'],
+                                'formSlotValue': node['addInfo']['slotValue']
                             })
 
             # Process the first target node

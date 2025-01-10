@@ -93,7 +93,7 @@ dialogues
               {%- elif action.uri %}
               FireEvent('{{ action.uri }}', {{ action.message }})
               {%- elif action.serviceName %}
-              {{ action.serviceName }}=(
+              {{ action.serviceName }}(
                   {%- if action.serviceQuery %}query=[{{ action.serviceQuery }}]{% if action.serviceHeader or action.servicePath or action.serviceBody %}, {% endif %}{% endif %}
                   {%- if action.serviceHeader %}header=[{{ action.serviceHeader }}]{% if action.servicePath or action.serviceBody %}, {% endif %}{% endif %}
                   {%- if action.servicePath %}path=[{{ action.servicePath }}]{% if action.serviceBody %}, {% endif %}{% endif %}
