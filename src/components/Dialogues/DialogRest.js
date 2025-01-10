@@ -19,6 +19,7 @@ function DialogRest({ showDialogRest, setShowDialogRest, onSelectService }) {
   const queryRef = useRef('');
   const headerRef = useRef('');
   const bodyRef = useRef('');
+  const pathValueRef = useRef(''); // Add this line
 
   const settings = { effect: 'Zoom', duration: 400, delay: 0 };
 
@@ -38,12 +39,14 @@ function DialogRest({ showDialogRest, setShowDialogRest, onSelectService }) {
     const query = queryRef.current.value;
     const header = headerRef.current.value;
     const body = bodyRef.current.value;
+    const pathValue = pathValueRef.current.value; // Add this line
 
     const serviceDetails = {
       ...selectedService,
       query,
       header,
       body,
+      pathValue, // Add this line
     };
 
     onSelectService(serviceDetails);
@@ -172,6 +175,20 @@ function DialogRest({ showDialogRest, setShowDialogRest, onSelectService }) {
           id="bodyInput"
           inputRef={bodyRef}
           label="Body"
+          fullWidth
+          size="small"
+          margin="dense"
+          InputLabelProps={{ shrink: true, style: { fontSize: 12 } }}
+          inputProps={{ style: { fontSize: 12 } }}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        {' '}
+        {/* Add this block */}
+        <TextField
+          id="pathValueInput"
+          inputRef={pathValueRef}
+          label="Path"
           fullWidth
           size="small"
           margin="dense"

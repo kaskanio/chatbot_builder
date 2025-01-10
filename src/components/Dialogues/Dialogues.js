@@ -17,7 +17,7 @@ import DialogIntent from './DialogIntent';
 import DialogFSlot from './DialogFSlot'; // Add this import
 import DialoguesMenu from './DialoguesMenu';
 import { handleSymbolDrag } from './handlers';
-import { saveDiagramState, loadDiagramState } from '../../store/diagramSlice';
+import { loadDiagramState } from '../../store/diagramSlice';
 import axios from 'axios';
 
 const Dialogues = forwardRef((props, ref) => {
@@ -44,47 +44,36 @@ const Dialogues = forwardRef((props, ref) => {
   }, [dispatch, diagramData]);
 
   useEffect(() => {
-    if (diagramInstanceRef.current && diagramData) {
-      diagramInstanceRef.current.loadDiagram(diagramData);
-    }
-  }, []);
-
-  useEffect(() => {
-    const loadDiagramFromServer = async () => {
+    const loadDiagram = async () => {
       try {
         const response = await axios.get('http://localhost:8000/load-diagram');
-        const diagramData = response.data;
-        if (diagramInstanceRef.current && diagramData) {
+        const diagramData = JSON.parse(response.data);
+        if (diagramInstanceRef.current) {
           diagramInstanceRef.current.loadDiagram(diagramData);
-          dispatch(loadDiagramState(diagramData));
         }
       } catch (error) {
-        console.error(
-          'An error occurred while loading the diagram:',
-          error.message
-        );
+        alert('An error occurred while loading the diagram: ' + error.message);
       }
     };
 
-    loadDiagramFromServer();
-  }, [dispatch]);
+    loadDiagram();
+  }, [diagramInstanceRef]);
 
   const handleSaveDiagram = async () => {
     if (diagramInstanceRef.current) {
       const serializedData = diagramInstanceRef.current.saveDiagram();
-      dispatch(saveDiagramState(serializedData));
       const formattedData = JSON.stringify(JSON.parse(serializedData), null, 2);
       try {
-        await axios.post('http://localhost:8000/save-diagram', {
-          filename: 'diagram.json',
-          directory: '', // You can specify a directory if needed
-          data: formattedData,
-        });
-      } catch (error) {
-        console.error(
-          'An error occurred while saving the diagram:',
-          error.message
+        const response = await axios.post(
+          'http://localhost:8000/save-diagram',
+          {
+            filename: 'diagram.json',
+            directory: 'shared',
+            data: formattedData,
+          }
         );
+      } catch (error) {
+        alert('An error occurred while saving the diagram: ' + error.message);
       }
     }
   };
@@ -225,6 +214,9 @@ const Dialogues = forwardRef((props, ref) => {
           <strong>Query:</strong> ${service.query || ''}<br>
           <strong>Header:</strong> ${service.header || ''}<br>
           <strong>Body:</strong> ${service.body || ''}<br>
+          <strong>Path:</strong> ${
+            service.pathValue || ''
+          }<br> <!-- Add this line -->
         </div>
       </div>
     `;
@@ -264,6 +256,7 @@ const Dialogues = forwardRef((props, ref) => {
         serviceQuery: service.query,
         serviceHeader: service.header,
         serviceBody: service.body,
+        servicePathValue: service.pathValue, // Add this line
       },
       annotations: [],
     };
@@ -576,7 +569,9 @@ const Dialogues = forwardRef((props, ref) => {
       setShowDialogIntent(true);
       setInitialIntentName(intentName);
       setInitialIntentStrings(intentStrings);
+      console.log('Tsekare', pretrainedEntitiesData);
       setInitialPretrainedEntitiesData(pretrainedEntitiesData); // Pass pretrainedEntitiesData
+      console.log('Tsekare 2', initialPretrainedEntitiesData);
       setCurrentNode(args.source); // Set the current node being edited
       setIsDoubleClick(true); // Set the flag to indicate double-click
     }

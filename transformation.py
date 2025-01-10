@@ -1,26 +1,33 @@
 import json
 from jinja2 import Environment, FileSystemLoader
+import os
 
-# Load JSON files
-with open('db.json') as f:
+# Define the shared directory path
+shared_dir = os.path.join(os.getcwd(), 'shared')
+
+# Load JSON files from the shared directory
+with open(os.path.join(shared_dir, 'db.json')) as f:
     db = json.load(f)
-with open('diagram.json') as f:
-    diagram_weather = json.load(f)
+with open(os.path.join(shared_dir, 'diagram.json')) as f:
+    diagram = json.load(f)
 
 # Function to format intent strings
-def format_intent_string(intent_string, pretrained_entities, trainable_entities):
+def format_intent_string(intent_string, pretrained_entities, trainable_entities, synonyms):
     parts = intent_string.split(' ')
     formatted_parts = []
     current_string = []
     for part in parts:
-        if part.startswith('PE:') or part.startswith('TE:'):
+        if part.startswith('PE:') or part.startswith('TE:') or part.startswith('S:'):
             if current_string:
                 formatted_parts.append('"{}"'.format(" ".join(current_string)))
                 current_string = []
             entity_type, entity_name = part.split(':')
             if entity_type == 'PE':
+                entity_name = entity_name.upper()  # Convert pretrained entity name to uppercase
                 entity_values = pretrained_entities.get(entity_name, [])
                 formatted_parts.append('{}:{}[{}]'.format(entity_type, entity_name, ", ".join("'{}'".format(value) for value in entity_values)))
+            elif entity_type == 'S':
+                formatted_parts.append('{}:{}'.format(entity_type, entity_name))
             else:
                 formatted_parts.append('{}:{}'.format(entity_type, entity_name))
         else:
@@ -37,11 +44,15 @@ def extract_pretrained_entities(pretrained_entities_data):
 def extract_trainable_entities(trainable_entities_data):
     return {entity['name']: entity['values'] for entity in trainable_entities_data}
 
+# Extract synonyms
+def extract_synonyms(synonyms_data):
+    return {synonym['name']: synonym['values'] for synonym in synonyms_data}
+
 # Function to transform entity string
 def transform_entity_string(entity_string):
-    if '(' in entity_string and ')' in entity_string:
+    if ('(' in entity_string) and (')' in entity_string):
         entity, entity_type = entity_string.split(' (')
-        entity_type = entity_type.rstrip(')') 
+        entity_type = entity_type.rstrip(')')
         return f"{entity_type}:{entity}"
     return entity_string
 
@@ -49,9 +60,9 @@ def transform_entity_string(entity_string):
 intents = [
     {
         'name': node['addInfo']['intentName'],
-        'strings': [format_intent_string(intent_string['string'], extract_pretrained_entities(node['addInfo'].get('pretrainedEntitiesData', [])), extract_trainable_entities(node['addInfo'].get('trainableEntitiesData', []))) for intent_string in node['addInfo']['intentStrings']]
+        'strings': [format_intent_string(intent_string['string'], extract_pretrained_entities(node['addInfo'].get('pretrainedEntitiesData', [])), extract_trainable_entities(node['addInfo'].get('trainableEntitiesData', [])), extract_synonyms(db['synonyms'])) for intent_string in node['addInfo']['intentStrings']]
     }
-    for node in diagram_weather['nodes']
+    for node in diagram['nodes']
     if 'addInfo' in node and 'intentName' in node['addInfo']
 ]
 
@@ -136,13 +147,17 @@ def extract_dialogues(diagram):
                             for part in parts:
                                 if '.' in part:
                                     if current_string:
-                                        formatted_parts.append("'{} '".format(" ".join(current_string)))
+                                        formatted_string = " ".join(current_string)
+                                        formatted_string = formatted_string.replace("'", "\\'")
+                                        formatted_parts.append("'{}'".format(formatted_string))
                                         current_string = []
                                     formatted_parts.append(part)
                                 else:
                                     current_string.append(part)
                             if current_string:
-                                formatted_parts.append("'{} '".format(" ".join(current_string)))
+                                formatted_string = " ".join(current_string)
+                                formatted_string = formatted_string.replace("'", "\\'")
+                                formatted_parts.append("'{}'".format(formatted_string))
                             formatted_action_string = ' '.join(formatted_parts)
                             dialogue['responses'].append({
                                 'type': 'ActionGroup',
@@ -163,11 +178,9 @@ def extract_dialogues(diagram):
                                 'type': 'ActionGroup',
                                 'name': node['addInfo']['serviceName'],
                                 'actions': [{
-                                    'serviceName': node['addInfo']['serviceName'],
-                                    'serviceQuery': node['addInfo']['serviceQuery'],
-                                    'serviceHeader': node['addInfo']['serviceHeader'],
-                                    'servicePath': node['addInfo']['servicePath'],
-                                    'serviceBody': node['addInfo']['serviceBody']
+                                    'uri': node['addInfo'].get('serviceUri', ''),
+                                    'method': node['addInfo'].get('serviceMethod', ''),
+                                    'body': node['addInfo'].get('serviceBody', '')
                                 }]
                             })
                         elif node['addInfo']['actionType'] == 'GlobalSlot':
@@ -212,16 +225,20 @@ def process_hri_string(hri_string):
     for part in parts:
         if '.' in part:
             if current_string:
-                formatted_parts.append("'{} '".format(" ".join(current_string)))
+                formatted_string = " ".join(current_string)
+                formatted_string = formatted_string.replace("'", "\\'")
+                formatted_parts.append("'{}'".format(formatted_string))
                 current_string = []
             formatted_parts.append(part)
         else:
             current_string.append(part)
     if current_string:
-        formatted_parts.append("'{} '".format(" ".join(current_string)))
+        formatted_string = " ".join(current_string)
+        formatted_string = formatted_string.replace("'", "\\'")
+        formatted_parts.append("'{}'".format(formatted_string))
     return ' '.join(formatted_parts)
 
-dialogues = extract_dialogues(diagram_weather)
+dialogues = extract_dialogues(diagram)
 
 # Setup Jinja2 environment
 env = Environment(loader=FileSystemLoader('.'))
@@ -231,7 +248,8 @@ template = env.get_template('template.dflow.jinja')
 output = template.render(intents=intents, dialogues=dialogues, services=db['services'], synonyms=db['synonyms'], entities=db['entities'], gslots=db['globalSlots'], events=db['events'])
 
 # Write to .dflow file
-with open('outputPY.dflow', 'w') as f:
+output_path = os.path.join(shared_dir, 'outputPY.dflow')
+with open(output_path, 'w') as f:
     f.write(output)
 
 print('DFlow file created successfully.')

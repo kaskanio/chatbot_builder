@@ -25,7 +25,7 @@ class SaveDiagramRequest(BaseModel):
 @app.post("/save-diagram")
 def save_diagram(request: SaveDiagramRequest):
     try:
-        file_path = os.path.join(request.directory, request.filename)
+        file_path = os.path.join('shared', request.filename)  # Use shared directory
         with open(file_path, 'w') as file:
             file.write(request.data)
         return {"message": "Diagram saved successfully"}
@@ -33,24 +33,33 @@ def save_diagram(request: SaveDiagramRequest):
         logging.error(f"Error saving diagram: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+
 @app.post("/export-dflow")
 def export_dflow():
     try:
         result = subprocess.run(["python", "transformation.py"], capture_output=True, text=True)
+        logging.info(f"stdout: {result.stdout}")
+        logging.error(f"stderr: {result.stderr}")
         if result.returncode == 0:
-            return {"message": "Transformation successful", "output": result.stdout}
+            output_path = os.path.join('shared', 'outputPY.dflow')  # Use shared directory
+            with open(output_path, 'r') as file:
+                dflow_content = file.read()
+            return {"message": "Transformation successful", "output": dflow_content}
         else:
             return {"message": "Transformation failed", "error": result.stderr}
     except Exception as e:
+        logging.error(f"Exception: {str(e)}")
         return {"message": "An error occurred", "error": str(e)}
 
 @app.put("/upload-db")
 async def upload_db(file: UploadFile = File(...)):
     try:
-        upload_path = os.path.join(os.getcwd(), 'db.json')
+        upload_path = os.path.join(os.getcwd(), 'shared', 'db.json')  # Adjust the path to the correct location
         with open(upload_path, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
-        return {"message": "Database successfully loaded from file."}
+        return {"message": "Database successfully replaced with the new file."}
     except Exception as e:
         logging.error(f"Error uploading database: {e}")
         raise HTTPException(status_code=500, detail=str(e))
@@ -58,7 +67,7 @@ async def upload_db(file: UploadFile = File(...)):
 @app.get("/load-diagram")
 def load_diagram():
     try:
-        file_path = os.path.join('', 'diagram.json')  # Adjust the directory if needed
+        file_path = os.path.join('shared', 'diagram.json')  # Use shared directory
         with open(file_path, 'r') as file:
             data = file.read()
         return data

@@ -1,0 +1,21 @@
+# Dockerfile for JSON Server
+FROM node:16
+
+# Set the working directory
+WORKDIR /app
+
+# Copy db.json and package.json
+COPY db.json .
+COPY package.json .
+
+# Install nodemon globally
+RUN npm install -g nodemon --legacy-peer-deps
+
+# Install json-server locally
+RUN npm install json-server@0.17.3 --legacy-peer-deps
+
+# Expose the port for JSON Server
+EXPOSE 3001
+
+# Start JSON Server with nodemon
+CMD ["nodemon", "--watch", "db.json", "--delay", "2.5", "--exec", "json-server db.json --port 3001 --host 0.0.0.0"]

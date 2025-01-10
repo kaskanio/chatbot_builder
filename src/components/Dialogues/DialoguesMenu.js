@@ -177,10 +177,25 @@ const DialoguesMenu = ({ diagramInstanceRef }) => {
     }
   };
 
-  const handleExportDflow = async () => {
+  const handleExportDflow = async (
+    filename = 'exported.dflow',
+    directory = ''
+  ) => {
     try {
       const response = await axios.post('http://localhost:8000/export-dflow');
       alert(response.data.message);
+
+      // Assuming the response contains the exported data
+      const formattedData = response.data.output;
+      const blob = new Blob([formattedData], {
+        type: 'application/json',
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = directory ? `${directory}/${filename}` : filename;
+      a.click();
+      URL.revokeObjectURL(url);
     } catch (error) {
       alert('An error occurred while exporting: ' + error.message);
     }

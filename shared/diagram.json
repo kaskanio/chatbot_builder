@@ -1,0 +1,1433 @@
+{
+  "width": "100%",
+  "height": "1200px",
+  "drop": {},
+  "click": {},
+  "doubleClick": {},
+  "contextMenuSettings": {
+    "show": true,
+    "items": [
+      {
+        "text": "Delete",
+        "id": "delete"
+      }
+    ],
+    "showCustomMenuOnly": false
+  },
+  "contextMenuClick": {},
+  "scrollSettings": {
+    "scrollLimit": "Diagram",
+    "viewPortWidth": 2264.28125,
+    "viewPortHeight": 1200,
+    "currentZoom": 1,
+    "horizontalOffset": 0,
+    "verticalOffset": 0,
+    "padding": {
+      "left": 0,
+      "right": 0,
+      "top": 0,
+      "bottom": 0
+    },
+    "canAutoScroll": false,
+    "maxZoom": 30,
+    "minZoom": 0.2
+  },
+  "enableRtl": false,
+  "locale": "en-US",
+  "enablePersistence": false,
+  "rulerSettings": {
+    "showRulers": false,
+    "horizontalRuler": {
+      "orientation": "Horizontal",
+      "arrangeTick": null
+    },
+    "verticalRuler": {
+      "orientation": "Vertical",
+      "arrangeTick": null
+    }
+  },
+  "backgroundColor": "transparent",
+  "constraints": 500,
+  "layout": {
+    "type": "None",
+    "enableAnimation": true,
+    "arrangement": "Nonlinear",
+    "enableRouting": false
+  },
+  "snapSettings": {
+    "constraints": 31,
+    "gridType": "Lines",
+    "verticalGridlines": {
+      "lineIntervals": [
+        1.25,
+        18.75,
+        0.25,
+        19.75,
+        0.25,
+        19.75,
+        0.25,
+        19.75,
+        0.25,
+        19.75
+      ],
+      "snapIntervals": [
+        20
+      ],
+      "lineDashArray": "",
+      "lineColor": "lightgray"
+    },
+    "horizontalGridlines": {
+      "lineIntervals": [
+        1.25,
+        18.75,
+        0.25,
+        19.75,
+        0.25,
+        19.75,
+        0.25,
+        19.75,
+        0.25,
+        19.75
+      ],
+      "snapIntervals": [
+        20
+      ],
+      "lineDashArray": "",
+      "lineColor": "lightgray"
+    }
+  },
+  "dataSourceSettings": {
+    "dataManager": null,
+    "dataSource": null,
+    "crudAction": {
+      "read": ""
+    },
+    "connectionDataSource": {
+      "crudAction": {
+        "read": ""
+      }
+    }
+  },
+  "mode": "SVG",
+  "layers": [
+    {
+      "objects": [
+        "intentNode_1736536307354",
+        "formNode_1736536455533",
+        "speakNode_1736536472125",
+        "eventNode_1736536513468",
+        "formNode_1736536552224",
+        "speakNode_1736536682780",
+        "serviceNode_1736537457856",
+        "Link1itcCG",
+        "Link1xbNKS",
+        "Link1knvE1",
+        "Link1Kq7lJ",
+        "Link1t7TCQ"
+      ],
+      "id": "default_layer",
+      "visible": true,
+      "lock": false,
+      "zIndex": 0,
+      "objectZIndex": 20
+    }
+  ],
+  "nodes": [
+    {
+      "shape": {
+        "type": "HTML",
+        "content": "\n      <div id=\"intentNode_1736536307354\" style=\"padding: 10px; border: 2px solid #ff5733; border-radius: 10px; background-color: #fff3e6;\">\n        <h3 style=\"text-align: center; color: #ff5733; font-size: 24px; font-weight: font-size: 18px; bold;;\">find_doctor</h3>\n        <div style=\"margin-top: 10px;\">\n          \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           I want to call <strong>PE:PERSON</strong> test\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           I want to call <strong>TE:Doctor</strong> test <strong>S:date_period</strong> test <strong>PE:PERSON</strong>\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           I want to call <strong>PE:PERSON</strong> test\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           I want to call <strong>TE:Doctor</strong> test <strong>S:date_period</strong> test\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           I want to call <strong>TE:Doctor</strong> <strong>S:date_period</strong>\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           I want to call <strong>TE:Doctor</strong>\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           <strong>TE:Doctor</strong> please!\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           I want <strong>TE:Doctor</strong> please\n          </div>\n        \n        </div>\n      </div>\n    "
+      },
+      "ports": [],
+      "id": "intentNode_1736536307354",
+      "offsetX": 506.09375,
+      "offsetY": 290,
+      "width": 510.953125,
+      "height": 430,
+      "annotations": [],
+      "addInfo": {
+        "intentName": "find_doctor",
+        "intentStrings": [
+          {
+            "string": "I want to call PE:PERSON test"
+          },
+          {
+            "string": "I want to call TE:Doctor test S:date_period test PE:PERSON"
+          },
+          {
+            "string": "I want to call PE:PERSON test"
+          },
+          {
+            "string": "I want to call TE:Doctor test S:date_period test"
+          },
+          {
+            "string": "I want to call TE:Doctor S:date_period"
+          },
+          {
+            "string": "I want to call TE:Doctor"
+          },
+          {
+            "string": "TE:Doctor please!"
+          },
+          {
+            "string": "I want TE:Doctor please"
+          }
+        ],
+        "pretrainedEntitiesData": [
+          {
+            "entity": "PERSON",
+            "values": "Test, Test"
+          },
+          {
+            "entity": "NORP",
+            "values": ""
+          },
+          {
+            "entity": "FAC",
+            "values": ""
+          },
+          {
+            "entity": "ORG",
+            "values": ""
+          },
+          {
+            "entity": "GPE",
+            "values": ""
+          },
+          {
+            "entity": "LOC",
+            "values": ""
+          },
+          {
+            "entity": "PRODUCT",
+            "values": ""
+          },
+          {
+            "entity": "EVENT",
+            "values": ""
+          },
+          {
+            "entity": "WORK_OF_ART",
+            "values": ""
+          },
+          {
+            "entity": "LAW",
+            "values": ""
+          },
+          {
+            "entity": "LANGUAGE",
+            "values": ""
+          },
+          {
+            "entity": "DATE",
+            "values": ""
+          },
+          {
+            "entity": "TIME",
+            "values": ""
+          },
+          {
+            "entity": "PERCENT",
+            "values": ""
+          },
+          {
+            "entity": "MONEY",
+            "values": ""
+          },
+          {
+            "entity": "QUANTITY",
+            "values": ""
+          },
+          {
+            "entity": "ORDINAL",
+            "values": ""
+          },
+          {
+            "entity": "CARDINAL",
+            "values": ""
+          }
+        ]
+      },
+      "zIndex": 2,
+      "container": null,
+      "visible": true,
+      "horizontalAlignment": "Left",
+      "verticalAlignment": "Top",
+      "backgroundColor": "transparent",
+      "borderColor": "none",
+      "borderWidth": 0,
+      "rotateAngle": 0,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "margin": {},
+      "flip": "None",
+      "flipMode": "All",
+      "wrapper": {
+        "actualSize": {
+          "width": 510.953125,
+          "height": 430
+        },
+        "offsetX": 506.09375,
+        "offsetY": 290
+      },
+      "constraints": 5240814,
+      "style": {
+        "fill": "white",
+        "gradient": {
+          "type": "None"
+        },
+        "strokeColor": "black",
+        "strokeWidth": 1,
+        "strokeDashArray": "",
+        "opacity": 1,
+        "textOverflow": "Wrap"
+      },
+      "isExpanded": true,
+      "expandIcon": {
+        "shape": "None"
+      },
+      "fixedUserHandles": [],
+      "tooltip": {
+        "openOn": "Auto",
+        "content": "",
+        "isSticky": false
+      },
+      "inEdges": [],
+      "outEdges": [
+        "Link1xbNKS"
+      ],
+      "parentId": "",
+      "processId": "",
+      "umlIndex": -1,
+      "isPhase": false,
+      "isLane": false
+    },
+    {
+      "shape": {
+        "type": "HTML",
+        "content": "\n      <div style=\"padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9;\">\n        <h3 style=\"text-align: center; font-size: 18px; bold; color: #0056b3;\">AF1</h3>\n        \n            <div style=\"margin-top: 10px;\">\n              <h4 style=\"color: #0056b3;\">slot1</h4>\n            </div>\n            <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n              <strong>Type:</strong> str<br>\n              <strong>HRI String:</strong> Give parameter 1<br>\n              <strong>Value:</strong> undefined<br>\n              <strong>Entity:</strong> PERSON (PE)\n            </div>\n          \n            <div style=\"margin-top: 10px;\">\n              <h4 style=\"color: #0056b3;\">slot2</h4>\n            </div>\n            <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n              <strong>Type:</strong> str<br>\n              <strong>HRI String:</strong> Give parameter 2<br>\n              <strong>Value:</strong> find_doctor:True, external_1: False<br>\n              <strong>Entity:</strong> null\n            </div>\n          \n            <div style=\"margin-top: 10px;\">\n              <h4 style=\"color: #0056b3;\">slot3</h4>\n            </div>\n            <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n              <strong>Type:</strong> str<br>\n              <strong>HRI String:</strong> Give parameter 3 you AF1.slot1<br>\n              <strong>Value:</strong> undefined<br>\n              <strong>Entity:</strong> Doctor (TE)\n            </div>\n          \n      </div>\n    "
+      },
+      "ports": [],
+      "id": "formNode_1736536455533",
+      "offsetX": 521.09375,
+      "offsetY": 822,
+      "width": 600,
+      "height": 437,
+      "annotations": [],
+      "addInfo": {
+        "formName": "AF1",
+        "gridDataHRI": [
+          {
+            "order": 3,
+            "name": "slot3",
+            "type": "str",
+            "hriString": "Give parameter 3 you AF1.slot1",
+            "entity": "Doctor (TE)"
+          },
+          {
+            "order": 2,
+            "name": "slot2",
+            "type": "str",
+            "hriString": "Give parameter 2",
+            "value": "find_doctor:True, external_1: False",
+            "entity": null
+          },
+          {
+            "order": 1,
+            "name": "slot1",
+            "type": "str",
+            "hriString": "Give parameter 1",
+            "entity": "PERSON (PE)"
+          }
+        ],
+        "gridDataService": []
+      },
+      "zIndex": 4,
+      "container": null,
+      "visible": true,
+      "horizontalAlignment": "Left",
+      "verticalAlignment": "Top",
+      "backgroundColor": "transparent",
+      "borderColor": "none",
+      "borderWidth": 0,
+      "rotateAngle": 0,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "margin": {},
+      "flip": "None",
+      "flipMode": "All",
+      "wrapper": {
+        "actualSize": {
+          "width": 600,
+          "height": 437
+        },
+        "offsetX": 521.09375,
+        "offsetY": 822
+      },
+      "constraints": 5240814,
+      "style": {
+        "fill": "white",
+        "gradient": {
+          "type": "None"
+        },
+        "strokeColor": "black",
+        "strokeWidth": 1,
+        "strokeDashArray": "",
+        "opacity": 1,
+        "textOverflow": "Wrap"
+      },
+      "isExpanded": true,
+      "expandIcon": {
+        "shape": "None"
+      },
+      "fixedUserHandles": [],
+      "tooltip": {
+        "openOn": "Auto",
+        "content": "",
+        "isSticky": false
+      },
+      "inEdges": [
+        "Link1xbNKS"
+      ],
+      "outEdges": [
+        "Link1itcCG"
+      ],
+      "parentId": "",
+      "processId": "",
+      "umlIndex": -1,
+      "isPhase": false,
+      "isLane": false
+    },
+    {
+      "shape": {
+        "type": "HTML",
+        "content": "\n      <div style=\"padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9; height:100%;\">\n        <h3 style=\"text-align: center; color: #0056b3; font-size: 24px; font-weight: bold;\">\n          Speak Action: answers\n        </h3>\n        <div style=\"margin-top: 10px;\">\n          Hello <strong>AF1.slot1</strong> how are you\n        </div>\n      </div>\n    "
+      },
+      "ports": [],
+      "id": "speakNode_1736536472125",
+      "offsetX": 1162.09375,
+      "offsetY": 1040,
+      "width": 292.390625,
+      "height": 94,
+      "addInfo": {
+        "actionType": "SpeakAction",
+        "actionString": "Hello AF1.slot1 how are you",
+        "speakActionName": "answers"
+      },
+      "annotations": [],
+      "zIndex": 6,
+      "container": null,
+      "visible": true,
+      "horizontalAlignment": "Left",
+      "verticalAlignment": "Top",
+      "backgroundColor": "transparent",
+      "borderColor": "none",
+      "borderWidth": 0,
+      "rotateAngle": 0,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "margin": {},
+      "flip": "None",
+      "flipMode": "All",
+      "wrapper": {
+        "actualSize": {
+          "width": 292.390625,
+          "height": 94
+        },
+        "offsetX": 1162.09375,
+        "offsetY": 1040
+      },
+      "constraints": 5240814,
+      "style": {
+        "fill": "white",
+        "gradient": {
+          "type": "None"
+        },
+        "strokeColor": "black",
+        "strokeWidth": 1,
+        "strokeDashArray": "",
+        "opacity": 1,
+        "textOverflow": "Wrap"
+      },
+      "isExpanded": true,
+      "expandIcon": {
+        "shape": "None"
+      },
+      "fixedUserHandles": [],
+      "tooltip": {
+        "openOn": "Auto",
+        "content": "",
+        "isSticky": false
+      },
+      "inEdges": [
+        "Link1itcCG"
+      ],
+      "outEdges": [],
+      "parentId": "",
+      "processId": "",
+      "umlIndex": -1,
+      "isPhase": false,
+      "isLane": false
+    },
+    {
+      "shape": {
+        "type": "HTML",
+        "content": "\n      <div style=\"padding: 10px; border: 2px solid #ff5733; border-radius: 10px; background-color: #fff3e6; height:100%;\">\n        <h3 style=\"text-align: center; color: #ff5733; font-size: 18px; font-weight: bold;\">Event Trigger</h3>\n        <div style=\"margin-top: 10px;\">\n          <strong>Name:</strong> external_1<br>\n          <strong>URI:</strong> <i>bot/event/external_1</i>\n          \n        </div>\n      </div>\n    "
+      },
+      "ports": [],
+      "id": "eventNode_1736536513468",
+      "offsetX": 1213.09375,
+      "offsetY": 137,
+      "width": 213.15625,
+      "height": 109,
+      "addInfo": {
+        "actionType": "Event Trigger",
+        "eventName": "external_1",
+        "eventUri": "bot/event/external_1"
+      },
+      "annotations": [],
+      "zIndex": 10,
+      "container": null,
+      "visible": true,
+      "horizontalAlignment": "Left",
+      "verticalAlignment": "Top",
+      "backgroundColor": "transparent",
+      "borderColor": "none",
+      "borderWidth": 0,
+      "rotateAngle": 0,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "margin": {},
+      "flip": "None",
+      "flipMode": "All",
+      "wrapper": {
+        "actualSize": {
+          "width": 213.15625,
+          "height": 109
+        },
+        "offsetX": 1213.09375,
+        "offsetY": 137
+      },
+      "constraints": 5240814,
+      "style": {
+        "fill": "white",
+        "gradient": {
+          "type": "None"
+        },
+        "strokeColor": "black",
+        "strokeWidth": 1,
+        "strokeDashArray": "",
+        "opacity": 1,
+        "textOverflow": "Wrap"
+      },
+      "isExpanded": true,
+      "expandIcon": {
+        "shape": "None"
+      },
+      "fixedUserHandles": [],
+      "tooltip": {
+        "openOn": "Auto",
+        "content": "",
+        "isSticky": false
+      },
+      "inEdges": [],
+      "outEdges": [
+        "Link1knvE1"
+      ],
+      "parentId": "",
+      "processId": "",
+      "umlIndex": -1,
+      "isPhase": false,
+      "isLane": false
+    },
+    {
+      "shape": {
+        "type": "HTML",
+        "content": "\n      <div style=\"padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9;\">\n        <h3 style=\"text-align: center; font-size: 18px; bold; color: #0056b3;\">SF1</h3>\n        \n            <div style=\"margin-top: 10px;\">\n              <h4 style=\"color: #0056b3;\">slot1</h4>\n            </div>\n            <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n              <strong>Type:</strong> str<br>\n              <strong>HRI String:</strong> Give parameter 1<br>\n              <strong>Value:</strong> undefined<br>\n              <strong>Entity:</strong> null\n            </div>\n          \n            <div style=\"margin-top: 10px;\">\n              <h4 style=\"color: #0056b3;\">slot2</h4>\n            </div>\n            <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n              <strong>Type:</strong> str<br>\n              <strong>Service:</strong> storage_svc<br>\n              <div style=\"margin-left: 10px;\">\n                <strong>Query:</strong> city={a:SF1.slot1, b:0}<br>\n                <strong>Header:</strong> undefined<br>\n                <strong>Path:</strong> username='mario'<br>\n                <strong>Body:</strong> undefined\n              </div>\n            </div>\n          \n      </div>\n    "
+      },
+      "ports": [],
+      "id": "formNode_1736536552224",
+      "offsetX": 1277.09375,
+      "offsetY": 493,
+      "width": 600,
+      "height": 346,
+      "annotations": [
+        {
+          "id": "KIiik",
+          "content": "",
+          "annotationType": "String",
+          "style": {
+            "strokeWidth": 0,
+            "strokeColor": "transparent",
+            "fill": "transparent",
+            "bold": false,
+            "textWrapping": "WrapWithOverflow",
+            "color": "black",
+            "whiteSpace": "CollapseSpace",
+            "fontFamily": "Arial",
+            "fontSize": 12,
+            "italic": false,
+            "opacity": 1,
+            "strokeDashArray": "",
+            "textAlign": "Center",
+            "textOverflow": "Wrap",
+            "textDecoration": "None"
+          },
+          "hyperlink": {
+            "link": "",
+            "hyperlinkOpenState": "NewTab",
+            "content": "",
+            "textDecoration": "None"
+          },
+          "constraints": 4,
+          "visibility": true,
+          "rotateAngle": 0,
+          "rotationReference": "Parent",
+          "margin": {
+            "right": 0,
+            "bottom": 0,
+            "left": 0,
+            "top": 0
+          },
+          "horizontalAlignment": "Center",
+          "verticalAlignment": "Center",
+          "offset": {
+            "x": 0.5,
+            "y": 0.5
+          }
+        }
+      ],
+      "addInfo": {
+        "formName": "SF1",
+        "gridDataHRI": [
+          {
+            "order": 1,
+            "name": "slot1",
+            "type": "str",
+            "hriString": "Give parameter 1",
+            "entity": null
+          }
+        ],
+        "gridDataService": [
+          {
+            "order": 2,
+            "name": "slot2",
+            "type": "str",
+            "eServiceName": "storage_svc",
+            "query": "city={a:SF1.slot1, b:0}",
+            "path": "username='mario'"
+          }
+        ]
+      },
+      "zIndex": 13,
+      "container": null,
+      "visible": true,
+      "horizontalAlignment": "Left",
+      "verticalAlignment": "Top",
+      "backgroundColor": "transparent",
+      "borderColor": "none",
+      "borderWidth": 0,
+      "rotateAngle": 0,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "margin": {},
+      "flip": "None",
+      "flipMode": "All",
+      "wrapper": {
+        "actualSize": {
+          "width": 600,
+          "height": 346
+        },
+        "offsetX": 1277.09375,
+        "offsetY": 493
+      },
+      "constraints": 5240814,
+      "style": {
+        "fill": "white",
+        "gradient": {
+          "type": "None"
+        },
+        "strokeColor": "black",
+        "strokeWidth": 1,
+        "strokeDashArray": "",
+        "opacity": 1,
+        "textOverflow": "Wrap"
+      },
+      "isExpanded": true,
+      "expandIcon": {
+        "shape": "None"
+      },
+      "fixedUserHandles": [],
+      "tooltip": {
+        "openOn": "Auto",
+        "content": "",
+        "isSticky": false
+      },
+      "inEdges": [
+        "Link1knvE1"
+      ],
+      "outEdges": [
+        "Link1Kq7lJ"
+      ],
+      "parentId": "",
+      "processId": "",
+      "umlIndex": -1,
+      "isPhase": false,
+      "isLane": false
+    },
+    {
+      "shape": {
+        "type": "HTML",
+        "content": "\n      <div style=\"padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9; height:100%;\">\n        <h3 style=\"text-align: center; color: #0056b3; font-size: 24px; font-weight: bold;\">\n          Speak Action: answers2\n        </h3>\n        <div style=\"margin-top: 10px;\">\n          The weather is <strong>SF1.slot1</strong>\n        </div>\n      </div>\n    "
+      },
+      "ports": [],
+      "id": "speakNode_1736536682780",
+      "offsetX": 1222.09375,
+      "offsetY": 805,
+      "width": 307.5,
+      "height": 94,
+      "addInfo": {
+        "actionType": "SpeakAction",
+        "actionString": "The weather is SF1.slot1",
+        "speakActionName": "answers2"
+      },
+      "annotations": [],
+      "zIndex": 15,
+      "container": null,
+      "visible": true,
+      "horizontalAlignment": "Left",
+      "verticalAlignment": "Top",
+      "backgroundColor": "transparent",
+      "borderColor": "none",
+      "borderWidth": 0,
+      "rotateAngle": 0,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "margin": {},
+      "flip": "None",
+      "flipMode": "All",
+      "wrapper": {
+        "actualSize": {
+          "width": 307.5,
+          "height": 94
+        },
+        "offsetX": 1222.09375,
+        "offsetY": 805
+      },
+      "constraints": 5240814,
+      "style": {
+        "fill": "white",
+        "gradient": {
+          "type": "None"
+        },
+        "strokeColor": "black",
+        "strokeWidth": 1,
+        "strokeDashArray": "",
+        "opacity": 1,
+        "textOverflow": "Wrap"
+      },
+      "isExpanded": true,
+      "expandIcon": {
+        "shape": "None"
+      },
+      "fixedUserHandles": [],
+      "tooltip": {
+        "openOn": "Auto",
+        "content": "",
+        "isSticky": false
+      },
+      "inEdges": [
+        "Link1Kq7lJ"
+      ],
+      "outEdges": [
+        "Link1t7TCQ"
+      ],
+      "parentId": "",
+      "processId": "",
+      "umlIndex": -1,
+      "isPhase": false,
+      "isLane": false
+    },
+    {
+      "shape": {
+        "type": "HTML",
+        "content": "\n      <div style=\"padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9; height:100%;\">\n        <h3 style=\"text-align: center; color: #0056b3; font-size: 18px; font-weight: bold;\">Call Service</h3>\n        <div style=\"margin-top: 10px;\">\n          <strong>Name:</strong> storage_svc<br>\n          <strong>HTTP Verb:</strong> POST<br>\n          <strong>Host:</strong> r4a.issel.ee.auth.gr<br>\n          <strong>Port:</strong> 00<br>\n          <strong>Path:</strong> /{username}<br>\n          <strong>Query:</strong> city=SF1.slot1<br>\n          <strong>Header:</strong> <br>\n          <strong>Body:</strong> <br>\n          <strong>Path:</strong> username='mario'<br> <!-- Add this line -->\n        </div>\n      </div>\n    "
+      },
+      "ports": [],
+      "id": "serviceNode_1736537457856",
+      "offsetX": 1679.09375,
+      "offsetY": 968,
+      "width": 214.875,
+      "height": 277,
+      "addInfo": {
+        "actionType": "RestAction",
+        "serviceName": "storage_svc",
+        "serviceVerb": "POST",
+        "serviceHost": "r4a.issel.ee.auth.gr",
+        "servicePort": "00",
+        "servicePath": "/{username}",
+        "serviceQuery": "city=SF1.slot1",
+        "serviceHeader": "",
+        "serviceBody": "",
+        "servicePathValue": "username='mario'"
+      },
+      "annotations": [],
+      "zIndex": 18,
+      "container": null,
+      "visible": true,
+      "horizontalAlignment": "Left",
+      "verticalAlignment": "Top",
+      "backgroundColor": "transparent",
+      "borderColor": "none",
+      "borderWidth": 0,
+      "rotateAngle": 0,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "margin": {},
+      "flip": "None",
+      "flipMode": "All",
+      "wrapper": {
+        "actualSize": {
+          "width": 214.875,
+          "height": 277
+        },
+        "offsetX": 1679.09375,
+        "offsetY": 968
+      },
+      "constraints": 5240814,
+      "style": {
+        "fill": "white",
+        "gradient": {
+          "type": "None"
+        },
+        "strokeColor": "black",
+        "strokeWidth": 1,
+        "strokeDashArray": "",
+        "opacity": 1,
+        "textOverflow": "Wrap"
+      },
+      "isExpanded": true,
+      "expandIcon": {
+        "shape": "None"
+      },
+      "fixedUserHandles": [],
+      "tooltip": {
+        "openOn": "Auto",
+        "content": "",
+        "isSticky": false
+      },
+      "inEdges": [
+        "Link1t7TCQ"
+      ],
+      "outEdges": [],
+      "parentId": "",
+      "processId": "",
+      "umlIndex": -1,
+      "isPhase": false,
+      "isLane": false
+    }
+  ],
+  "connectors": [
+    {
+      "shape": {
+        "type": "None"
+      },
+      "id": "Link1itcCG",
+      "type": "Orthogonal",
+      "sourcePoint": {
+        "x": 821.09,
+        "y": 822
+      },
+      "targetPoint": {
+        "x": 1015.9,
+        "y": 1040
+      },
+      "targetDecorator": {
+        "shape": "Arrow",
+        "width": 10,
+        "height": 10,
+        "pivot": {
+          "x": 0,
+          "y": 0.5
+        },
+        "style": {
+          "fill": "black",
+          "strokeColor": "black",
+          "strokeWidth": 1,
+          "strokeDashArray": "",
+          "opacity": 1,
+          "gradient": {
+            "type": "None"
+          }
+        }
+      },
+      "sourcePortID": "",
+      "targetPortID": "",
+      "sourceID": "formNode_1736536455533",
+      "targetID": "speakNode_1736536472125",
+      "flip": "None",
+      "connectorSpacing": 13,
+      "segments": [
+        {
+          "type": "Orthogonal",
+          "length": null,
+          "direction": null
+        }
+      ],
+      "sourceDecorator": {
+        "shape": "None",
+        "width": 10,
+        "height": 10,
+        "pivot": {
+          "x": 0,
+          "y": 0.5
+        },
+        "style": {
+          "fill": "black",
+          "strokeColor": "black",
+          "strokeWidth": 1,
+          "strokeDashArray": "",
+          "opacity": 1,
+          "gradient": {
+            "type": "None"
+          }
+        }
+      },
+      "cornerRadius": 0,
+      "wrapper": {
+        "actualSize": {
+          "width": 194.80999999999995,
+          "height": 218
+        },
+        "offsetX": 918.495,
+        "offsetY": 931
+      },
+      "style": {
+        "strokeWidth": 1,
+        "strokeColor": "black",
+        "fill": "transparent",
+        "strokeDashArray": "",
+        "opacity": 1,
+        "gradient": {
+          "type": "None"
+        }
+      },
+      "annotations": [],
+      "fixedUserHandles": [],
+      "ports": [],
+      "tooltip": {
+        "content": "Link1",
+        "showTipPointer": true,
+        "width": "auto",
+        "height": "auto",
+        "isSticky": false,
+        "relativeMode": "Object",
+        "openOn": "Auto"
+      },
+      "constraints": 2043454,
+      "previewSize": {},
+      "zIndex": 7,
+      "visible": true,
+      "connectionPadding": 0,
+      "flipMode": "All",
+      "hitPadding": 10,
+      "sourcePadding": 0,
+      "targetPadding": 0,
+      "parentId": ""
+    },
+    {
+      "shape": {
+        "type": "None"
+      },
+      "id": "Link1xbNKS",
+      "type": "Orthogonal",
+      "sourcePoint": {
+        "x": 506.09,
+        "y": 505
+      },
+      "targetPoint": {
+        "x": 521.09,
+        "y": 603.5
+      },
+      "targetDecorator": {
+        "shape": "Arrow",
+        "width": 10,
+        "height": 10,
+        "pivot": {
+          "x": 0,
+          "y": 0.5
+        },
+        "style": {
+          "fill": "black",
+          "strokeColor": "black",
+          "strokeWidth": 1,
+          "strokeDashArray": "",
+          "opacity": 1,
+          "gradient": {
+            "type": "None"
+          }
+        }
+      },
+      "sourcePortID": "",
+      "targetPortID": "",
+      "sourceID": "intentNode_1736536307354",
+      "targetID": "formNode_1736536455533",
+      "flip": "None",
+      "connectorSpacing": 13,
+      "segments": [
+        {
+          "type": "Orthogonal",
+          "length": null,
+          "direction": null
+        }
+      ],
+      "sourceDecorator": {
+        "shape": "None",
+        "width": 10,
+        "height": 10,
+        "pivot": {
+          "x": 0,
+          "y": 0.5
+        },
+        "style": {
+          "fill": "black",
+          "strokeColor": "black",
+          "strokeWidth": 1,
+          "strokeDashArray": "",
+          "opacity": 1,
+          "gradient": {
+            "type": "None"
+          }
+        }
+      },
+      "cornerRadius": 0,
+      "wrapper": {
+        "actualSize": {
+          "width": 15.000000000000057,
+          "height": 98.5
+        },
+        "offsetX": 513.59,
+        "offsetY": 554.25
+      },
+      "style": {
+        "strokeWidth": 1,
+        "strokeColor": "black",
+        "fill": "transparent",
+        "strokeDashArray": "",
+        "opacity": 1,
+        "gradient": {
+          "type": "None"
+        }
+      },
+      "annotations": [],
+      "fixedUserHandles": [],
+      "ports": [],
+      "tooltip": {
+        "content": "Link1",
+        "showTipPointer": true,
+        "width": "auto",
+        "height": "auto",
+        "isSticky": false,
+        "relativeMode": "Object",
+        "openOn": "Auto"
+      },
+      "constraints": 2043454,
+      "previewSize": {},
+      "zIndex": 8,
+      "visible": true,
+      "connectionPadding": 0,
+      "flipMode": "All",
+      "hitPadding": 10,
+      "sourcePadding": 0,
+      "targetPadding": 0,
+      "parentId": ""
+    },
+    {
+      "shape": {
+        "type": "None"
+      },
+      "id": "Link1knvE1",
+      "type": "Orthogonal",
+      "sourcePoint": {
+        "x": 1213.09,
+        "y": 191.5
+      },
+      "targetPoint": {
+        "x": 1277.09,
+        "y": 320
+      },
+      "targetDecorator": {
+        "shape": "Arrow",
+        "width": 10,
+        "height": 10,
+        "pivot": {
+          "x": 0,
+          "y": 0.5
+        },
+        "style": {
+          "fill": "black",
+          "strokeColor": "black",
+          "strokeWidth": 1,
+          "strokeDashArray": "",
+          "opacity": 1,
+          "gradient": {
+            "type": "None"
+          }
+        }
+      },
+      "sourcePortID": "",
+      "targetPortID": "",
+      "sourceID": "eventNode_1736536513468",
+      "targetID": "formNode_1736536552224",
+      "flip": "None",
+      "connectorSpacing": 13,
+      "segments": [
+        {
+          "type": "Orthogonal",
+          "length": null,
+          "direction": null
+        }
+      ],
+      "sourceDecorator": {
+        "shape": "None",
+        "width": 10,
+        "height": 10,
+        "pivot": {
+          "x": 0,
+          "y": 0.5
+        },
+        "style": {
+          "fill": "black",
+          "strokeColor": "black",
+          "strokeWidth": 1,
+          "strokeDashArray": "",
+          "opacity": 1,
+          "gradient": {
+            "type": "None"
+          }
+        }
+      },
+      "cornerRadius": 0,
+      "wrapper": {
+        "actualSize": {
+          "width": 64,
+          "height": 128.5
+        },
+        "offsetX": 1245.09,
+        "offsetY": 255.75
+      },
+      "style": {
+        "strokeWidth": 1,
+        "strokeColor": "black",
+        "fill": "transparent",
+        "strokeDashArray": "",
+        "opacity": 1,
+        "gradient": {
+          "type": "None"
+        }
+      },
+      "annotations": [],
+      "fixedUserHandles": [],
+      "ports": [],
+      "tooltip": {
+        "content": "Link1",
+        "showTipPointer": true,
+        "width": "auto",
+        "height": "auto",
+        "isSticky": false,
+        "relativeMode": "Object",
+        "openOn": "Auto"
+      },
+      "constraints": 2043454,
+      "previewSize": {},
+      "zIndex": 11,
+      "visible": true,
+      "connectionPadding": 0,
+      "flipMode": "All",
+      "hitPadding": 10,
+      "sourcePadding": 0,
+      "targetPadding": 0,
+      "parentId": ""
+    },
+    {
+      "shape": {
+        "type": "None"
+      },
+      "id": "Link1Kq7lJ",
+      "type": "Orthogonal",
+      "sourcePoint": {
+        "x": 1277.09,
+        "y": 666
+      },
+      "targetPoint": {
+        "x": 1222.09,
+        "y": 758
+      },
+      "targetDecorator": {
+        "shape": "Arrow",
+        "width": 10,
+        "height": 10,
+        "pivot": {
+          "x": 0,
+          "y": 0.5
+        },
+        "style": {
+          "fill": "black",
+          "strokeColor": "black",
+          "strokeWidth": 1,
+          "strokeDashArray": "",
+          "opacity": 1,
+          "gradient": {
+            "type": "None"
+          }
+        }
+      },
+      "sourcePortID": "",
+      "targetPortID": "",
+      "sourceID": "formNode_1736536552224",
+      "targetID": "speakNode_1736536682780",
+      "flip": "None",
+      "connectorSpacing": 13,
+      "segments": [
+        {
+          "type": "Orthogonal",
+          "length": null,
+          "direction": null
+        }
+      ],
+      "sourceDecorator": {
+        "shape": "None",
+        "width": 10,
+        "height": 10,
+        "pivot": {
+          "x": 0,
+          "y": 0.5
+        },
+        "style": {
+          "fill": "black",
+          "strokeColor": "black",
+          "strokeWidth": 1,
+          "strokeDashArray": "",
+          "opacity": 1,
+          "gradient": {
+            "type": "None"
+          }
+        }
+      },
+      "cornerRadius": 0,
+      "wrapper": {
+        "actualSize": {
+          "width": 55,
+          "height": 92
+        },
+        "offsetX": 1249.59,
+        "offsetY": 712
+      },
+      "style": {
+        "strokeWidth": 1,
+        "strokeColor": "black",
+        "fill": "transparent",
+        "strokeDashArray": "",
+        "opacity": 1,
+        "gradient": {
+          "type": "None"
+        }
+      },
+      "annotations": [],
+      "fixedUserHandles": [],
+      "ports": [],
+      "tooltip": {
+        "content": "Link1",
+        "showTipPointer": true,
+        "width": "auto",
+        "height": "auto",
+        "isSticky": false,
+        "relativeMode": "Object",
+        "openOn": "Auto"
+      },
+      "constraints": 2043454,
+      "previewSize": {},
+      "zIndex": 19,
+      "visible": true,
+      "connectionPadding": 0,
+      "flipMode": "All",
+      "hitPadding": 10,
+      "sourcePadding": 0,
+      "targetPadding": 0,
+      "parentId": ""
+    },
+    {
+      "shape": {
+        "type": "None"
+      },
+      "id": "Link1t7TCQ",
+      "type": "Orthogonal",
+      "sourcePoint": {
+        "x": 1375.84,
+        "y": 805
+      },
+      "targetPoint": {
+        "x": 1571.66,
+        "y": 968
+      },
+      "targetDecorator": {
+        "shape": "Arrow",
+        "width": 10,
+        "height": 10,
+        "pivot": {
+          "x": 0,
+          "y": 0.5
+        },
+        "style": {
+          "fill": "black",
+          "strokeColor": "black",
+          "strokeWidth": 1,
+          "strokeDashArray": "",
+          "opacity": 1,
+          "gradient": {
+            "type": "None"
+          }
+        }
+      },
+      "sourcePortID": "",
+      "targetPortID": "",
+      "sourceID": "speakNode_1736536682780",
+      "targetID": "serviceNode_1736537457856",
+      "flip": "None",
+      "connectorSpacing": 13,
+      "segments": [
+        {
+          "type": "Orthogonal",
+          "length": null,
+          "direction": null
+        }
+      ],
+      "sourceDecorator": {
+        "shape": "None",
+        "width": 10,
+        "height": 10,
+        "pivot": {
+          "x": 0,
+          "y": 0.5
+        },
+        "style": {
+          "fill": "black",
+          "strokeColor": "black",
+          "strokeWidth": 1,
+          "strokeDashArray": "",
+          "opacity": 1,
+          "gradient": {
+            "type": "None"
+          }
+        }
+      },
+      "cornerRadius": 0,
+      "wrapper": {
+        "actualSize": {
+          "width": 195.82000000000016,
+          "height": 163
+        },
+        "offsetX": 1473.75,
+        "offsetY": 886.5
+      },
+      "style": {
+        "strokeWidth": 1,
+        "strokeColor": "black",
+        "fill": "transparent",
+        "strokeDashArray": "",
+        "opacity": 1,
+        "gradient": {
+          "type": "None"
+        }
+      },
+      "annotations": [],
+      "fixedUserHandles": [],
+      "ports": [],
+      "tooltip": {
+        "content": "Link1",
+        "showTipPointer": true,
+        "width": "auto",
+        "height": "auto",
+        "isSticky": false,
+        "relativeMode": "Object",
+        "openOn": "Auto"
+      },
+      "constraints": 2043454,
+      "previewSize": {},
+      "zIndex": 20,
+      "visible": true,
+      "connectionPadding": 0,
+      "flipMode": "All",
+      "hitPadding": 10,
+      "sourcePadding": 0,
+      "targetPadding": 0,
+      "parentId": ""
+    }
+  ],
+  "pageSettings": {
+    "orientation": "Landscape",
+    "height": null,
+    "width": null,
+    "background": {
+      "source": "",
+      "color": "transparent"
+    },
+    "showPageBreaks": false,
+    "fitOptions": {
+      "canFit": false
+    },
+    "boundaryConstraints": "Infinity",
+    "multiplePage": false
+  },
+  "selectedItems": {
+    "nodes": [],
+    "connectors": [],
+    "constraints": 16382,
+    "selectedObjects": [],
+    "userHandles": [],
+    "rotateAngle": 0,
+    "canToggleSelection": false,
+    "pivot": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "width": 0,
+    "height": 0,
+    "offsetX": 0,
+    "offsetY": 0,
+    "handleSize": 14,
+    "rubberBandSelectionMode": "CompleteIntersect",
+    "wrapper": null
+  },
+  "basicElements": [],
+  "tooltip": {
+    "content": ""
+  },
+  "commandManager": {
+    "commands": []
+  },
+  "tool": 3,
+  "customCursor": [],
+  "bridgeDirection": "Top",
+  "diagramSettings": {
+    "inversedAlignment": true
+  },
+  "serializationSettings": {
+    "preventDefaults": false
+  },
+  "version": 17.1
+}

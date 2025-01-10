@@ -1,0 +1,78 @@
+{
+  "services": [
+    {
+      "name": "weather_svc",
+      "verb": "GET",
+      "host": "r4a.issel.ee.auth.gr",
+      "port": "8080",
+      "path": "/weather",
+      "id": 1
+    },
+    {
+      "name": "storage_svc",
+      "verb": "POST",
+      "host": "r4a.issel.ee.auth.gr",
+      "port": "00",
+      "path": "/{username}",
+      "id": 2
+    }
+  ],
+  "events": [
+    {
+      "name": "external_1",
+      "uri": "bot/event/external_1",
+      "id": 1
+    }
+  ],
+  "entities": [
+    {
+      "name": "Doctor",
+      "values": [
+        "Kardiologos",
+        "Odontiatros",
+        "good doc"
+      ],
+      "id": 1
+    }
+  ],
+  "synonyms": [
+    {
+      "name": "date_period",
+      "values": [
+        "mera",
+        "evdomada",
+        "mina",
+        "aurio",
+        "some day"
+      ],
+      "id": 1
+    }
+  ],
+  "globalSlots": [],
+  "formSlots": [
+    {
+      "name": "slot1",
+      "type": "str",
+      "form": "",
+      "id": 1
+    },
+    {
+      "name": "slot2",
+      "type": "str",
+      "form": "",
+      "id": 2
+    },
+    {
+      "name": "slot3",
+      "type": null,
+      "form": "AF1",
+      "id": 3
+    },
+    {
+      "name": "slot1",
+      "type": "str",
+      "form": "SF1",
+      "id": 4
+    }
+  ]
+}

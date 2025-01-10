@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.react
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./src:/app/src
+      - .:/app/shared-data
+    stdin_open: true
+    tty: true
+
+  json-server:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.jsonserver
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./shared/db.json:/app/db.json
+      - .:/app/shared-data
+
+  backend:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.fastapi
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+      - .:/app/shared-data
+    environment:
+      - PYTHONUNBUFFERED=1

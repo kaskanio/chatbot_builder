@@ -1,67 +1,8 @@
 {
   "services": [],
-  "events": [
-    {
-      "name": "external_1",
-      "uri": "bot/event/external_1",
-      "id": 1
-    }
-  ],
-  "entities": [
-    {
-      "name": "Doctor",
-      "values": [
-        "cardiologist",
-        "dentist",
-        "doc"
-      ],
-      "id": 1
-    }
-  ],
+  "events": [],
+  "entities": [],
   "synonyms": [],
   "globalSlots": [],
-  "formSlots": [
-    {
-      "name": "Param2",
-      "type": "bool",
-      "form": "AF1",
-      "id": 2
-    },
-    {
-      "name": "Param3",
-      "type": "str",
-      "form": "AF1",
-      "id": 3
-    },
-    {
-      "name": "Param1",
-      "type": "int",
-      "form": "",
-      "id": 4
-    },
-    {
-      "name": "Param1",
-      "type": "int",
-      "form": "AF1",
-      "id": 5
-    },
-    {
-      "name": "Param2",
-      "type": "bool",
-      "form": "AF1",
-      "id": 6
-    },
-    {
-      "name": "Param3",
-      "type": "str",
-      "form": "AF1",
-      "id": 7
-    },
-    {
-      "name": "dfgfd",
-      "type": "float",
-      "form": "dfgdf",
-      "id": 8
-    }
-  ]
+  "formSlots": []
 }
