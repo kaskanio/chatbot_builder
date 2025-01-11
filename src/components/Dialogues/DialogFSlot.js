@@ -37,7 +37,7 @@ function DialogFSlot({
     formSlotsNames = <div>Error loading form slots.</div>;
   } else {
     formSlotsNames = formSlotsData.map((slot) => ({
-      name: `${slot.name} (${slot.type})`,
+      name: `${slot.form}.${slot.name} (${slot.type})`,
       value: slot.name,
     }));
     content = formSlotsData.map((slot) => {

@@ -60,7 +60,7 @@ end
 {%- if gslots %}
 gslots
     {%- for gslot in gslots %}
-    {{ gslot.name }}: {{ gslot.type }} = {%- if gslot.type == 'str' %} "{{ gslot.value }}"{% else %} {{ gslot.value }}{% endif %}
+    {{ gslot.name }}: {{ gslot.type }}{%- if gslot.value %} = {%- if gslot.type == 'str' %} "{{ gslot.value }}"{% else %} {{ gslot.value }}{% endif %}{% endif %}{% if not loop.last %}, {% endif %}
     {%- endfor %}
 end   
 {% endif %}
@@ -68,6 +68,7 @@ end
 {%- if dialogues %}
 dialogues
     {%- for dialogue in dialogues %}
+    {%- if dialogue.trigger %}
     Dialogue {{ dialogue.name }}
         on: {{ dialogue.trigger }}
         responses:
@@ -84,14 +85,14 @@ dialogues
                   {%- if slot.path %}path=[{{ slot.path }}]{% endif %},){%- if slot.body %}[{{ slot.body }}]{%- endif %}{% if not loop.last %} {% endif %}
               {%- endif %}
               {%- endfor %}
-          end,
+          end{% if not loop.last %},{% endif %}
           {%- elif response.type == 'ActionGroup' %}
           ActionGroup {{ response.name }}
               {%- for action in response.actions %}
               {%- if action.speak %}
               Speak({{ action.speak }})
               {%- elif action.uri %}
-              FireEvent('{{ action.uri }}', {{ action.message }})
+              FireEvent('{{ action.uri }}' {{ action.message }})
               {%- elif action.serviceName %}
               {{ action.serviceName }}(
                   {%- if action.serviceQuery %}query=[{{ action.serviceQuery }}]{% if action.serviceHeader or action.servicePath or action.serviceBody %}, {% endif %}{% endif %}
@@ -99,17 +100,18 @@ dialogues
                   {%- if action.servicePath %}path=[{{ action.servicePath }}]{% if action.serviceBody %}, {% endif %}{% endif %}
                   {%- if action.serviceBody %}body=[{{ action.serviceBody }}]{% endif %},)
               {%- elif action.gslotName %}
-              SetGSlot({{ action.gslotName }}, {{ action.gslotValue }})
+              SetGSlot({{ action.gslotName }}, {%- if action.gslotType == 'str' %}"{{ action.gslotValue }}"{% else %}{{ action.gslotValue }}{% endif %})
               {%- elif action.formSlotName %}
-              SetFSlot({{ action.formSlotName }}, {{ action.formSlotValue }})
+              SetFSlot({{ action.formSlotName }}, {%- if action.formSlotType == 'str' %}"{{ action.formSlotValue }}"{% else %}{{ action.formSlotValue }}{% endif %})
               {%- elif action.fslotName %}
-              SetFSlot({{ action.fslotName }}, {{ action.fslotValue }})
+              SetFSlot({{ action.fslotName }}, {%- if action.fslotType == 'str' %}"{{ action.fslotValue }}"{% else %}{{ action.fslotValue }}{% endif %})
               {%- endif %}
               {%- endfor %}
-          end
+          end{% if not loop.last %},{% endif %}
           {%- endif %}
           {%- endfor %}
     end
+    {%- endif %}
     {%- endfor %}
 end
 {% endif %}

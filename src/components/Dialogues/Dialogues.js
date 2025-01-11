@@ -316,7 +316,7 @@ const Dialogues = forwardRef((props, ref) => {
       <div style="padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9; height:100%;">
         <h3 style="text-align: center; color: #0056b3; font-size: 18px; font-weight: bold;">Set Form Slot</h3>
         <div style="margin-top: 10px;">
-          <strong>Name:</strong> ${slot.name}<br>
+          <strong>Name:</strong> ${slot.form}.${slot.name}<br>
           <strong>Type:</strong> ${slot.type}<br>
           <strong>Value:</strong> ${slot.value}
         </div>
@@ -350,7 +350,7 @@ const Dialogues = forwardRef((props, ref) => {
       },
       addInfo: {
         actionType: 'FormSlot',
-        slotName: slot.name,
+        slotName: `${slot.form}.${slot.name}`,
         slotType: slot.type,
         slotValue: slot.value,
       },
@@ -358,6 +358,7 @@ const Dialogues = forwardRef((props, ref) => {
     };
     addNewNode(newNode);
     setShowDialogFSlot(false);
+    console.log('The fslotnode is ', newNode.addInfo);
   };
 
   const measureContentSize = (content) => {

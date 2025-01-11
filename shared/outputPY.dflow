@@ -1,36 +1,19 @@
 triggers
     
-    Intent greet 
-        "hey",  
-        "hello",  
-        "hi",  
-        "hello there",  
-        "good morning",  
-        "goodevening",  
-        "moin",  
-        "hey there",  
-        "let's go",  
-        "hey dude",  
-        "goodmorning",  
-        "good evening",  
-        "good afternoon"
-    end
-    
-    Intent bot_challenge 
-        "are you a bot?",  
-        "are you a human?",  
-        "am i talking to a bot?",  
-        "am i talking to a human?"
-    end
-    
     Intent ask_weather 
-        "I want to tell me the weather",  
         "Tell me the weather please",  
-        "I want to tell me the weather for" PE:GPE['Thessaloniki', 'Athens'],  
-        "Tell me the weather please for" PE:DATE['tomorrow', 'today'],  
-        "Tell me the weather" PE:DATE['tomorrow', 'today'] "for" PE:GPE['Thessaloniki', 'Athens']
+        "I want to tell me the weather"
     end
     
+    Intent ask_weather2 
+        "Tell me the weather" PE:DATE['tomorrow', 'today'] "for" PE:GPE['Thessaloniki', 'Athens'],  
+        "Tell me the weather for" PE:DATE['tomorrow', 'today'],  
+        "I want to tell me the weather for" PE:GPE['Thessaloniki', 'Athens']
+    end
+    
+    Event test
+        "/test"
+    end
     
 end
 
@@ -38,36 +21,55 @@ end
 eservices
     EServiceHTTP weather_svc
         verb: GET
-        host: 'https://services.issel.ee.auth.gr'
-        path: '/general_information/weather_openweather'
+        host: 'r4a.issel.ee.auth.gr'
+        port: 8080
+        path: '/weather'
     end
 end
 
+entities
+    Entity Doctor
+        "cardiologist", 
+        "dentist", 
+        "doc"
+    end
+end
+
+gslots
+    slotA: int = 10, 
+    slotB: str = "asdas", 
+    slotC: str
+end   
+
 dialogues
-    Dialogue greet_dialogue
-        on: greet
-        responses:
-          ActionGroup greet_back
-              Speak('Hello there!!!!')
-          end
-    end
-    Dialogue bot_challenge_dialogue
-        on: bot_challenge
-        responses:
-          ActionGroup respond_iambot
-              Speak('I am a bot, powered by dFlow and Rasa.')
-          end
-    end
     Dialogue ask_weather_dialogue
         on: ask_weather
         responses:
           Form form1
               city_slot: str = HRI('For which city?', [PE:GPE]) 
-              answer: str = weather_svc(query=[city=form1.city_slot, language="English"], header=[access_token="Q5eJZ8sSLEX6XNmOHyMlWagI"],)[description] 
-              answer2: int = weather_svc(query=[city=form1.city_slot, language="English"], header=[access_token="Q5eJZ8sSLEX6XNmOHyMlWagI"],)[temp]
+              time_slot: str = HRI('For when?', [TE:Doctor]) 
+              answer: str = weather_svc(query=[city=[form1.city_slot[city]], time=form1.time_slot], header=[city=form1.city_slot[city], time=form1.time_slot],)[weather.forecast]
           end,
           ActionGroup answer_back
-              Speak('The weather for form1.city_slot is form1.answer with form1.answer2 degrees')
+              Speak('Dear the weather is form1.answer')
+              FireEvent('/test' ,{a: 1, b: '2'})
+              SetFSlot(form1.city_slot,"Thessaloniki")
+              SetGSlot(slotA,10)
+          end
+    end
+    Dialogue ask_weather2_dialogue
+        on: ask_weather2
+        responses:
+          Form form1
+              city_slot: str = HRI('For which city?', [PE:GPE]) 
+              time_slot: str = HRI('For when?', [TE:Doctor]) 
+              answer: str = weather_svc(query=[city=[form1.city_slot[city]], time=form1.time_slot], header=[city=form1.city_slot[city], time=form1.time_slot],)[weather.forecast]
+          end,
+          ActionGroup answer_back_2
+              Speak('Dear the weather is form1.answer')
+              FireEvent('/test' ,{a: 1, b: '2'})
+              SetFSlot(form1.city_slot,"Thessaloniki")
+              SetGSlot(slotA,10)
           end
     end
 end

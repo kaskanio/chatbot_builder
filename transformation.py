@@ -1,6 +1,7 @@
 import json
 from jinja2 import Environment, FileSystemLoader
 import os
+import re
 
 # Define the shared directory path
 shared_dir = os.path.join(os.getcwd(), 'shared')
@@ -71,6 +72,7 @@ def extract_dialogues(diagram):
     dialogues = []
     node_map = {node['id']: node for node in diagram['nodes']}
     dialogue_name_counter = {}  # Dictionary to keep track of dialogue name counts
+    action_group_name_counter = {}  # Dictionary to keep track of action group name counts
 
     for connector in diagram['connectors']:
         source_id = connector['sourceID']
@@ -80,7 +82,7 @@ def extract_dialogues(diagram):
 
         if 'intentName' in source_node['addInfo'] or ('eventName' in source_node['addInfo'] and source_node['addInfo'].get('eventType') != 'FireEvent'):
             # Set the dialogue name
-            trigger_name = source_node['addInfo'].get('intentName') or source_node['addInfo'].get('eventName')
+            trigger_name = source_node['addInfo'].get('intentName') or (source_node['addInfo'].get('eventType') == 'FireEvent' and source_node['addInfo'].get('eventName'))
             base_dialogue_name = f"{trigger_name}_dialogue"
             dialogue_name = base_dialogue_name
 
@@ -140,12 +142,19 @@ def extract_dialogues(diagram):
 
                     if 'actionType' in node['addInfo']:
                         action_group = None
+                        action_group_name = node['addInfo'].get('speakActionName') or node['addInfo'].get('eventName') or node['addInfo'].get('serviceName') or node['addInfo'].get('slotName')
+                        if action_group_name in action_group_name_counter:
+                            action_group_name_counter[action_group_name] += 1
+                            action_group_name = f"{action_group_name}_{action_group_name_counter[action_group_name]}"
+                        else:
+                            action_group_name_counter[action_group_name] = 1
+
                         if dialogue['responses'] and dialogue['responses'][-1]['type'] == 'ActionGroup':
                             action_group = dialogue['responses'][-1]
                         else:
                             action_group = {
                                 'type': 'ActionGroup',
-                                'name': node['addInfo'].get('speakActionName') or node['addInfo'].get('eventName') or node['addInfo'].get('serviceName') or node['addInfo'].get('slotName'),
+                                'name': action_group_name,
                                 'actions': []
                             }
                             dialogue['responses'].append(action_group)
@@ -157,7 +166,7 @@ def extract_dialogues(diagram):
                         elif node['addInfo']['actionType'] == 'Fire Event':
                             action_group['actions'].append({
                                 'uri': node['addInfo']['eventUri'],
-                                'message': node['addInfo']['message']
+                                'message': refactor_message(node['addInfo']['message'])  # Use refactor_message function
                             })
                         elif node['addInfo']['actionType'] == 'RestAction':
                             action_group['actions'].append({
@@ -170,11 +179,13 @@ def extract_dialogues(diagram):
                         elif node['addInfo']['actionType'] == 'GlobalSlot':
                             action_group['actions'].append({
                                 'gslotName': node['addInfo']['slotName'],
+                                'gslotType': node['addInfo']['slotType'],
                                 'gslotValue': node['addInfo']['slotValue']
                             })
                         elif node['addInfo']['actionType'] == 'FormSlot':
                             action_group['actions'].append({
                                 'formSlotName': node['addInfo']['slotName'],
+                                'formSlotType': node['addInfo']['slotType'],
                                 'formSlotValue': node['addInfo']['slotValue']
                             })
 
@@ -213,6 +224,10 @@ def process_hri_string(hri_string):
         formatted_string = formatted_string.replace("'", "\\'")
         formatted_parts.append("'{}'".format(formatted_string))
     return ' '.join(formatted_parts)
+
+# Function to refactor message by inserting a comma before brackets
+def refactor_message(message):
+    return re.sub(r'(\[|\{)', r',\1', message)
 
 dialogues = extract_dialogues(diagram)
 
