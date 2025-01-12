@@ -1,16 +1,15 @@
 triggers
     
-    Intent mean_log 
-        "I need to make a record of this meal for tracking purposes.",  
-        "Can you help me create a log entry for this meal?",  
-        "I want to jot down the details of this meal",  
-        "I need to remember what i ate, let's log it",  
-        "Could you remind me to log my meal",  
-        "I'd like to make a note of the food i consumed",  
-        "Can you assist me in logging my meal",  
-        "I need to jot down the meal i just had.",  
-        "Could you help me log what i just ate?",  
-        "I want to record the details of my meal"
+    Intent fill_profile 
+        "I'm" PE:PERSON['John', 'Nick'] "and i am 20 years old",  
+        "I am 30 years old",  
+        "Hi my name is" PE:PERSON['John', 'Nick'],  
+        "Hello I am" PE:PERSON['John', 'Nick'],  
+        "lets get to know us",  
+        "fill my data",  
+        "fill data",  
+        "Profile",  
+        "I want to fill my profile"
     end
     
     
@@ -18,24 +17,24 @@ end
 
 
 eservices
-    EServiceHTTP meal_svc
+    EServiceHTTP register_user
         verb: POST
-        host: 'https://services.issel.auth.gr'
-        path: '/profile/meal'
+        host: 'https://platform.health.gr'
+        path: '/user/register'
     end
 end
 
 dialogues
-    Dialogue mean_log_dialogue
-        on: mean_log
+    Dialogue fill_profile_dialogue
+        on: fill_profile
         responses:
-          Form meal_form
-              dish: str = HRI('What dish did you get?') 
-              volume: str = HRI('How much of this did you eat?')
+          Form form_profile
+              name: str = HRI('What\'s your name?', [PE:PERSON]) 
+              age: int = HRI('How old are you?')
           end,
-          ActionGroup meal_svc
-              meal_svc(body=[dish=meal_form.dish, volume=meal_form.volume],)
-              Speak('Thanks for letting me know!')
+          ActionGroup register_user
+              register_user(query=[name=form_profile.name, age=form_profile.age], )
+              Speak('Glad to meet you 'form_profile.name'')
           end
     end
 end

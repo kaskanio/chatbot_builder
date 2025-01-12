@@ -16,8 +16,8 @@
   },
   "contextMenuClick": {},
   "scrollSettings": {
-    "scrollLimit": "Diagram",
-    "viewPortWidth": 2249.59375,
+    "scrollLimit": "Infinity",
+    "viewPortWidth": 1257.59375,
     "viewPortHeight": 1200,
     "currentZoom": 1,
     "horizontalOffset": 0,
@@ -112,13 +112,13 @@
   "layers": [
     {
       "objects": [
-        "intentNode_1736688249998",
-        "formNode_1736688309336",
-        "serviceNode_1736688320600",
-        "speakNode_1736688359554",
-        "Link1NmGfp",
-        "Link1t5x5T",
-        "Link1cfQhe"
+        "intentNode_1736689453320",
+        "formNode_1736689504001",
+        "serviceNode_1736689517952",
+        "speakNode_1736689538033",
+        "Link1EqHhS",
+        "Link1Cm8FF",
+        "Link1O0Dok"
       ],
       "id": "default_layer",
       "visible": true,
@@ -131,53 +131,50 @@
     {
       "shape": {
         "type": "HTML",
-        "content": "\n      <div id=\"intentNode_1736688249998\" style=\"padding: 10px; border: 2px solid #ff5733; border-radius: 10px; background-color: #fff3e6;\">\n        <h3 style=\"text-align: center; color: #ff5733; font-size: 24px; font-weight: font-size: 18px; bold;;\">mean_log</h3>\n        <div style=\"margin-top: 10px;\">\n          \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           I need to make a record of this meal for tracking purposes.\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           Can you help me create a log entry for this meal?\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           I want to jot down the details of this meal\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           I need to remember what i ate, let's log it\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           Could you remind me to log my meal\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           I'd like to make a note of the food i consumed\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           Can you assist me in logging my meal\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           I need to jot down the meal i just had.\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           Could you help me log what i just ate?\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           I want to record the details of my meal\n          </div>\n        \n        </div>\n      </div>\n    "
+        "content": "\n      <div id=\"intentNode_1736689453320\" style=\"padding: 10px; border: 2px solid #ff5733; border-radius: 10px; background-color: #fff3e6;\">\n        <h3 style=\"text-align: center; color: #ff5733; font-size: 24px; font-weight: font-size: 18px; bold;;\">fill_profile</h3>\n        <div style=\"margin-top: 10px;\">\n          \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           I'm <strong>PE:PERSON</strong> and i am 20 years old\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           I am 30 years old\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           Hi my name is <strong>PE:PERSON</strong>\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           Hello I am <strong>PE:PERSON</strong>\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           lets get to know us\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           fill my data\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           fill data\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           Profile\n          </div>\n        \n          <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n           I want to fill my profile\n          </div>\n        \n        </div>\n      </div>\n    "
       },
       "ports": [],
-      "id": "intentNode_1736688249998",
-      "offsetX": 353.09375,
-      "offsetY": 276,
-      "width": 497.625,
-      "height": 520,
+      "id": "intentNode_1736689453320",
+      "offsetX": 320.09375,
+      "offsetY": 384,
+      "width": 338.78125,
+      "height": 475,
       "annotations": [],
       "addInfo": {
-        "intentName": "mean_log",
+        "intentName": "fill_profile",
         "intentStrings": [
           {
-            "string": "I need to make a record of this meal for tracking purposes."
+            "string": "I'm PE:PERSON and i am 20 years old"
           },
           {
-            "string": "Can you help me create a log entry for this meal?"
+            "string": "I am 30 years old"
           },
           {
-            "string": "I want to jot down the details of this meal"
+            "string": "Hi my name is PE:PERSON"
           },
           {
-            "string": "I need to remember what i ate, let's log it"
+            "string": "Hello I am PE:PERSON"
           },
           {
-            "string": "Could you remind me to log my meal"
+            "string": "lets get to know us"
           },
           {
-            "string": "I'd like to make a note of the food i consumed"
+            "string": "fill my data"
           },
           {
-            "string": "Can you assist me in logging my meal"
+            "string": "fill data"
           },
           {
-            "string": "I need to jot down the meal i just had."
+            "string": "Profile"
           },
           {
-            "string": "Could you help me log what i just ate?"
-          },
-          {
-            "string": "I want to record the details of my meal"
+            "string": "I want to fill my profile"
           }
         ],
         "pretrainedEntitiesData": [
           {
             "entity": "PERSON",
-            "values": ""
+            "values": "John, Nick"
           },
           {
             "entity": "NORP",
@@ -267,11 +264,11 @@
       "flipMode": "All",
       "wrapper": {
         "actualSize": {
-          "width": 497.625,
-          "height": 520
+          "width": 338.78125,
+          "height": 475
         },
-        "offsetX": 353.09375,
-        "offsetY": 276
+        "offsetX": 320.09375,
+        "offsetY": 384
       },
       "constraints": 5240814,
       "style": {
@@ -297,7 +294,7 @@
       },
       "inEdges": [],
       "outEdges": [
-        "Link1NmGfp"
+        "Link1EqHhS"
       ],
       "parentId": "",
       "processId": "",
@@ -306,32 +303,32 @@
       "isLane": false
     },
     {
-      "id": "formNode_1736688309336",
-      "offsetX": 389.09375,
-      "offsetY": 728,
+      "id": "formNode_1736689504001",
+      "offsetX": 399.09375,
+      "offsetY": 880,
       "width": 600,
       "height": 310,
       "shape": {
         "type": "HTML",
-        "content": "\n      <div style=\"padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9;\">\n        <h3 style=\"text-align: center; font-size: 18px; bold; color: #0056b3;\">meal_form</h3>\n        \n            <div style=\"margin-top: 10px;\">\n              <h4 style=\"color: #0056b3;\">dish</h4>\n            </div>\n            <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n              <strong>Type:</strong> str<br>\n              <strong>HRI String:</strong> What dish did you get?<br>\n              <strong>Value:</strong> undefined<br>\n              <strong>Entity:</strong> null\n            </div>\n          \n            <div style=\"margin-top: 10px;\">\n              <h4 style=\"color: #0056b3;\">volume</h4>\n            </div>\n            <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n              <strong>Type:</strong> str<br>\n              <strong>HRI String:</strong> How much of this did you eat?<br>\n              <strong>Value:</strong> undefined<br>\n              <strong>Entity:</strong> null\n            </div>\n          \n      </div>\n    "
+        "content": "\n      <div style=\"padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9;\">\n        <h3 style=\"text-align: center; font-size: 18px; bold; color: #0056b3;\">form_profile</h3>\n        \n            <div style=\"margin-top: 10px;\">\n              <h4 style=\"color: #0056b3;\">name</h4>\n            </div>\n            <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n              <strong>Type:</strong> str<br>\n              <strong>HRI String:</strong> What's your name?<br>\n              <strong>Value:</strong> undefined<br>\n              <strong>Entity:</strong> PERSON (PE)\n            </div>\n          \n            <div style=\"margin-top: 10px;\">\n              <h4 style=\"color: #0056b3;\">age</h4>\n            </div>\n            <div style=\"border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;\">\n              <strong>Type:</strong> int<br>\n              <strong>HRI String:</strong> How old are you?<br>\n              <strong>Value:</strong> undefined<br>\n              <strong>Entity:</strong> null\n            </div>\n          \n      </div>\n    "
       },
       "annotations": [],
       "addInfo": {
-        "formName": "meal_form",
+        "formName": "form_profile",
         "gridDataHRI": [
           {
             "order": 2,
-            "name": "volume",
-            "type": "str",
-            "hriString": "How much of this did you eat?",
+            "name": "age",
+            "type": "int",
+            "hriString": "How old are you?",
             "entity": null
           },
           {
             "order": 1,
-            "name": "dish",
+            "name": "name",
             "type": "str",
-            "hriString": "What dish did you get?",
-            "entity": null
+            "hriString": "What's your name?",
+            "entity": "PERSON (PE)"
           }
         ],
         "gridDataService": []
@@ -358,8 +355,8 @@
           "width": 600,
           "height": 310
         },
-        "offsetX": 389.09375,
-        "offsetY": 728
+        "offsetX": 399.09375,
+        "offsetY": 880
       },
       "constraints": 5240814,
       "style": {
@@ -384,10 +381,10 @@
         "isSticky": false
       },
       "inEdges": [
-        "Link1NmGfp"
+        "Link1EqHhS"
       ],
       "outEdges": [
-        "Link1t5x5T"
+        "Link1O0Dok"
       ],
       "parentId": "",
       "processId": "",
@@ -395,25 +392,25 @@
       "isLane": false
     },
     {
-      "id": "serviceNode_1736688320600",
-      "offsetX": 291.09375,
-      "offsetY": 1048,
-      "width": 441.375,
+      "id": "serviceNode_1736689517952",
+      "offsetX": 853.09375,
+      "offsetY": 513,
+      "width": 440.65625,
       "height": 277,
       "shape": {
         "type": "HTML",
-        "content": "\n      <div style=\"padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9; height:100%;\">\n        <h3 style=\"text-align: center; color: #0056b3; font-size: 18px; font-weight: bold;\">Call Service</h3>\n        <div style=\"margin-top: 10px;\">\n          <strong>Name:</strong> meal_svc<br>\n          <strong>HTTP Verb:</strong> POST<br>\n          <strong>Host:</strong> https://services.issel.auth.gr<br>\n          <strong>Port:</strong> undefined<br>\n          <strong>Path:</strong> /profile/meal<br>\n          <strong>Path ID:</strong> <br>\n          <strong>Query:</strong> <br>\n          <strong>Header:</strong> <br>\n          <strong>Body:</strong> dish=meal_form.dish, volume=meal_form.volume<br>\n        </div>\n      </div>\n    "
+        "content": "\n      <div style=\"padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9; height:100%;\">\n        <h3 style=\"text-align: center; color: #0056b3; font-size: 18px; font-weight: bold;\">Call Service</h3>\n        <div style=\"margin-top: 10px;\">\n          <strong>Name:</strong> register_user<br>\n          <strong>HTTP Verb:</strong> POST<br>\n          <strong>Host:</strong> https://platform.health.gr<br>\n          <strong>Port:</strong> undefined<br>\n          <strong>Path:</strong> /user/register<br>\n          <strong>Path ID:</strong> <br>\n          <strong>Query:</strong> name=form_profile.name, age=form_profile.age<br>\n          <strong>Header:</strong> <br>\n          <strong>Body:</strong> <br>\n        </div>\n      </div>\n    "
       },
       "addInfo": {
         "actionType": "RestAction",
-        "serviceName": "meal_svc",
+        "serviceName": "register_user",
         "serviceVerb": "POST",
-        "serviceHost": "https://services.issel.auth.gr",
-        "servicePath": "/profile/meal",
+        "serviceHost": "https://platform.health.gr",
+        "servicePath": "/user/register",
         "servicePathValue": "",
-        "serviceQuery": "",
+        "serviceQuery": "name=form_profile.name, age=form_profile.age",
         "serviceHeader": "",
-        "serviceBody": "dish=meal_form.dish, volume=meal_form.volume"
+        "serviceBody": ""
       },
       "annotations": [],
       "ports": [],
@@ -435,11 +432,11 @@
       "flipMode": "All",
       "wrapper": {
         "actualSize": {
-          "width": 441.375,
+          "width": 440.65625,
           "height": 277
         },
-        "offsetX": 291.09375,
-        "offsetY": 1048
+        "offsetX": 853.09375,
+        "offsetY": 513
       },
       "constraints": 5240814,
       "style": {
@@ -464,10 +461,10 @@
         "isSticky": false
       },
       "inEdges": [
-        "Link1t5x5T"
+        "Link1O0Dok"
       ],
       "outEdges": [
-        "Link1cfQhe"
+        "Link1Cm8FF"
       ],
       "parentId": "",
       "processId": "",
@@ -475,18 +472,18 @@
       "isLane": false
     },
     {
-      "id": "speakNode_1736688359554",
-      "offsetX": 1232.09375,
-      "offsetY": 737,
+      "id": "speakNode_1736689538033",
+      "offsetX": 954.09375,
+      "offsetY": 827,
       "width": 347.578125,
       "height": 94,
       "shape": {
         "type": "HTML",
-        "content": "\n      <div style=\"padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9; height:100%;\">\n        <h3 style=\"text-align: center; color: #0056b3; font-size: 24px; font-weight: bold;\">\n          Speak Action: answer_back\n        </h3>\n        <div style=\"margin-top: 10px;\">\n          Thanks for letting me know!\n        </div>\n      </div>\n    "
+        "content": "\n      <div style=\"padding: 10px; border: 2px solid #0056b3; border-radius: 10px; background-color: #f9f9f9; height:100%;\">\n        <h3 style=\"text-align: center; color: #0056b3; font-size: 24px; font-weight: bold;\">\n          Speak Action: answer_back\n        </h3>\n        <div style=\"margin-top: 10px;\">\n          Glad to meet you <strong>form_profile.name</strong>\n        </div>\n      </div>\n    "
       },
       "addInfo": {
         "actionType": "SpeakAction",
-        "actionString": "Thanks for letting me know!",
+        "actionString": "Glad to meet you form_profile.name",
         "speakActionName": "answer_back"
       },
       "annotations": [],
@@ -512,8 +509,8 @@
           "width": 347.578125,
           "height": 94
         },
-        "offsetX": 1232.09375,
-        "offsetY": 737
+        "offsetX": 954.09375,
+        "offsetY": 827
       },
       "constraints": 5240814,
       "style": {
@@ -538,7 +535,7 @@
         "isSticky": false
       },
       "inEdges": [
-        "Link1cfQhe"
+        "Link1Cm8FF"
       ],
       "outEdges": [],
       "parentId": "",
@@ -552,15 +549,15 @@
       "shape": {
         "type": "None"
       },
-      "id": "Link1NmGfp",
+      "id": "Link1EqHhS",
       "type": "Orthogonal",
       "sourcePoint": {
-        "x": 353.09,
-        "y": 536
+        "x": 320.09,
+        "y": 621.5
       },
       "targetPoint": {
-        "x": 389.09,
-        "y": 573
+        "x": 399.09,
+        "y": 725
       },
       "targetDecorator": {
         "shape": "Arrow",
@@ -583,8 +580,8 @@
       },
       "sourcePortID": "",
       "targetPortID": "",
-      "sourceID": "intentNode_1736688249998",
-      "targetID": "formNode_1736688309336",
+      "sourceID": "intentNode_1736689453320",
+      "targetID": "formNode_1736689504001",
       "flip": "None",
       "connectorSpacing": 13,
       "segments": [
@@ -616,11 +613,11 @@
       "cornerRadius": 0,
       "wrapper": {
         "actualSize": {
-          "width": 36,
-          "height": 37
+          "width": 79,
+          "height": 103.5
         },
-        "offsetX": 371.09,
-        "offsetY": 554.5
+        "offsetX": 359.59,
+        "offsetY": 673.25
       },
       "style": {
         "strokeWidth": 1,
@@ -659,15 +656,15 @@
       "shape": {
         "type": "None"
       },
-      "id": "Link1t5x5T",
+      "id": "Link1Cm8FF",
       "type": "Orthogonal",
       "sourcePoint": {
-        "x": 389.09,
-        "y": 883
+        "x": 853.09,
+        "y": 651.5
       },
       "targetPoint": {
-        "x": 291.09,
-        "y": 909.5
+        "x": 954.09,
+        "y": 780
       },
       "targetDecorator": {
         "shape": "Arrow",
@@ -690,8 +687,8 @@
       },
       "sourcePortID": "",
       "targetPortID": "",
-      "sourceID": "formNode_1736688309336",
-      "targetID": "serviceNode_1736688320600",
+      "sourceID": "serviceNode_1736689517952",
+      "targetID": "speakNode_1736689538033",
       "flip": "None",
       "connectorSpacing": 13,
       "segments": [
@@ -723,11 +720,11 @@
       "cornerRadius": 0,
       "wrapper": {
         "actualSize": {
-          "width": 98,
-          "height": 26.5
+          "width": 101,
+          "height": 128.5
         },
-        "offsetX": 340.09,
-        "offsetY": 896.25
+        "offsetX": 903.59,
+        "offsetY": 715.75
       },
       "style": {
         "strokeWidth": 1,
@@ -766,15 +763,15 @@
       "shape": {
         "type": "None"
       },
-      "id": "Link1cfQhe",
+      "id": "Link1O0Dok",
       "type": "Orthogonal",
       "sourcePoint": {
-        "x": 291.09,
-        "y": 909.5
+        "x": 399.09,
+        "y": 725
       },
       "targetPoint": {
-        "x": 1232.09,
-        "y": 784
+        "x": 853.09,
+        "y": 651.5
       },
       "targetDecorator": {
         "shape": "Arrow",
@@ -797,8 +794,8 @@
       },
       "sourcePortID": "",
       "targetPortID": "",
-      "sourceID": "serviceNode_1736688320600",
-      "targetID": "speakNode_1736688359554",
+      "sourceID": "formNode_1736689504001",
+      "targetID": "serviceNode_1736689517952",
       "flip": "None",
       "connectorSpacing": 13,
       "segments": [
@@ -830,11 +827,11 @@
       "cornerRadius": 0,
       "wrapper": {
         "actualSize": {
-          "width": 941,
-          "height": 125.5
+          "width": 454.00000000000006,
+          "height": 73.5
         },
-        "offsetX": 761.5899999999999,
-        "offsetY": 846.75
+        "offsetX": 626.09,
+        "offsetY": 688.25
       },
       "style": {
         "strokeWidth": 1,

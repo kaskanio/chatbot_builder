@@ -1,10 +1,10 @@
 {
   "services": [
     {
-      "name": "meal_svc",
+      "name": "register_user",
       "verb": "POST",
-      "host": "https://services.issel.auth.gr",
-      "path": "/profile/meal",
+      "host": "https://platform.health.gr",
+      "path": "/user/register",
       "id": 1
     }
   ],
@@ -14,15 +14,15 @@
   "globalSlots": [],
   "formSlots": [
     {
-      "name": "dish",
+      "name": "name",
       "type": "str",
-      "form": "meal_form",
+      "form": "form_profile",
       "id": 1
     },
     {
-      "name": "volume",
-      "type": "str",
-      "form": "meal_form",
+      "name": "age",
+      "type": "int",
+      "form": "form_profile",
       "id": 2
     }
   ]

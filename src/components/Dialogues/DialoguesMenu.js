@@ -139,7 +139,12 @@ const DialoguesMenu = ({ diagramInstanceRef }) => {
 
   const handleResetDiagram = () => {
     if (diagramInstanceRef.current) {
+      // Set scrollSettings before clearing the diagram
+      diagramInstanceRef.current.scrollSettings = {
+        scrollLimit: 'Infinity',
+      };
       diagramInstanceRef.current.clear();
+
       dispatch(saveDiagramState(null));
     }
   };
