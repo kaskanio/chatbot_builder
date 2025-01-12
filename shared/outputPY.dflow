@@ -1,40 +1,75 @@
 triggers
     
-    Intent fill_profile 
-        "I'm" PE:PERSON['John', 'Nick'] "and i am 20 years old",  
-        "I am 30 years old",  
-        "Hi my name is" PE:PERSON['John', 'Nick'],  
-        "Hello I am" PE:PERSON['John', 'Nick'],  
-        "lets get to know us",  
-        "fill my data",  
-        "fill data",  
-        "Profile",  
-        "I want to fill my profile"
+    Intent ask_weather 
+        "Tell me the weather please",  
+        "I want to tell me the weather"
     end
     
+    Intent ask_weather2 
+        "Tell me the weather" PE:DATE['tomorrow', 'today'] "for" PE:GPE['Thessaloniki', 'Athens'],  
+        "Tell me the weather for" PE:DATE['tomorrow', 'today'],  
+        "I want to tell me the weather for" PE:GPE['Thessaloniki', 'Athens']
+    end
+    
+    Event test
+        "/test"
+    end
     
 end
 
 
 eservices
-    EServiceHTTP register_user
-        verb: POST
-        host: 'https://platform.health.gr'
-        path: '/user/register'
+    EServiceHTTP weather_svc
+        verb: GET
+        host: 'r4a.issel.ee.auth.gr'
+        port: 8080
+        path: '/weather'
     end
 end
 
+entities
+    Entity Doctor
+        "cardiologist", 
+        "dentist", 
+        "doc"
+    end
+end
+
+gslots
+    slotA: int = 10, 
+    slotB: str = "asdas", 
+    slotC: str
+end   
+
 dialogues
-    Dialogue fill_profile_dialogue
-        on: fill_profile
+    Dialogue ask_weather_dialogue
+        on: ask_weather
         responses:
-          Form form_profile
-              name: str = HRI('What\'s your name?', [PE:PERSON]) 
-              age: int = HRI('How old are you?')
+          Form form1
+              city_slot: str = HRI('For which city?', [PE:GPE]) 
+              time_slot: str = HRI('For when?', [TE:Doctor]) 
+              answer: str = weather_svc(query=[city=[form1.city_slot[city]], time=form1.time_slot],header=[city=form1.city_slot[city], time=form1.time_slot],)[weather.forecast]
           end,
-          ActionGroup register_user
-              register_user(query=[name=form_profile.name, age=form_profile.age], )
-              Speak('Glad to meet you 'form_profile.name'')
+          ActionGroup answer_back
+              Speak('Dear the weather is 'form1.answer'')
+              FireEvent('/test' ,{a: 1, b: '2'})
+              SetFSlot(form1.city_slot,"Thessaloniki")
+              SetGSlot(slotA,10)
+          end
+    end
+    Dialogue ask_weather2_dialogue
+        on: ask_weather2
+        responses:
+          Form form1
+              city_slot: str = HRI('For which city?', [PE:GPE]) 
+              time_slot: str = HRI('For when?', [TE:Doctor]) 
+              answer: str = weather_svc(query=[city=[form1.city_slot[city]], time=form1.time_slot],header=[city=form1.city_slot[city], time=form1.time_slot],)[weather.forecast]
+          end,
+          ActionGroup answer_back_2
+              Speak('Dear the weather is 'form1.answer'')
+              FireEvent('/test' ,{a: 1, b: '2'})
+              SetFSlot(form1.city_slot,"Thessaloniki")
+              SetGSlot(slotA,10)
           end
     end
 end
