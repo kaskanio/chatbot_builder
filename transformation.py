@@ -82,7 +82,7 @@ def extract_dialogues(diagram):
 
         if 'intentName' in source_node['addInfo'] or ('eventName' in source_node['addInfo'] and source_node['addInfo'].get('eventType') != 'FireEvent'):
             # Set the dialogue name
-            trigger_name = source_node['addInfo'].get('intentName') or (source_node['addInfo'].get('eventType') == 'FireEvent' and source_node['addInfo'].get('eventName'))
+            trigger_name = source_node['addInfo'].get('intentName') or (source_node['addInfo'].get('actionType') == 'Event Trigger' and source_node['addInfo'].get('eventName'))
             base_dialogue_name = f"{trigger_name}_dialogue"
             dialogue_name = base_dialogue_name
 
@@ -124,7 +124,7 @@ def extract_dialogues(diagram):
                                 'name': slot['name'],
                                 'type': slot['type'],
                                 'service': slot['eServiceName'],
-                                'query': ''.join(slot['query']),
+                                'query': ''.join(slot.get('query', '')),
                                 'header': ''.join(slot.get('header', '')),
                                 'path': ''.join(slot.get('path', '')),
                                 'body': ''.join(slot.get('body', '')),
@@ -161,7 +161,8 @@ def extract_dialogues(diagram):
 
                         if node['addInfo']['actionType'] == 'SpeakAction':
                             action_string = node['addInfo']['actionString']
-                            formatted_action_string = "'{}'".format(action_string.replace("'", "\\'"))
+                            formatted_action_string = action_string.replace("'", "\\'")
+                            formatted_action_string = re.sub(r'(\w+\.\w+)', r"'\1'", formatted_action_string)
                             action_group['actions'].append({'speak': formatted_action_string})
                         elif node['addInfo']['actionType'] == 'Fire Event':
                             action_group['actions'].append({
@@ -174,6 +175,7 @@ def extract_dialogues(diagram):
                                 'serviceQuery': node['addInfo']['serviceQuery'],
                                 'serviceHeader': node['addInfo']['serviceHeader'],
                                 'servicePath': node['addInfo']['servicePath'],
+                                'servicePathValue': node['addInfo']['servicePathValue'],
                                 'serviceBody': node['addInfo']['serviceBody']
                             })
                         elif node['addInfo']['actionType'] == 'GlobalSlot':

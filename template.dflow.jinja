@@ -80,9 +80,9 @@ dialogues
               {{ slot.name }}: {{ slot.type }} = HRI({{ slot.hriString }}{% if slot.entity %}, [{{ slot.entity }}]{% endif %}{% if slot.value %}, [{{ slot.value }}]{% endif %}){% if not loop.last %} {% endif %}
               {%- elif slot.source == 'gridDataService' %}
               {{ slot.name }}: {{ slot.type }} = {{ slot.service }}(
-                  {%- if slot.query %}query=[{{ slot.query }}]{% if slot.header or slot.path %}, {% endif %}{% endif %}
-                  {%- if slot.header %}header=[{{ slot.header }}]{% if slot.path %}, {% endif %}{% endif %}
-                  {%- if slot.path %}path=[{{ slot.path }}]{% endif %},){%- if slot.body %}[{{ slot.body }}]{%- endif %}{% if not loop.last %} {% endif %}
+                  {%- if slot.query %}query=[{{ slot.query }}],{% endif %}
+                  {%- if slot.header %}header=[{{ slot.header }}],{% endif %}
+                  {%- if slot.path %}path=[{{ slot.path }}],{% endif %}){%- if slot.body %}[{{ slot.body }}]{%- endif %}{% if not loop.last %} {% endif %}
               {%- endif %}
               {%- endfor %}
           end{% if not loop.last %},{% endif %}
@@ -90,15 +90,12 @@ dialogues
           ActionGroup {{ response.name }}
               {%- for action in response.actions %}
               {%- if action.speak %}
-              Speak({{ action.speak }})
+              Speak('{{ action.speak }}')
               {%- elif action.uri %}
               FireEvent('{{ action.uri }}' {{ action.message }})
               {%- elif action.serviceName %}
               {{ action.serviceName }}(
-                  {%- if action.serviceQuery %}query=[{{ action.serviceQuery }}]{% if action.serviceHeader or action.servicePath or action.serviceBody %}, {% endif %}{% endif %}
-                  {%- if action.serviceHeader %}header=[{{ action.serviceHeader }}]{% if action.servicePath or action.serviceBody %}, {% endif %}{% endif %}
-                  {%- if action.servicePath %}path=[{{ action.servicePath }}]{% if action.serviceBody %}, {% endif %}{% endif %}
-                  {%- if action.serviceBody %}body=[{{ action.serviceBody }}]{% endif %},)
+                  {%- if action.serviceQuery %}query=[{{ action.serviceQuery }}], {% endif %}{%- if action.serviceHeader %}header=[{{ action.serviceHeader }}], {% endif %}{%if action.servicePathValue %}path=[{{ action.servicePathValue }}],{% endif %}{%- if action.serviceBody %}body=[{{ action.serviceBody }}],{% endif %})
               {%- elif action.gslotName %}
               SetGSlot({{ action.gslotName }}, {%- if action.gslotType == 'str' %}"{{ action.gslotValue }}"{% else %}{{ action.gslotValue }}{% endif %})
               {%- elif action.formSlotName %}

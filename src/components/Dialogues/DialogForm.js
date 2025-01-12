@@ -384,7 +384,7 @@ function DialogForm({
                       />
                       <ColumnDirective
                         field="path"
-                        headerText="Path"
+                        headerText="Specify Path"
                         width="150"
                         textAlign="Center"
                       />

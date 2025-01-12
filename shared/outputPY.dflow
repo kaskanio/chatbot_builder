@@ -1,75 +1,41 @@
 triggers
     
-    Intent ask_weather 
-        "Tell me the weather please",  
-        "I want to tell me the weather"
+    Intent mean_log 
+        "I need to make a record of this meal for tracking purposes.",  
+        "Can you help me create a log entry for this meal?",  
+        "I want to jot down the details of this meal",  
+        "I need to remember what i ate, let's log it",  
+        "Could you remind me to log my meal",  
+        "I'd like to make a note of the food i consumed",  
+        "Can you assist me in logging my meal",  
+        "I need to jot down the meal i just had.",  
+        "Could you help me log what i just ate?",  
+        "I want to record the details of my meal"
     end
     
-    Intent ask_weather2 
-        "Tell me the weather" PE:DATE['tomorrow', 'today'] "for" PE:GPE['Thessaloniki', 'Athens'],  
-        "Tell me the weather for" PE:DATE['tomorrow', 'today'],  
-        "I want to tell me the weather for" PE:GPE['Thessaloniki', 'Athens']
-    end
-    
-    Event test
-        "/test"
-    end
     
 end
 
 
 eservices
-    EServiceHTTP weather_svc
-        verb: GET
-        host: 'r4a.issel.ee.auth.gr'
-        port: 8080
-        path: '/weather'
+    EServiceHTTP meal_svc
+        verb: POST
+        host: 'https://services.issel.auth.gr'
+        path: '/profile/meal'
     end
 end
-
-entities
-    Entity Doctor
-        "cardiologist", 
-        "dentist", 
-        "doc"
-    end
-end
-
-gslots
-    slotA: int = 10, 
-    slotB: str = "asdas", 
-    slotC: str
-end   
 
 dialogues
-    Dialogue ask_weather_dialogue
-        on: ask_weather
+    Dialogue mean_log_dialogue
+        on: mean_log
         responses:
-          Form form1
-              city_slot: str = HRI('For which city?', [PE:GPE]) 
-              time_slot: str = HRI('For when?', [TE:Doctor]) 
-              answer: str = weather_svc(query=[city=[form1.city_slot[city]], time=form1.time_slot], header=[city=form1.city_slot[city], time=form1.time_slot],)[weather.forecast]
+          Form meal_form
+              dish: str = HRI('What dish did you get?') 
+              volume: str = HRI('How much of this did you eat?')
           end,
-          ActionGroup answer_back
-              Speak('Dear the weather is form1.answer')
-              FireEvent('/test' ,{a: 1, b: '2'})
-              SetFSlot(form1.city_slot,"Thessaloniki")
-              SetGSlot(slotA,10)
-          end
-    end
-    Dialogue ask_weather2_dialogue
-        on: ask_weather2
-        responses:
-          Form form1
-              city_slot: str = HRI('For which city?', [PE:GPE]) 
-              time_slot: str = HRI('For when?', [TE:Doctor]) 
-              answer: str = weather_svc(query=[city=[form1.city_slot[city]], time=form1.time_slot], header=[city=form1.city_slot[city], time=form1.time_slot],)[weather.forecast]
-          end,
-          ActionGroup answer_back_2
-              Speak('Dear the weather is form1.answer')
-              FireEvent('/test' ,{a: 1, b: '2'})
-              SetFSlot(form1.city_slot,"Thessaloniki")
-              SetGSlot(slotA,10)
+          ActionGroup meal_svc
+              meal_svc(body=[dish=meal_form.dish, volume=meal_form.volume],)
+              Speak('Thanks for letting me know!')
           end
     end
 end
