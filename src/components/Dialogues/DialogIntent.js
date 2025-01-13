@@ -16,11 +16,10 @@ import {
 } from '@syncfusion/ej2-react-navigations';
 import { DataManager } from '@syncfusion/ej2-data';
 import { useFetchEntitiesQuery, useFetchSynonymsQuery } from '../../store';
-import { TextBoxComponent } from '@syncfusion/ej2-react-inputs'; // Import TextBoxComponent
+import { TextBoxComponent } from '@syncfusion/ej2-react-inputs';
 import { Box } from '@mui/material';
 
-import Button from '../modules/Button'; // Import Button component
-
+import Button from '../modules/Button';
 const pretrainedEntities = [
   'PERSON',
   'NORP',

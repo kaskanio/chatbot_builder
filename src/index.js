@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-// Registering Syncfusion license key
+// Registering Syncfusion license key. License key is required to use Syncfusion components.
 registerLicense(
   'ORg4AjUWIQA/Gnt2UlhhQlVMfV5AQmBIYVp/TGpJfl96cVxMZVVBJAtUQF1hTX9Td0NjXXpdcHddQGdV'
 );

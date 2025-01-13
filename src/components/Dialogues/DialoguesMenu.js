@@ -1,6 +1,6 @@
 import React from 'react';
 import { MenuComponent } from '@syncfusion/ej2-react-navigations';
-import { useDispatch } from 'react-redux'; // Corrected import
+import { useDispatch } from 'react-redux';
 import { saveDiagramState } from '../../store/diagramSlice';
 import {
   useFetchFormSlotsQuery,
@@ -74,6 +74,7 @@ const DialoguesMenu = ({ diagramInstanceRef }) => {
     }
   };
 
+  // Manually save diagram inside project directory. Not used in this project.
   // const handleSaveDiagram = async () => {
   //   if (diagramInstanceRef.current) {
   //     const serializedData = diagramInstanceRef.current.saveDiagram({
@@ -129,7 +130,7 @@ const DialoguesMenu = ({ diagramInstanceRef }) => {
         );
         alert(response.data.message);
         setTimeout(() => {
-          window.location.reload(); // Trigger page reload after 1 second
+          window.location.reload(); // Trigger page reload after 1 second to apply all changes
         }, 1000);
       } catch (error) {
         alert('An error occurred while loading the database: ' + error.message);
@@ -190,7 +191,6 @@ const DialoguesMenu = ({ diagramInstanceRef }) => {
       const response = await axios.post('http://localhost:8000/export-dflow');
       alert(response.data.message);
 
-      // Assuming the response contains the exported data
       const formattedData = response.data.output;
       const blob = new Blob([formattedData], {
         type: 'application/json',

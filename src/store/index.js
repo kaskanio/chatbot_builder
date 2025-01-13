@@ -6,7 +6,7 @@ import { entitiesApi } from './apis/entitiesApi';
 import { synonymsApi } from './apis/synonymsApi';
 import { globalSlotsApi } from './apis/globalSlotsApi';
 import { formSlotsApi } from './apis/formSlotsApi';
-import diagramReducer from './diagramSlice'; // Import the diagramSlice reducer
+import diagramReducer from './diagramSlice';
 
 export const store = configureStore({
   reducer: {
@@ -16,7 +16,7 @@ export const store = configureStore({
     [synonymsApi.reducerPath]: synonymsApi.reducer,
     [globalSlotsApi.reducerPath]: globalSlotsApi.reducer,
     [formSlotsApi.reducerPath]: formSlotsApi.reducer,
-    diagram: diagramReducer, // Add the diagramSlice reducer
+    diagram: diagramReducer,
   },
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware()

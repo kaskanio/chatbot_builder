@@ -37,7 +37,7 @@ function GlobalSlotsList() {
 
   const returnGlobalSlots =
     data?.map((slot) => ({
-      id: slot.id, // assuming you still have an `id` field for unique identification
+      id: slot.id,
       name: slot.name,
       type: slot.type,
       value: slot.value,

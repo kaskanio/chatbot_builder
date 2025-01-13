@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 const synonymsApi = createApi({
   reducerPath: 'synonyms',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:3001', // Ensure this matches the port your backend is running on
+    baseUrl: 'http://localhost:3001',
   }),
   endpoints(builder) {
     return {

@@ -11,7 +11,7 @@ app = FastAPI()
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Adjust this to your frontend's URL
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -25,7 +25,7 @@ class SaveDiagramRequest(BaseModel):
 @app.post("/save-diagram")
 def save_diagram(request: SaveDiagramRequest):
     try:
-        file_path = os.path.join('shared', request.filename)  # Use shared directory
+        file_path = os.path.join('shared', request.filename)
         with open(file_path, 'w') as file:
             file.write(request.data)
         return {"message": "Diagram saved successfully"}
@@ -43,7 +43,7 @@ def export_dflow():
         logging.info(f"stdout: {result.stdout}")
         logging.error(f"stderr: {result.stderr}")
         if result.returncode == 0:
-            output_path = os.path.join('shared', 'outputPY.dflow')  # Use shared directory
+            output_path = os.path.join('shared', 'outputPY.dflow') 
             with open(output_path, 'r') as file:
                 dflow_content = file.read()
             return {"message": "Transformation successful", "output": dflow_content}
@@ -56,7 +56,7 @@ def export_dflow():
 @app.put("/upload-db")
 async def upload_db(file: UploadFile = File(...)):
     try:
-        upload_path = os.path.join(os.getcwd(), 'shared', 'db.json')  # Adjust the path to the correct location
+        upload_path = os.path.join(os.getcwd(), 'shared', 'db.json') 
         with open(upload_path, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
         return {"message": "Database successfully replaced with the new file."}
@@ -67,7 +67,7 @@ async def upload_db(file: UploadFile = File(...)):
 @app.get("/load-diagram")
 def load_diagram():
     try:
-        file_path = os.path.join('shared', 'diagram.json')  # Use shared directory
+        file_path = os.path.join('shared', 'diagram.json') 
         with open(file_path, 'r') as file:
             data = file.read()
         return data

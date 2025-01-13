@@ -64,14 +64,11 @@ const Dialogues = forwardRef((props, ref) => {
       const serializedData = diagramInstanceRef.current.saveDiagram();
       const formattedData = JSON.stringify(JSON.parse(serializedData), null, 2);
       try {
-        const response = await axios.post(
-          'http://localhost:8000/save-diagram',
-          {
-            filename: 'diagram.json',
-            directory: 'shared',
-            data: formattedData,
-          }
-        );
+        await axios.post('http://localhost:8000/save-diagram', {
+          filename: 'diagram.json',
+          directory: 'shared',
+          data: formattedData,
+        });
       } catch (error) {
         alert('An error occurred while saving the diagram: ' + error.message);
       }
@@ -584,7 +581,7 @@ const Dialogues = forwardRef((props, ref) => {
   const [initialIntentName, setInitialIntentName] = useState('');
   const [initialIntentStrings, setInitialIntentStrings] = useState([]);
   const [initialPretrainedEntitiesData, setInitialPretrainedEntitiesData] =
-    useState([]); // Add this state
+    useState([]);
 
   let content;
   content = (
@@ -708,7 +705,7 @@ const Dialogues = forwardRef((props, ref) => {
                   addNewNode,
                   setShowDialogForm,
                   setCurrentNode,
-                  diagramInstanceRef // Pass this parameter
+                  diagramInstanceRef
                 )
               }
               initialFormName={isDoubleClick ? initialFormName : ''}
@@ -736,7 +733,7 @@ const Dialogues = forwardRef((props, ref) => {
                   addNewNode,
                   setShowDialogIntent,
                   setCurrentNode,
-                  diagramInstanceRef // Pass this parameter
+                  diagramInstanceRef
                 )
               }
               initialIntentName={isDoubleClick ? initialIntentName : ''}

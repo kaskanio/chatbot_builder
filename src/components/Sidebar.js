@@ -2,12 +2,7 @@ import { useState } from 'react';
 import Link from './Link';
 
 function Sidebar() {
-  // const [isTriggersOpen, setIsTriggersOpen] = useState(true); // Start open
   const [activeLink, setActiveLink] = useState('/dialogues'); // Default active link
-
-  // const toggleTriggers = () => {
-  //   setIsTriggersOpen(!isTriggersOpen);
-  // };
 
   const handleLinkClick = (link) => {
     setActiveLink(link);
@@ -95,34 +90,6 @@ function Sidebar() {
                 Events
               </Link>
             </li>
-            {/* <li className="mb-0">
-              <div
-                className="flex items-center py-1.5 px-4 rounded hover:bg-gray-800 cursor-pointer transition-colors duration-200"
-                onClick={toggleTriggers}
-              >
-                <i className="fas fa-bell mr-3"></i>
-                Triggers
-                <i
-                  className={`fas ml-auto ${
-                    isTriggersOpen ? 'fa-chevron-up' : 'fa-chevron-down'
-                  }`}
-                ></i>
-              </div>
-              {isTriggersOpen && (
-                <ul className="pl-8 space-y-1 border-l border-gray-700 mt-1">
-                  <li>
-                    <Link
-                      to="/intents"
-                      isActive={isActive('/intents')}
-                      onClick={() => handleLinkClick('/intents')}
-                    >
-                      <i className="fas fa-circle mr-3 text-xs"></i>
-                      Intents
-                    </Link>
-                  </li>
-                </ul>
-              )}
-            </li> */}
           </ul>
         </div>
         <div className="text-center">

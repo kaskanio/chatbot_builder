@@ -22,7 +22,7 @@ const servicesApi = createApi({
           return {
             url: '/services',
             method: 'POST',
-            body: { name: name, verb, host, port, path }, // Include customId in the body
+            body: { name: name, verb, host, port, path },
           };
         },
       }),

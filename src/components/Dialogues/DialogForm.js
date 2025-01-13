@@ -16,14 +16,14 @@ import {
   TabItemDirective,
   TabItemsDirective,
 } from '@syncfusion/ej2-react-navigations';
-import { TextBoxComponent } from '@syncfusion/ej2-react-inputs'; // Import TextBoxComponent
+import { TextBoxComponent } from '@syncfusion/ej2-react-inputs';
 import {
   useFetchEntitiesQuery,
   useFetchServiceQuery,
   useAddFormSlotMutation,
   useRemoveFormSlotMutation,
 } from '../../store';
-import Button from '../modules/Button'; // Import Button component
+import Button from '../modules/Button';
 
 const formSlotTypes = ['int', 'float', 'str', 'bool', 'list', 'dict'];
 const pretrainedEntities = [
