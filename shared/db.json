@@ -1,64 +1,54 @@
 {
   "services": [
     {
-      "name": "weather_svc",
-      "verb": "GET",
-      "host": "r4a.issel.ee.auth.gr",
-      "port": "8080",
-      "path": "/weather",
+      "name": "appointment_service",
+      "verb": "POST",
+      "host": "https://health.com",
+      "path": "/medical/book_appointment",
       "id": 1
     }
   ],
-  "events": [
-    {
-      "name": "test",
-      "uri": "/test",
-      "id": 1
-    }
-  ],
+  "events": [],
   "entities": [
     {
       "name": "Doctor",
       "values": [
-        "cardiologist",
-        "dentist",
-        "doc"
+        "Cardiologist",
+        "Pathologist",
+        "Dentist"
       ],
       "id": 1
     }
   ],
-  "synonyms": [],
-  "globalSlots": [
+  "synonyms": [
     {
-      "name": "slotA",
-      "type": "int",
-      "value": "10",
+      "name": "date_period",
+      "values": [
+        "tomorrow",
+        "next day"
+      ],
+      "id": 1
+    }
+  ],
+  "globalSlots": [],
+  "formSlots": [
+    {
+      "name": "doctor",
+      "type": "str",
+      "form": "form1",
       "id": 1
     },
     {
-      "name": "slotB",
+      "name": "date",
       "type": "str",
-      "value": "asdas",
+      "form": "form1",
       "id": 2
     },
     {
-      "name": "slotC",
-      "type": "str",
-      "id": 3
-    }
-  ],
-  "formSlots": [
-    {
-      "name": "city_slot",
+      "name": "time",
       "type": "str",
       "form": "form1",
       "id": 3
-    },
-    {
-      "name": "time_slot",
-      "type": "str",
-      "form": "form1",
-      "id": 4
     }
   ]
 }

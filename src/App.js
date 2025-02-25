@@ -8,6 +8,9 @@ import EntitiesList from './components/Pages/EntitiesList';
 import SynonymsList from './components/Pages/SynonymsList';
 import GlobalSlotsList from './components/Pages/GlobalSlotsList';
 import FormSlotsList from './components/Pages/FormSlotsList';
+import Button from './components/modules/Button';
+import getStartedImage from './get_started.png';
+import Link from './components/Link'; // Import Link component
 
 function App() {
   return (
@@ -16,14 +19,7 @@ function App() {
       <div className="flex-0 overflow-y-auto">
         <Sidebar />
       </div>
-
-      {/* Main Content */}
       <div className="flex flex-col flex-1 overflow-y-auto">
-        {/* <div className="bg-white h-16 sticky top-0 shadow flex items-center justify-center px-4 sm:px-8">
-          <h1 className="text-lg font-semibold text-indigo-800 text-center">
-            Main Content
-          </h1>
-        </div> */}
         <div className="flex-1 p-4 sm:p-8 overflow-y-auto">
           <Route path="/dialogues">
             <Dialogues />
@@ -45,6 +41,29 @@ function App() {
           </Route>
           <Route path="/formSlots">
             <FormSlotsList />
+          </Route>
+          <Route path="/">
+            <div className="relative h-full w-full flex items-center justify-center">
+              <img
+                src={getStartedImage}
+                alt="Get Started"
+                className="absolute inset-0 w-full h-full object-cover blur-lg brightness-75"
+              />
+              <div className="absolute flex flex-col items-center justify-center p-8 bg-white/20 backdrop-blur-md rounded-2xl shadow-xl border border-white/30">
+                <h1 className="text-3xl font-semibold text-white mb-4">
+                  Welcome to Chat Builder
+                </h1>
+                <Link to="/dialogues">
+                  <Button
+                    primary
+                    rounded
+                    className="px-6 py-3 text-lg font-bold transition-transform transform hover:scale-105 hover:bg-blue-600 hover:text-white shadow-lg"
+                  >
+                    Get Started
+                  </Button>
+                </Link>
+              </div>
+            </div>
           </Route>
         </div>
       </div>
