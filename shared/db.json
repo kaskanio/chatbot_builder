@@ -1,54 +1,8 @@
 {
-  "services": [
-    {
-      "name": "appointment_service",
-      "verb": "POST",
-      "host": "https://health.com",
-      "path": "/medical/book_appointment",
-      "id": 1
-    }
-  ],
+  "services": [],
   "events": [],
-  "entities": [
-    {
-      "name": "Doctor",
-      "values": [
-        "Cardiologist",
-        "Pathologist",
-        "Dentist"
-      ],
-      "id": 1
-    }
-  ],
-  "synonyms": [
-    {
-      "name": "date_period",
-      "values": [
-        "tomorrow",
-        "next day"
-      ],
-      "id": 1
-    }
-  ],
+  "entities": [],
+  "synonyms": [],
   "globalSlots": [],
-  "formSlots": [
-    {
-      "name": "doctor",
-      "type": "str",
-      "form": "form1",
-      "id": 1
-    },
-    {
-      "name": "date",
-      "type": "str",
-      "form": "form1",
-      "id": 2
-    },
-    {
-      "name": "time",
-      "type": "str",
-      "form": "form1",
-      "id": 3
-    }
-  ]
+  "formSlots": []
 }

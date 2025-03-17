@@ -9,9 +9,10 @@ import { store } from './store';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 // Registering Syncfusion license key. License key is required to use Syncfusion components.
-registerLicense(
-  'ORg4AjUWIQA/Gnt2UlhhQlVMfV5AQmBIYVp/TGpJfl96cVxMZVVBJAtUQF1hTX9Td0NjXXpdcHddQGdV'
-);
+console.log('License Key:', process.env.REACT_APP_SYNCFUSION_LICENSE);
+
+const licenseKey = process.env.REACT_APP_SYNCFUSION_LICENSE;
+registerLicense(licenseKey);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

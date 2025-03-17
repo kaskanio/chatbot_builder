@@ -1,56 +1,39 @@
 triggers
     
-    Intent book_appointment 
-        "I want to book a doctor appointment",  
-        "I want to book a doctor appointment with DR." PE:PERSON['Johnson', 'Smith'],  
-        "an appointment for next" S:date_period,  
-        "a doctor visit" S:date_period,  
-        "I want an exam",  
-        "when can a" TE:Doctor "examine me",  
-        "doctor appointment",  
-        "new appointment for" TE:Doctor,  
-        "request for doc exam from" TE:Doctor
+    Intent greet 
+        "hey",  
+        "hi",  
+        "hi there",  
+        "good morning",  
+        "good evening",  
+        "good afternoon"
+    end
+    
+    Intent ask_weather 
+        "Tell me the weather please for" PE:GPE['Thessaloniki', 'Athens'],  
+        "Tell me the weather" PE:DATE['tomorrow', 'today'] "for" PE:GPE['Thessaloniki', 'Athens'],  
+        "Tell me the weather",  
+        "I want to tell me the weather please"
     end
     
     
 end
 
-
-eservices
-    EServiceHTTP appointment_service
-        verb: POST
-        host: 'https://health.com'
-        path: '/medical/book_appointment'
-    end
-end
-
-entities
-    Entity Doctor
-        "Cardiologist", 
-        "Pathologist", 
-        "Dentist"
-    end
-end
-
-synonyms
-    Synonym date_period
-        "tomorrow", 
-        "next day"
-    end
-end
 
 dialogues
-    Dialogue book_appointment_dialogue
-        on: book_appointment
+    Dialogue greet_dialogue
+        on: greet
+        responses:
+          ActionGroup greet_back
+              Speak('Hello there!!!')
+          end
+    end
+    Dialogue ask_weather_dialogue
+        on: ask_weather
         responses:
           Form form1
-              doctor: str = HRI('What is the name of your doctor?', [PE:PERSON]) 
-              date: str = HRI('What day do you want to visit the doctor?') 
-              time: str = HRI('At what time?')
-          end,
-          ActionGroup appointment_service
-              appointment_service(query=[doctor=form1.doctor, date=form1.date, time=form1.time], )
-              Speak('Doctor 'form1.doctor' is waiting for you at 'form1.date', 'form1.time'.')
+              city_slot: str = HRI('For which city?', [PE:GPE]) 
+              weather_svc GET: str = weather_svc(query=[city=form1.city_slot, language="English"],header=[access_token="Q5eJZ8sSLEX6XNmOHyMlWagI"],)[description]
           end
     end
 end
