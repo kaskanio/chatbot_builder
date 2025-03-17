@@ -16,8 +16,7 @@ To set up the project locally, follow these steps:
 
 ### Prerequisites
 
-- Node.js (>=16.x recommended)
-- npm or yarn
+- Docker & Docker Compose installed on your machine
 
 ### Steps
 
@@ -26,11 +25,11 @@ To set up the project locally, follow these steps:
 git clone https://github.com/kaskanio/chatbot_builder.git
 cd chatbot_builder
 
-# Install dependencies
-npm install  # or yarn install
+# Build the Docker image
+docker-compose build
 
-# Start the development server
-npm start  # or yarn start
+# Run the application
+docker-compose up
 ```
 
 The application will be available at `http://localhost:3000/`.
