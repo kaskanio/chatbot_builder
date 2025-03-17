@@ -17,7 +17,7 @@
   "contextMenuClick": {},
   "scrollSettings": {
     "scrollLimit": "Infinity",
-    "viewPortWidth": 1453.13916015625,
+    "viewPortWidth": 2034.957275390625,
     "viewPortHeight": 1200,
     "currentZoom": 1,
     "horizontalOffset": 0,
@@ -165,9 +165,6 @@
   },
   "tool": 3,
   "bridgeDirection": "Top",
-  "diagramSettings": {
-    "inversedAlignment": true
-  },
   "customCursor": [],
   "serializationSettings": {
     "preventDefaults": false

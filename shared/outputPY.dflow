@@ -1,39 +1,5 @@
 triggers
     
-    Intent greet 
-        "hey",  
-        "hi",  
-        "hi there",  
-        "good morning",  
-        "good evening",  
-        "good afternoon"
-    end
-    
-    Intent ask_weather 
-        "Tell me the weather please for" PE:GPE['Thessaloniki', 'Athens'],  
-        "Tell me the weather" PE:DATE['tomorrow', 'today'] "for" PE:GPE['Thessaloniki', 'Athens'],  
-        "Tell me the weather",  
-        "I want to tell me the weather please"
-    end
-    
     
 end
 
-
-dialogues
-    Dialogue greet_dialogue
-        on: greet
-        responses:
-          ActionGroup greet_back
-              Speak('Hello there!!!')
-          end
-    end
-    Dialogue ask_weather_dialogue
-        on: ask_weather
-        responses:
-          Form form1
-              city_slot: str = HRI('For which city?', [PE:GPE]) 
-              weather_svc GET: str = weather_svc(query=[city=form1.city_slot, language="English"],header=[access_token="Q5eJZ8sSLEX6XNmOHyMlWagI"],)[description]
-          end
-    end
-end
