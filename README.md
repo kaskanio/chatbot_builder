@@ -58,6 +58,12 @@ The chatbot flow data can be exported in a structured format for use with Rasa. 
 - Additional chatbot templates
 - Improved data validation and error handling
 
+# Associated Diploma Thesis
+
+The development of Chatbot Builder is based on my diploma thesis titled **"A graphical application for the rapid development of digital assistants"**, completed at the Aristotle University of Thessaloniki.
+
+You can access the full thesis [here](https://ikee.lib.auth.gr/record/362729/?ln=en).
+
 ## Contributing
 
 Contributions are welcome! Feel free to open an issue or submit a pull request.
