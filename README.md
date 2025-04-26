@@ -10,6 +10,12 @@ Chatbot Builder is a web application that enables users to create interactive ch
 - **Data Persistence**: Supports JSON-based storage and export functionality.
 - **React-Based Frontend**: Built with React and Tailwind CSS for a modern, responsive design.
 
+## Video Demo
+
+This demo showcases the creation of a chatbot designed to inform users about the weather conditions in a specific location.
+
+[![Watch the video]](https://youtu.be/k17ttVTbRwY)
+
 ## Installation
 
 To set up the project locally, follow these steps:
