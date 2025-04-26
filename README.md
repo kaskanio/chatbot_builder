@@ -14,7 +14,7 @@ Chatbot Builder is a web application that enables users to create interactive ch
 
 This demo showcases the creation of a chatbot designed to inform users about the weather conditions in a specific location.
 
-[![Watch the video](https://img.youtube.com/vi/k17ttVTbRwY/0.jpg)](https://www.youtube.com/watch?v=k17ttVTbRwY)
+[[Watch the video]](https://youtu.be/k17ttVTbRwY)
 
 ## Installation
 
